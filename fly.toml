@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for itehax on 2023-07-19T16:58:50+02:00
+# fly.toml app configuration file generated for itehax-website on 2023-07-24T15:01:03+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "itehax"
-primary_region = "ams"
+app = "itehax-website"
+primary_region = "mad"
 
 [http_service]
   internal_port = 3000
