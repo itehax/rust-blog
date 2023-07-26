@@ -130,6 +130,7 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
     let post_query = move || params.with(|params| params.get("post").cloned().unwrap_or_default());
 
     view! { cx,
+       
         <Suspense fallback=move || {
             view! { cx, <p>"Loading..."</p> }
         }>
@@ -144,9 +145,7 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
                                 .iter()
                                 .find(|&p| p.post_metadata.create_href() == post_query());
                             if let Some(post) = post {
-                                view! { cx,
-                                   
-                                     <PostLayout content=post.post_content.clone()/> }
+                                view! { cx, <PostLayout content=post.post_content.clone()/> }
                                     .into_view(cx)
                             } else {
                                 let mut outside_errors = Errors::default();
@@ -167,33 +166,7 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
 #[component]
 pub fn PostLayout(cx: Scope, content: PostContent) -> impl IntoView {
     view! { cx,
-        <Link rel="stylesheet" href="/highlighter/styles/github.min.css"/>
-        <Script>
-            "function loadScript(scriptUrl) {
-            const script = document.createElement('script');
-            script.src = scriptUrl;
-            document.body.appendChild(script);
-            
-            return new Promise((res, rej) => {
-            script.onload = function() {
-            res();
-            }
-            script.onerror = function () {
-            rej();
-            }
-            });
-            }
-            
-            // use
-            loadScript('/highlighter/highlight.min.js')
-            .then(() => {
-            hljs.highlightAll();
-            })
-            .catch(() => {
-            console.error('Script loading failed! Handle this error');
-            });"
-        </Script>
-
+       
         <div class="bg-[#080A21]">
             <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
                 <div class="max-w-3xl">
