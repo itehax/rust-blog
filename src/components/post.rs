@@ -145,7 +145,10 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
                                 .iter()
                                 .find(|&p| p.post_metadata.create_href() == post_query());
                             if let Some(post) = post {
-                                view! { cx, <PostLayout content=post.post_content.clone()/> }
+                                view! { cx,
+                                    <Title text=post.post_metadata.title.clone()/>
+                                    <Meta name="description" content=post.post_metadata.description.clone()/>
+                                    <PostLayout content=post.post_content.clone()/> }
                                     .into_view(cx)
                             } else {
                                 let mut outside_errors = Errors::default();
