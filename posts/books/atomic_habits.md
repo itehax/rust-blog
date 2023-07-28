@@ -6,7 +6,7 @@ description: Atomic Habits will reshape the way you think about progress and suc
 project_link: none
 ---
 
-# What i learned from Atomic Habits
+# Atomic Habits
 
 First of all I would like to say that this is one of the first books of this kind that I have read, usually programmers do not read this kind of book, it is more of an economist and business man thing, but instead I have been able to get a lot out of it and I think every developer should start reading mindset and personal growth books.
 

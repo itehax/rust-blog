@@ -24,9 +24,7 @@ pub fn App(cx: Scope) -> impl IntoView {
     view! { cx,
         <Stylesheet id="leptos" href="/pkg/itehax-website.css"/>
         <Link rel="shortcut icon" type_="image/png" href="/favicon.png"/>
-
         <Link rel="preconnect" href="https://fonts.googleapis.com"/>
-
         <Link rel="preconnect" href="https://fonts.gstatic.com"/>
         <Link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap"
@@ -53,7 +51,11 @@ pub fn App(cx: Scope) -> impl IntoView {
                 <Route
                     path="/blog/:post"
                     view=move |cx| {
-                        view! { cx, <RenderBlogPost/> }
+                        view! { cx,
+                            <Link rel="stylesheet" href="/highlighter/styles/github.min.css"/>
+                            <script src="/highlighter/load_highlight.js"></script>
+                            <RenderBlogPost/>
+                        }
                     }
                 />
                 <Route
@@ -92,7 +94,6 @@ pub fn App(cx: Scope) -> impl IntoView {
                         view! { cx, <RenderProjectsPost/> }
                     }
                 />
-
             </Routes>
             <script src="/preline/preline.js"></script>
         </Router>
