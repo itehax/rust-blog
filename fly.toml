@@ -4,7 +4,7 @@
 #
 
 app = "itehax-website"
-primary_region = "ams"
+primary_region = "cdg"
 
 [http_service]
   internal_port = 3000
