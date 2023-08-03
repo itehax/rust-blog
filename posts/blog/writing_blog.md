@@ -2,7 +2,7 @@
 image_path: "/images/blog_images/writing_website.jpg"
 title: Writing a Blog in Rust
 date: 2023-07-22
-description: How i wrote my personal Website and what i learned.
+description: Writing a Blog using Rust, Leptos and Preline. what I learnt and whether I would do it again.
 project_link: https://github.com/itehax/itehax-website
 ---
 

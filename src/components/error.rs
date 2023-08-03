@@ -1,4 +1,4 @@
-use crate::components::footer::Footer;
+use crate::components::footer::HomeFooter;
 use http::StatusCode;
 use leptos::*;
 use leptos_meta::*;
@@ -68,7 +68,7 @@ pub fn Error(cx: Scope, error_code: StatusCode, error_string: String) -> impl In
                     </a>
                 </div>
             </div>
-            <Footer/>
+            <HomeFooter/>
         </div>
     }
 }

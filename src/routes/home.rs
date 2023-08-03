@@ -1,7 +1,7 @@
 use leptos::*;
 use leptos_meta::*;
+use crate::components::footer::HomeFooter;
 
-use crate::components::footer::Footer;
 #[component]
 pub fn Home(cx: Scope) -> impl IntoView {
     view! { cx,
@@ -193,7 +193,7 @@ pub fn Home(cx: Scope) -> impl IntoView {
                     </div>
                 </div>
             </main>
-            <Footer/>
+            <HomeFooter/>
         </div>
     }
 }

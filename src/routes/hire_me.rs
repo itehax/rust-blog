@@ -1,6 +1,8 @@
 use leptos::*;
 use leptos_meta::*;
 
+use crate::components::footer::{GoBack, HomeFooter};
+
 #[component]
 pub fn HireMe(cx: Scope) -> impl IntoView {
     view! { cx,
@@ -109,5 +111,7 @@ pub fn HireMe(cx: Scope) -> impl IntoView {
                 </div>
             </div>
         </div>
+        <GoBack content="Back to Home".to_string()/>
+        <HomeFooter/>
     }
 }

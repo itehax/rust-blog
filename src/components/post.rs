@@ -1,4 +1,5 @@
-use crate::components::footer::Footer;
+use crate::components::footer::GoBack;
+use crate::components::footer::HomeFooter;
 use crate::error_template::AppError;
 use crate::error_template::ErrorTemplate;
 use crate::server_functions::posts::Post;
@@ -67,8 +68,9 @@ pub fn Post(cx: Scope, post_type: PostType, post_description: String) -> impl In
                     }}
                 </Transition>
             </div>
-            <Footer/>
         </div>
+        <GoBack content="Back to Home".to_string()/>
+        <HomeFooter/>
     }
 }
 
@@ -148,7 +150,8 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
                                 view! { cx,
                                     <Title text=post.post_metadata.title.clone()/>
                                     <Meta name="description" content=post.post_metadata.description.clone()/>
-                                    <PostLayout content=post.post_content.clone()/> }
+                                    <PostLayout content=post.post_content.clone()/>
+                                 }
                                     .into_view(cx)
                             } else {
                                 let mut outside_errors = Errors::default();
@@ -179,6 +182,8 @@ pub fn PostLayout(cx: Scope, content: PostContent) -> impl IntoView {
                     ></div>
                 </div>
             </div>
+            <GoBack content="Back to Posts".to_string()/>
+            <HomeFooter/>
         </div>
     }
 }

@@ -1084,6 +1084,10 @@ video {
   margin-top: auto;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1253,6 +1257,11 @@ video {
        column-gap: 0.75rem;
 }
 
+.gap-x-3\.5 {
+  -moz-column-gap: 0.875rem;
+       column-gap: 0.875rem;
+}
+
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -1285,6 +1294,10 @@ video {
   border-width: 1px;
 }
 
+.border-2 {
+  border-width: 2px;
+}
+
 .border-gray-700 {
   --tw-border-opacity: 1;
   border-color: rgb(55 65 81 / var(--tw-border-opacity));
@@ -1292,6 +1305,11 @@ video {
 
 .border-transparent {
   border-color: transparent;
+}
+
+.border-gray-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
 }
 
 .bg-\[\#080A21\] {
@@ -1349,6 +1367,11 @@ video {
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .py-10 {
@@ -1481,6 +1504,10 @@ video {
 
 .ring-offset-slate-900 {
   --tw-ring-offset-color: #0f172a;
+}
+
+.ring-offset-white {
+  --tw-ring-offset-color: #fff;
 }
 
 .filter {
@@ -1730,6 +1757,11 @@ video {
   border-color: transparent;
 }
 
+.hover\:border-gray-500:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
+
 .hover\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
@@ -1760,6 +1792,11 @@ video {
   color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 .hover\:shadow-black\/\[\.4\]:hover {
   --tw-shadow-color: rgb(0 0 0 / .4);
   --tw-shadow: var(--tw-shadow-colored);
@@ -1784,6 +1821,11 @@ video {
 .focus\:ring-blue-600:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(37 99 235 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-gray-400:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(156 163 175 / var(--tw-ring-opacity));
 }
 
 .focus\:ring-offset-2:focus {
@@ -1837,6 +1879,12 @@ video {
 
 .prose-pre\:rounded-none :is(:where(pre):not(:where([class~="not-prose"] *))) {
   border-radius: 0px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark\:ring-offset-slate-900 {
+    --tw-ring-offset-color: #0f172a;
+  }
 }
 
 @media (min-width: 480px) {
