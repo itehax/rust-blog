@@ -2,7 +2,7 @@
 FROM rustlang/rust:nightly-bullseye as builder
 
 RUN rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
-RUN cargo install --git https://github.com/leptos-rs/cargo-leptos cargo-leptos
+RUN cargo install --locked cargo-leptos
 
 
 RUN rustup target add wasm32-unknown-unknown
