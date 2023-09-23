@@ -7,7 +7,7 @@ use crate::{
         books::{books_article::RenderBooksPost, books_section::BooksPost},
         hire_me::HireMe,
         home::Home,
-        projects::{projects_article::RenderProjectsPost, projects_section::ProjectsPost},
+        projects::{projects_article::RenderProjectsPost, projects_section::ProjectsPost}, feed::{ RssFeed},
     },
     server_functions::posts::get_posts,
 };
@@ -42,12 +42,14 @@ pub fn App(cx: Scope) -> impl IntoView {
                         view! { cx, <Home/> }
                     }
                 />
+
                 <Route
                     path="/blog"
                     view=move |cx| {
                         view! { cx, <BlogPost/> }
                     }
                 />
+
                 <Route
                     path="/blog/:post"
                     view=move |cx| {
@@ -58,36 +60,42 @@ pub fn App(cx: Scope) -> impl IntoView {
                         }
                     }
                 />
+
                 <Route
                     path="/about"
                     view=move |cx| {
                         view! { cx, <About/> }
                     }
                 />
+
                 <Route
                     path="/hire-me"
                     view=move |cx| {
                         view! { cx, <HireMe/> }
                     }
                 />
+
                 <Route
                     path="/books"
                     view=move |cx| {
                         view! { cx, <BooksPost/> }
                     }
                 />
+
                 <Route
                     path="/books/:post"
                     view=move |cx| {
                         view! { cx, <RenderBooksPost/> }
                     }
                 />
+
                 <Route
                     path="/projects"
                     view=move |cx| {
                         view! { cx, <ProjectsPost/> }
                     }
                 />
+
                 <Route
                     path="/projects/:post"
                     view=move |cx| {

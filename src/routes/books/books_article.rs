@@ -3,7 +3,5 @@ use crate::server_functions::posts::PostType;
 use leptos::*;
 #[component]
 pub fn RenderBooksPost(cx: Scope) -> impl IntoView {
-    view! { cx,
-        <RenderPost post_type=PostType::Book/>
-    }
+    view! { cx, <RenderPost post_type=PostType::Book/> }
 }

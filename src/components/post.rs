@@ -48,6 +48,7 @@ pub fn Post(cx: Scope, post_type: PostType, post_description: String) -> impl In
                                                     />
                                                 }
                                             } else {
+
                                                 view! { cx,
                                                     <PostCard
                                                         post_metadata=post.post_metadata.clone()
@@ -59,6 +60,7 @@ pub fn Post(cx: Scope, post_type: PostType, post_description: String) -> impl In
                                         .collect_view(cx)
                                 }
                                 Err(e) => {
+
                                     view! { cx,
                                         <pre class="error">"Server Error: " {e.to_string()}</pre>
                                     }
@@ -66,6 +68,7 @@ pub fn Post(cx: Scope, post_type: PostType, post_description: String) -> impl In
                                 }
                             })
                     }}
+
                 </Transition>
             </div>
         </div>
@@ -132,7 +135,6 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
     let post_query = move || params.with(|params| params.get("post").cloned().unwrap_or_default());
 
     view! { cx,
-       
         <Suspense fallback=move || {
             view! { cx, <p>"Loading..."</p> }
         }>
@@ -149,22 +151,29 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
                             if let Some(post) = post {
                                 view! { cx,
                                     <Title text=post.post_metadata.title.clone()/>
-                                    <Meta name="description" content=post.post_metadata.description.clone()/>
+                                    <Meta
+                                        name="description"
+                                        content=post.post_metadata.description.clone()
+                                    />
                                     <PostLayout content=post.post_content.clone()/>
-                                 }
+                                }
                                     .into_view(cx)
                             } else {
                                 let mut outside_errors = Errors::default();
                                 outside_errors.insert_with_default_key(AppError::NotFound);
-                                view! { cx, <ErrorTemplate outside_errors/> }.into_view(cx)
+
+                                view! { cx, <ErrorTemplate outside_errors/> }
+                                    .into_view(cx)
                             }
                         }
                         Err(e) => {
+
                             view! { cx, <pre class="error">"Server Error: " {e.to_string()}</pre> }
                                 .into_view(cx)
                         }
                     })
             }}
+
         </Suspense>
     }
 }
@@ -172,7 +181,6 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
 #[component]
 pub fn PostLayout(cx: Scope, content: PostContent) -> impl IntoView {
     view! { cx,
-       
         <div class="bg-[#080A21]">
             <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
                 <div class="max-w-3xl">

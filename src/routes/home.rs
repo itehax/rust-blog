@@ -13,7 +13,7 @@ pub fn Home(cx: Scope) -> impl IntoView {
         />
         <Body class="bg-[#080A21] flex h-full"/>
         <div class="max-w-[50rem] flex flex-col mx-auto w-full h-full ">
-            //   <!-- ========== HEADER ========== -->
+            // <!-- ========== HEADER ========== -->
             <header class="mb-auto flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full text-sm py-4">
                 <nav
                     class="w-full px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
@@ -95,8 +95,8 @@ pub fn Home(cx: Scope) -> impl IntoView {
                     </div>
                 </nav>
             </header>
-            //   <!-- ========== END HEADER ========== -->
-            //   <!-- ========== MAIN CONTENT ========== -->
+            // <!-- ========== END HEADER ========== -->
+            // <!-- ========== MAIN CONTENT ========== -->
             <main id="content" role="main">
                 <div class="text-center py-10 px-4 sm:px-6 lg:px-8">
                     <h1 class="block text-2xl font-bold  sm:text-4xl animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
