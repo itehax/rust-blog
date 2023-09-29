@@ -1,4 +1,3 @@
-
 use crate::components::post::RenderPost;
 use crate::server_functions::posts::PostType;
 use leptos::*;

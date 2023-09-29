@@ -29,13 +29,17 @@ pub fn HomeFooter(cx: Scope) -> impl IntoView {
                     </p>
                     <p class="text-[#CED4DA]">"© Itehax. 2023 "</p>
 
-                    <a class="flex justify-center items-center space-x-2 text-blue-500 hover:text-blue-400 text-base mt-4" href="./feed">
+                    <a
+                        class="flex justify-center items-center space-x-2 text-blue-500 hover:text-blue-400 text-base mt-4"
+                        href="./feed.xml"
+                        rel="external"
+                    >
                         <span class="text-[#CED4DA]">"Rss"</span>
                         <svg
                             viewBox="0 0 48 48"
                             class="h-6 w-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
                         >
                             <path d="M0 0h48v48H0z" fill="none"></path>
                             <circle cx="12.36" cy="35.64" r="4.36"></circle>

@@ -7,7 +7,7 @@ use crate::{
         books::{books_article::RenderBooksPost, books_section::BooksPost},
         hire_me::HireMe,
         home::Home,
-        projects::{projects_article::RenderProjectsPost, projects_section::ProjectsPost}, feed::{ RssFeed},
+        projects::{projects_article::RenderProjectsPost, projects_section::ProjectsPost},
     },
     server_functions::posts::get_posts,
 };
@@ -102,6 +102,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                         view! { cx, <RenderProjectsPost/> }
                     }
                 />
+
             </Routes>
             <script src="/preline/preline.js"></script>
         </Router>

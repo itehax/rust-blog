@@ -1,9 +1,10 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-    use axum::{routing::post, Router};
+    use axum::{routing::get, routing::post, Router};
     use itehax_website::app::*;
     use itehax_website::fileserv::file_and_error_handler;
+    use itehax_website::routes::feed::rss_feed;
     use leptos::*;
     use leptos_axum::{generate_route_list, LeptosRoutes};
 
@@ -25,6 +26,7 @@ async fn main() {
     // build our application with a route
     let app = Router::new()
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
+        .route("/feed.xml", get(rss_feed))
         .leptos_routes(&leptos_options, routes, |cx| {
             view! { cx, <App/> }
         })

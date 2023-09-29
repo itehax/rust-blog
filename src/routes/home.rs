@@ -1,6 +1,6 @@
+use crate::components::footer::HomeFooter;
 use leptos::*;
 use leptos_meta::*;
-use crate::components::footer::HomeFooter;
 
 #[component]
 pub fn Home(cx: Scope) -> impl IntoView {
