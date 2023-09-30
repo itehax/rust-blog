@@ -23,7 +23,7 @@ pub fn App(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <Stylesheet id="leptos" href="/pkg/itehax-website.css"/>
-        <Link rel="shortcut icon" type_="image/png" href="/favicon.png"/>
+        <Link rel="shortcut icon" type_="image/png" href="/favicon1.png"/>
         <Link rel="preconnect" href="https://fonts.googleapis.com"/>
         <Link rel="preconnect" href="https://fonts.gstatic.com"/>
         <Link
