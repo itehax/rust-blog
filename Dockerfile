@@ -19,7 +19,7 @@ FROM rustlang/rust:nightly-bullseye as runner
 COPY --from=builder /app/posts /app/posts
 COPY --from=builder /app/public /app/public
 
-COPY --from=builder /app/target/server/x86_64-unknown-linux-gnu/release/itehax-website /app/
+COPY --from=builder /app/target/x86_64-unknown-linux-gnu/release/itehax-website /app/
 COPY --from=builder /app/target/site /app/site
 COPY --from=builder /app/Cargo.toml /app/
 WORKDIR /app

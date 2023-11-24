@@ -79,7 +79,7 @@ By default, `cargo-leptos` uses `nightly` Rust, `cargo-generate`, and `sass`. If
 cargo leptos build --release
 ```
 
-Will generate your server binary in target/server/release and your site package in target/site.
+Will generate your server binary in target/release and your site package in target/site.
 
 
 # Using the docker image
