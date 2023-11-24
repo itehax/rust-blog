@@ -34,7 +34,7 @@ Credit : https://malware.news/t/portable-executable-file/32980
 
 To parse the format we will use rust, and windows api, which contain the data structures we need to interpret the format correctly.
 There are several crates in rust, including the official microsoft bindings, which we are going to use.
-Microsoft, offers [2 different crates](https://github.com/microsoft/windows-rs): windows and windows-sys, in a nutshell, the main difference is that the former offers methods on the bindings of the api that allow us to make the code more idiomatic, for example the Default trait on the structs offered by the windows api, this is at the expense of compilation time,which is faster in the latter case.
+Microsoft, offers [2 different crates](https://github.com/microsoft/windows-rs): windows and windows-sys, in a nutshell, the main difference is that the former offers methods on the bindings of the api that allow us to make the code more idiomatic, for example the Default trait on the structs offered by the windows api, this is at the expense of compilation time, which is faster in the latter case.
 In addition, it provides the most comprehensive API coverage for the Windows operating system, but you are not going to be able to use them in the no-std environment.
 More information [here](https://kennykerr.ca/rust-getting-started/index.html). 
 In our case, we will use the windows crate.
@@ -833,8 +833,6 @@ __Adding this distance to the offset of the a section, we get the actual positio
 
 This logic will be repeated several times, so try to **understand it thoroughly**.
 This is also well explained [here](https://www.ired.team/miscellaneous-reversing-forensics/windows-kernel-internals/pe-file-header-parser-in-c++).
-
----
 
 Now, the import information is contained in the `IMAGE_IMPORT_DESCRIPTOR` struct.
 
@@ -1651,18 +1649,3 @@ Export:
 ```
 </div>
 
-### References and Useful links
-
-- <https://paper.bobylive.com/Security/Bin_Portable_Executable_File_Format_%E2%80%93_A_Reverse_Engineer_View_2012-1-31_16.43_CBM_1_2_2006_Goppit_PE_Format_Reverse_Engineer_View.pdf>
-
-- <https://www.ired.team/miscellaneous-reversing-forensics/windows-kernel-internals/pe-file-header-parser-in-c++>
-
-- <https://0xrick.github.io/win-internals/pe8/>
-
-- <https://k0deless.github.io/posts/pe-file-format/>
-
-- <https://en.wikipedia.org/wiki/Portable_Executable>
-
-- <https://learn.microsoft.com/en-us/windows/win32/debug/pe-format>
-
-- <https://ferreirasc.github.io/PE-Export-Address-Table/>
