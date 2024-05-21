@@ -9,7 +9,7 @@ pub fn Home(cx: Scope) -> impl IntoView {
         <Title text="Itehax"/>
         <Meta
             name="description"
-            content="My own personal website. Here you'll find everything about me."
+            content="My own personal website. Here you'll find everything about Edoardo D'Errico/itehax."
         />
         <Body class="bg-[#080A21] flex h-full"/>
         <div class="max-w-[50rem] flex flex-col mx-auto w-full h-full ">
@@ -100,11 +100,10 @@ pub fn Home(cx: Scope) -> impl IntoView {
             <main id="content" role="main">
                 <div class="text-center py-10 px-4 sm:px-6 lg:px-8">
                     <h1 class="block text-2xl font-bold  sm:text-4xl animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
-                        "Itehax."
+                        "Edoardo D'Errico."
                     </h1>
                     <p class="mt-5 text-lg text-[#F8F9FA]">
-                        "Backend Developer // Reverse Engineer // Game Hacker // Malware
-                        Analyst"
+                        "CS student interested in // CyberSec // CTF // Whatever stimulates my Brain."
                     </p>
                     <div class="mt-18 flex flex-col justify-center items-center gap-2 sm:flex-row sm:gap-3">
                         // <!-- Social Brands -->
@@ -135,7 +134,7 @@ pub fn Home(cx: Scope) -> impl IntoView {
                             </a>
                             <a
                                 class="inline-flex justify-center items-center w-10 h-10 text-center rounded-full  transition text-gray-500 hover:text-gray-200 hover:-translate-y-1"
-                                href="#"
+                                href="https://www.linkedin.com/in/edoardo-d%E2%80%99errico-5301302a1/"
                             >
                                 <svg
                                     class="w-5 h-5"
@@ -190,6 +189,30 @@ pub fn Home(cx: Scope) -> impl IntoView {
                                     ></path>
                                 </svg>
 
+                            </a>
+                            <a
+                                class="hover:-translate-y-1 inline-flex justify-center items-center w-10 h-10 text-center rounded-full  transition text-gray-500 hover:text-gray-200 "
+                                href="https://www.goodreads.com/review/list/178395501-edoardo-d-errico?order=a&ref=nav_mybooks&sort=date_added"
+                            >
+                                <svg
+                                    class="w-5 h-5"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="currentColor"
+                                >
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g
+                                        id="SVGRepo_tracerCarrier"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    ></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M4 19V6.2C4 5.0799 4 4.51984 4.21799 4.09202C4.40973 3.71569 4.71569 3.40973 5.09202 3.21799C5.51984 3 6.0799 3 7.2 3H16.8C17.9201 3 18.4802 3 18.908 3.21799C19.2843 3.40973 19.5903 3.71569 19.782 4.09202C20 4.51984 20 5.0799 20 6.2V17H6C4.89543 17 4 17.8954 4 19ZM4 19C4 20.1046 4.89543 21 6 21H20M9 7H15M9 11H15M19 17V21"
+                                            fill="currentColor"
+                                        ></path>
+                                    </g>
+                                </svg>
                             </a>
 
                         // telegram icon
