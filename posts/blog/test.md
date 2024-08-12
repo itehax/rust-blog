@@ -156,3 +156,13 @@ Ordered list
 <img src="/images/blog_images/rust_cute.png">
 
 
+Now some maths!
+
+<p class = "text-xl">Integral $\int_{a}^{b} x^2 dx$ inside text. 
+The same integral on display: $$\int_{a}^{b} x^2 \,dx$$
+and multiple integrals: 
+$$\iint_V \mu(u,v) \,du\,dv$$
+$$\iiint_V \mu(u,v,w) \,du\,dv\,dw$$
+$$\oint_V f(s) \,ds$$
+Sum $\sum_{n=1}^{\infty} 2^{-n} = 1$ inside text.
+</p>

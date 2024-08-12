@@ -42,7 +42,7 @@ pub fn About(cx: Scope) -> impl IntoView {
                         <strong>"mind"</strong> "."
                     </p>
 
-                    <img src="/images/about_images/me.jpeg" alt=""/>
+                    <img src="/images/about_images/me.jpg" alt=""/>
                     <h3>"What should be expected from this blog"</h3>
                     <ol>
                         <li>
