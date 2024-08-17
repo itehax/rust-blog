@@ -158,7 +158,7 @@ Ordered list
 
 Now some maths!
 
-<p class = "text-xl">Integral $\int_{a}^{b} x^2 dx$ inside text. 
+<p>Integral $\int_{a}^{b} x^2 dx$ inside text. 
 The same integral on display: $$\int_{a}^{b} x^2 \,dx$$
 and multiple integrals: 
 $$\iint_V \mu(u,v) \,du\,dv$$

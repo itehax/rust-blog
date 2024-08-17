@@ -61,6 +61,8 @@ pub fn App(cx: Scope) -> impl IntoView {
                                 integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+"
                                 crossorigin="anonymous"
                             />
+                            <Link rel="stylesheet" href="/highlighter/styles/katex.css"/>
+
 
                             <script defer src="/highlighter/load_highlight.js"></script>
                             <RenderBlogPost/>
