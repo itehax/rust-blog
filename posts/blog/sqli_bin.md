@@ -75,7 +75,7 @@ Look at this example, in which the site will return a positive (OK) response if 
 ```
 </div>
 
-Due to the presence of the vulnerability, we can therefore check whether a condition is true or false, for instance by entering as id **" OR 1=1 --** we would get the answer 200, reasoning on this fact, we can, via the keyword union go to other tables and for example we could check that the ith character of a user's password corresponds to a certain character.
+Due to the presence of the vulnerability, we can therefore check whether a condition is true or false, for instance by entering as id **" OR 1=1 --** we would get the answer 200, reasoning on this fact, we can, via the keyword __union__ search in other tables and for example we could check that the $i$th character of a user's password corresponds to a certain character.
 To do this we can, for example, use the [SUBSTR](https://dev.mysql.com/doc/refman/8.4/en/string-functions.html#function_substr) function.
 
 <div class="bg-blue-950 overflow-hidden rounded-md">
@@ -88,8 +88,8 @@ To do this we can, for example, use the [SUBSTR](https://dev.mysql.com/doc/refma
 ```
 </div>
 
-In this case, atleast in MySql the pos parameter indicate the starting position from which the substring will be created and the len parameter the number of character which need to be included starting from pos.
-so, by setting **pos=i** and **len=1** we get the ith character.
+In this case, atleast in __MySql__ the __pos__ parameter indicate the __starting position__ from which the substring will be created and the __len__ parameter the number of character which __need to be included starting from pos__.
+so, by setting **pos=i** and **len=1** we get the $i$th character.
 
 Awesome!
 
@@ -129,7 +129,7 @@ Great, this is an example of what we can do by abusing the website response. Obv
 In the upper algorithm, we will overlook the fact that our search algorithm will be executed $s$ times, where $s = len(brute) \textrm{,} \ s \in \mathbb{N}$.
 
 We used the linear search algorithm, which is known to have complexity of $\mathcal{O}(n)  \textrm{, where, in this case, } \ n = |charset| $ 
-<a href ="https://www.freecodecamp.org/news/binary-search-algorithm-and-time-complexity-explained/"><img src="/images/blog_images/linear_search.png"></a>
+<a href ="https://www.freecodecamp.org/news/binary-search-algorithm-and-time-complexity-explained/">G</a>
  All this, assuming that the cost of querying the database is constant, in this case we will treat it as a variable $q \in \mathbb{R}^+$.
 So the time complexity of this algorithm is $\mathcal{O}(nq)$, because the code inside the loop get executed $n$ time and each time the cost is $q$.
 
@@ -138,7 +138,7 @@ So the time complexity of this algorithm is $\mathcal{O}(nq)$, because the code 
 
 ## An optimization, introducing binary search
 
-As computer scientists, we want to be able to achieve the best performance, and in this case, what will enable us to achieve this is the fact that we can consider our "array" as ordered.
+As computer scientists, we want to be able to achieve the __best performance__, and in this case, what will enable us to achieve this is the fact that we can consider our "array" as __ordered__.
 
 Informally, the idea that we may have, as we know that the array is ordered so that  $A_0 \leq A_1 \leq A_2 \leq ... \leq A_{n-1}$ 
 is the fact that instead of trying to search on all the elements, assuming that the element $\in A$, we can check whether the element at position $\left \lfloor \frac{start+end}{2} \right \rfloor$ (the middle) matches, if it is not, we check whether the element at the middle is major, if it is, we know that our element will be in the $[start,mid - 1]$ range because we know that the array is sorted, otherwise it will be in the upper half, namely $[mid + 1,end]$.
@@ -168,7 +168,7 @@ A[0] == to_find #is 1 equal to 1? yes, found at index 0!
 </div>
 
 
-In this way we can each time half the range in which we search! We are going to prove the time complexity later.
+In this way we can __each time half the range__ in which we search! We are going to prove the time complexity later.
 
 As computer scientists and mathematicians we want to generalise this reasoning, so here is the pseudocode, using the recursive variant of binary search.
 
@@ -224,7 +224,7 @@ print(bruteforced)
 ```
 </div>
 
-The functions $g$ and $eq$ are the equality conditions we are looking for in the case of a blind sql injection.
+The functions $g$ and $eq$ are the __equality conditions__ we are looking for in the case of a blind sql injection.
 
 The code mirrors the reasoning set out earlier, the only thing we need to pay attention to is the base case of our recursive function, i.e. $end \leq start$, the moment $start > end$, we are certain that our element $ \notin A$ .
 
@@ -298,4 +298,52 @@ We have proven the correctness of binary search! Now let's talk about performanc
 
 ## Time complexity
 
+In computer science, one way to describe the performance of an algorithm is to assign a cost to a given instruction, and to count, the number of times all instructions are executed (taking into account the relative cost, of course).
+To provide an approximation to this number, mathematical notations have been introduced to provide an upper or lower bound (or both) to the number of operations that are executed.
+Here is an example, we will take knowledge of these notations for granted.
 
+<a href ="https://en.wikipedia.org/wiki/Big_O_notation"><img src="/images/blog_images/big_o.png"></a>
+
+In the case of recursive functions, which use the paradigm called divide and conquer, we can express the execution time T(n) using a mathematical concept called recurrence relation or recursive succession.
+A recurrence relation is nothing more than a succession in which the value of each term depends on all the values of the terms before it.
+
+One example is the famous fibonacci succession, defined as follows: $$ F(n) = \begin{cases}
+  \ 1 & \textrm{if} \ \ n = 1 \lor n = 2 \newline
+   \ F(n-1) + F(n-2) & \textrm{otherwise} 
+\end{cases} $$
+For example, to find the value of $F(4)$, all we have to do is $F(3) + F(2) = F(2) + F(1) + F(2) = 3$.
+
+As far as the binary search algorithm is concerned, with a bit of sloppiness, its execution time is given by: $$ T(n) = \begin{cases}
+  \ 1 & \textrm{if} \ \ n = 1 \newline
+   \ T(\frac{n}{2}) + 1 & \textrm{if} \  \ n > 1
+\end{cases} $$
+
+To find the running time, we generally have several methods, such as iterative, recurrence trees, substitution method and master theorem.
+For simplicity's sake, we will use the iterative method, which allows us to write our recursive function in a non-recursive manner (i.e. not dependent on previously assumed values).
+This technique coinsists in continuing to pass smaller and smaller inputs to our recursive function, which will allow us to find patterns from which to deduce the execution time.
+Let's see it in action.
+
+$$ T(n) = T(\frac{n}{2}) + 1 $$
+We pass $\frac{n}{2}$ as input to $T(n)$ and so on.
+$$ T(n) = T(\frac{n}{2}) + 1 $$
+$$ = 1 + 1 + T(\frac{n}{4}) = 2 + T(\frac{n}{2^2}) $$
+$$ = 1 + 1 + 1 + T(\frac{n}{8}) = 3 + T(\frac{n}{2^3})  $$
+$$ = 1 + 1 + 1 + 1+ T(\frac{n}{16}) = 4 + T(\frac{n}{2^4}) $$
+$$ = ... $$
+$$ = k + T(\frac{n}{2^k}) $$
+you see the pattern, right?
+
+From these considerations, we can rewrite $T(n)$ explicitly as: $T(n) = T(\frac{n}{2^k}) + k$, where $k$ is the number of times we have performed the substitution.
+Now that we have written it as a function of k, we want to know after how many steps our function will reach the base case.
+We know that the base case is reached when $n=1$, so all we need is solve this equation is to solve this equation in terms of $k$.
+$$ \frac{n}{2^k} = 1 \Rightarrow k = \log_2(n)$$
+Knowing this, we can state that: $$T(n) = T(\frac{n}{2^{\log_2(n)}}) + \log_2(n) = \log_2(n) + 1 = \mathcal{O}(log_2(n))$$
+
+So, we have just proved that given an ordered array $A, \ \ |A| = n$, binary search will find whether an elemement $a \in A$ or not in logarithmic time!
+
+## Conclusion
+
+<img src="/images/blog_images/plot.png">
+
+These are the __graphs__ of a __linear__ and __logarithmic__ function, you can immediately see that as $n$ increases we have a __large saving__ in operations.
+For the way we have structured our __blind sql injection algorithm__, we will be able to find a character in $\log_2(128)$ steps, i.e. $7$ times, unlike the $128$ for linear search, and remember that the __larger__ the input becomes (think utf-8 strings) the **greater the gain!**
