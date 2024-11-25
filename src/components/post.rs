@@ -6,18 +6,17 @@ use crate::server_functions::posts::Post;
 use crate::server_functions::posts::PostContent;
 use crate::server_functions::posts::PostMetadata;
 use crate::server_functions::posts::PostType;
-use leptos::Scope;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::use_params_map;
 use std::collections::HashMap;
 
 #[component]
-pub fn Post(cx: Scope, post_type: PostType, post_description: String) -> impl IntoView {
+pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
     let posts =
-        use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>(cx)
+        use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>()
             .expect("unable to find context");
-    view! { cx,
+    view! { 
         <Body class="bg-[#080A21]"/>
         <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
@@ -28,11 +27,11 @@ pub fn Post(cx: Scope, post_type: PostType, post_description: String) -> impl In
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <Transition fallback=move || {
-                    view! { cx, <p>"Loading..."</p> }
+                    view! {  <p>"Loading..."</p> }
                 }>
                     {move || {
                         posts
-                            .read(cx)
+                            .get()
                             .map(|posts| match posts {
                                 Ok(posts) => {
                                     posts
@@ -41,15 +40,14 @@ pub fn Post(cx: Scope, post_type: PostType, post_description: String) -> impl In
                                         .iter()
                                         .map(|post| {
                                             if post_type == PostType::Project {
-                                                view! { cx,
+                                                view! {
                                                     <ProjectPostCard
                                                         post_metadata=post.post_metadata.clone()
                                                         href=post.post_metadata.project_link.clone()
                                                     />
                                                 }
                                             } else {
-
-                                                view! { cx,
+                                                view! {
                                                     <PostCard
                                                         post_metadata=post.post_metadata.clone()
                                                         path=post_type.to_string()
@@ -57,14 +55,14 @@ pub fn Post(cx: Scope, post_type: PostType, post_description: String) -> impl In
                                                 }
                                             }
                                         })
-                                        .collect_view(cx)
+                                        .collect_view()
                                 }
                                 Err(e) => {
 
-                                    view! { cx,
+                                    view! {
                                         <pre class="error">"Server Error: " {e.to_string()}</pre>
                                     }
-                                        .into_view(cx)
+                                        .into_view()
                                 }
                             })
                     }}
@@ -78,8 +76,8 @@ pub fn Post(cx: Scope, post_type: PostType, post_description: String) -> impl In
 }
 
 #[component]
-pub fn PostCard(cx: Scope, post_metadata: PostMetadata, path: String) -> impl IntoView {
-    view! { cx,
+pub fn PostCard(post_metadata: PostMetadata, path: String) -> impl IntoView {
+    view! {
         <a
             class="group flex flex-col h-full border transition-all duration-300 rounded-xl p-5 border-gray-700 hover:border-transparent hover:shadow-black/[.4]"
             href=format!("/{}/{}", path, post_metadata.create_href())
@@ -103,8 +101,8 @@ pub fn PostCard(cx: Scope, post_metadata: PostMetadata, path: String) -> impl In
 }
 
 #[component]
-pub fn ProjectPostCard(cx: Scope, post_metadata: PostMetadata, href: String) -> impl IntoView {
-    view! { cx,
+pub fn ProjectPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView {
+    view! {
         <a
             class="group flex flex-col h-full border transition-all duration-300 rounded-xl p-5 border-gray-700 hover:border-transparent hover:shadow-black/[.4]"
             href=href
@@ -127,20 +125,20 @@ pub fn ProjectPostCard(cx: Scope, post_metadata: PostMetadata, href: String) -> 
     }
 }
 #[component]
-pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
+pub fn RenderPost(post_type: PostType) -> impl IntoView {
     let posts =
-        use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>(cx)
+        use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>()
             .expect("unable to find context");
-    let params = use_params_map(cx);
+    let params = use_params_map();
     let post_query = move || params.with(|params| params.get("post").cloned().unwrap_or_default());
 
-    view! { cx,
+    view! { 
         <Suspense fallback=move || {
-            view! { cx, <p>"Loading..."</p> }
+            view! {  <p>"Loading..."</p> }
         }>
             {move || {
                 posts
-                    .read(cx)
+                    .get()
                     .map(|posts| match posts {
                         Ok(posts) => {
                             let post = posts
@@ -149,7 +147,7 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
                                 .iter()
                                 .find(|&p| p.post_metadata.create_href() == post_query());
                             if let Some(post) = post {
-                                view! { cx,
+                                view! {
                                     <Title text=post.post_metadata.title.clone()/>
                                     <Meta
                                         name="description"
@@ -157,19 +155,16 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
                                     />
                                     <PostLayout content=post.post_content.clone()/>
                                 }
-                                    .into_view(cx)
+                                    .into_view()
                             } else {
                                 let mut outside_errors = Errors::default();
                                 outside_errors.insert_with_default_key(AppError::NotFound);
-
-                                view! { cx, <ErrorTemplate outside_errors/> }
-                                    .into_view(cx)
+                                view! { <ErrorTemplate outside_errors/> }.into_view()
                             }
                         }
                         Err(e) => {
-
-                            view! { cx, <pre class="error">"Server Error: " {e.to_string()}</pre> }
-                                .into_view(cx)
+                            view! { <pre class="error">"Server Error: " {e.to_string()}</pre> }
+                                .into_view()
                         }
                     })
             }}
@@ -179,8 +174,8 @@ pub fn RenderPost(cx: Scope, post_type: PostType) -> impl IntoView {
 }
 
 #[component]
-pub fn PostLayout(cx: Scope, content: PostContent) -> impl IntoView {
-    view! { cx,
+pub fn PostLayout(content: PostContent) -> impl IntoView {
+    view! {
         <div class="bg-[#080A21]">
             <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
                 <div class="max-w-3xl">

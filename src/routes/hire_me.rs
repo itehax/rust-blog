@@ -4,8 +4,8 @@ use leptos_meta::*;
 use crate::components::footer::{GoBack, HomeFooter};
 
 #[component]
-pub fn HireMe(cx: Scope) -> impl IntoView {
-    view! { cx,
+pub fn HireMe() -> impl IntoView {
+    view! {
         <Title text="Hire Me"/>
         <Meta name="description" content="Hire Itehax as:"/>
         <Body class="bg-[#080A21]"/>

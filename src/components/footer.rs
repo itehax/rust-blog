@@ -1,8 +1,8 @@
 use leptos::*;
 
 #[component]
-pub fn HomeFooter(cx: Scope) -> impl IntoView {
-    view! { cx,
+pub fn HomeFooter() -> impl IntoView {
+    view! {
         <footer class="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
             <div class="text-center">
                 <div class="mt-3">
@@ -54,8 +54,8 @@ pub fn HomeFooter(cx: Scope) -> impl IntoView {
 }
 
 #[component]
-pub fn GoBack(cx: Scope, content: String) -> impl IntoView {
-    view! { cx,
+pub fn GoBack(content: String) -> impl IntoView {
+    view! {
         <footer class="mt-auto w-full max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
             <div class="text-center">
                 <a

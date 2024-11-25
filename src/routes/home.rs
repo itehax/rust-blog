@@ -3,8 +3,8 @@ use leptos::*;
 use leptos_meta::*;
 
 #[component]
-pub fn Home(cx: Scope) -> impl IntoView {
-    view! { cx,
+pub fn Home() -> impl IntoView {
+    view! {
         <Html lang="en" class="h-full"/>
         <Title text="Itehax"/>
         <Meta

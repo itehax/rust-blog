@@ -16,12 +16,12 @@ use leptos_meta::*;
 use leptos_router::*;
 
 #[component]
-pub fn App(cx: Scope) -> impl IntoView {
-    provide_meta_context(cx);
-    let posts = create_resource(cx, || (), |_| async move { get_posts().await });
-    provide_context(cx, posts);
+pub fn App() -> impl IntoView {
+    provide_meta_context();
+    let posts = create_resource( || (), |_| async move { get_posts().await });
+    provide_context(posts);
 
-    view! { cx,
+    view! {
         <Stylesheet id="leptos" href="/pkg/itehax-website.css"/>
         <Link rel="shortcut icon" type_="image/png" href="/favicon1.png"/>
         <Link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -30,30 +30,20 @@ pub fn App(cx: Scope) -> impl IntoView {
             href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap"
             rel="stylesheet"
         />
-        <Router fallback=|cx| {
+        <Router fallback=|| {
             let mut outside_errors = Errors::default();
             outside_errors.insert_with_default_key(AppError::NotFound);
-            view! { cx, <ErrorTemplate outside_errors/> }.into_view(cx)
+            view! { <ErrorTemplate outside_errors/> }.into_view()
         }>
             <Routes>
-                <Route
-                    path=""
-                    view=move |cx| {
-                        view! { cx, <Home/> }
-                    }
-                />
+                <Route path="" view=Home/>
 
-                <Route
-                    path="/blog"
-                    view=move |cx| {
-                        view! { cx, <BlogPost/> }
-                    }
-                />
+                <Route path="/blog" view=BlogPost/>
 
                 <Route
                     path="/blog/:post"
-                    view=move |cx| {
-                        view! { cx,
+                    view=move || {
+                        view! {
                             <Link rel="stylesheet" href="/highlighter/styles/github.min.css"/>
                             <Link
                                 rel="stylesheet"
@@ -63,54 +53,23 @@ pub fn App(cx: Scope) -> impl IntoView {
                             />
                             <Link rel="stylesheet" href="/highlighter/styles/katex.css"/>
 
-
                             <script defer src="/highlighter/load_highlight.js"></script>
                             <RenderBlogPost/>
                         }
                     }
                 />
 
-                <Route
-                    path="/about"
-                    view=move |cx| {
-                        view! { cx, <About/> }
-                    }
-                />
+                <Route path="/about" view=About/>
 
-                <Route
-                    path="/hire-me"
-                    view=move |cx| {
-                        view! { cx, <HireMe/> }
-                    }
-                />
+                <Route path="/hire-me" view=HireMe/>
 
-                <Route
-                    path="/books"
-                    view=move |cx| {
-                        view! { cx, <BooksPost/> }
-                    }
-                />
+                <Route path="/books" view=BooksPost/>
 
-                <Route
-                    path="/books/:post"
-                    view=move |cx| {
-                        view! { cx, <RenderBooksPost/> }
-                    }
-                />
+                <Route path="/books/:post" view=RenderBooksPost/>
 
-                <Route
-                    path="/projects"
-                    view=move |cx| {
-                        view! { cx, <ProjectsPost/> }
-                    }
-                />
+                <Route path="/projects" view=ProjectsPost/>
 
-                <Route
-                    path="/projects/:post"
-                    view=move |cx| {
-                        view! { cx, <RenderProjectsPost/> }
-                    }
-                />
+                <Route path="/projects/:post" view=RenderProjectsPost/>
 
             </Routes>
             <script src="/preline/preline.js"></script>

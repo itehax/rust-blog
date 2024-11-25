@@ -1,11 +1,8 @@
-use crate::components::error::Error as ErrorComponent;
-use cfg_if::cfg_if;
 use http::status::StatusCode;
 use leptos::*;
-#[cfg(feature = "ssr")]
-use leptos_axum::ResponseOptions;
 use leptos_meta::{Body, Html};
 use thiserror::Error;
+use crate::components::error::Error as ErrorComponent;
 
 #[derive(Clone, Debug, Error)]
 pub enum AppError {
@@ -25,19 +22,18 @@ impl AppError {
 // Feel free to do more complicated things here than just displaying the error.
 #[component]
 pub fn ErrorTemplate(
-    cx: Scope,
     #[prop(optional)] outside_errors: Option<Errors>,
     #[prop(optional)] errors: Option<RwSignal<Errors>>,
 ) -> impl IntoView {
     let errors = match outside_errors {
-        Some(e) => create_rw_signal(cx, e),
+        Some(e) => create_rw_signal(e),
         None => match errors {
             Some(e) => e,
             None => panic!("No Errors found and we expected errors!"),
         },
     };
     // Get Errors from Signal
-    let errors = errors.get();
+    let errors = errors.get_untracked();
 
     // Downcast lets us take a type that implements `std::error::Error`
     let errors: Vec<AppError> = errors
@@ -48,14 +44,16 @@ pub fn ErrorTemplate(
 
     // Only the response code for the first error is actually sent from the server
     // this may be customized by the specific application
-    cfg_if! { if #[cfg(feature="ssr")] {
-        let response = use_context::<ResponseOptions>(cx);
+    #[cfg(feature = "ssr")]
+    {
+        use leptos_axum::ResponseOptions;
+        let response = use_context::<ResponseOptions>();
         if let Some(response) = response {
             response.set_status(errors[0].status_code());
         }
-    }}
+    }
 
-    view! { cx,
+    view! {
         <Html lang="en" class="h-full"/>
         <Body class="flex h-full bg-[#080A21]"/>
         <For
@@ -64,11 +62,12 @@ pub fn ErrorTemplate(
             // a unique key for each item as a reference
             key=|(index, _error)| *index
             // renders each item to a view
-            view=move |cx, error| {
+            children=move |error| {
                 let error_string = error.1.to_string();
                 let error_code = error.1.status_code();
-                view! { cx, <ErrorComponent error_code=error_code error_string=error_string/> }
+                view! { <ErrorComponent error_code=error_code error_string=error_string/> }
             }
         />
     }
 }
+

@@ -4,8 +4,8 @@ use leptos::*;
 use leptos_meta::*;
 
 #[component]
-pub fn Error(cx: Scope, error_code: StatusCode, error_string: String) -> impl IntoView {
-    view! { cx,
+pub fn Error(error_code: StatusCode, error_string: String) -> impl IntoView {
+    view! {
         <Title text="Error"/>
         <Meta name="description" content="An error occurred."/>
         <div class="max-w-[50rem] flex flex-col mx-auto w-full h-full">

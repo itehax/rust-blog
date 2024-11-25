@@ -3,6 +3,6 @@ use leptos::*;
 
 use crate::components::post::RenderPost;
 #[component]
-pub fn RenderProjectsPost(cx: Scope) -> impl IntoView {
-    view! { cx, <RenderPost post_type=PostType::Project/> }
+pub fn RenderProjectsPost() -> impl IntoView {
+    view! { <RenderPost post_type=PostType::Project/> }
 }
