@@ -38,7 +38,8 @@ impl Post {
 pub enum PostType {
     Blog,
     Project,
-    Book,
+    Notes,
+    Writing,
 }
 
 impl std::fmt::Display for PostType {
@@ -46,7 +47,8 @@ impl std::fmt::Display for PostType {
         match self {
             PostType::Blog => write!(f, "blog"),
             PostType::Project => write!(f, "projects"),
-            PostType::Book => write!(f, "books"),
+            PostType::Notes => write!(f, "notes"),
+            PostType::Writing => write!(f, "writing"),
         }
     }
 }
@@ -56,7 +58,8 @@ pub async fn get_posts() -> Result<HashMap<PostType, Vec<Post>>, ServerFnError> 
     let mut post_paths = HashMap::new();
     post_paths.insert(PostType::Blog, "posts/blog");
     post_paths.insert(PostType::Project, "posts/projects");
-    post_paths.insert(PostType::Book, "posts/books");
+    post_paths.insert(PostType::Notes, "posts/notes");
+    post_paths.insert(PostType::Writing, "posts/writing");
 
     let mut all_posts = HashMap::new();
 

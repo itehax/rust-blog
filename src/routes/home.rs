@@ -9,7 +9,7 @@ pub fn Home() -> impl IntoView {
         <Title text="Itehax"/>
         <Meta
             name="description"
-            content="My own personal website. Here you'll find everything about Edoardo D'Errico/itehax."
+            content="My own personal website. Here you'll find everything about Edoardo D'Errico aka itehax."
         />
         <Body class="bg-[#080A21] flex h-full"/>
         <div class="max-w-[50rem] flex flex-col mx-auto w-full h-full ">
@@ -25,7 +25,7 @@ pub fn Home() -> impl IntoView {
                             href="#"
                             aria-label="Brand"
                         >
-                            "Itehax 🖥️🥊📚"
+                            "Itehax 🖥️🇮🇹📚"
                         </a>
                         <div class="sm:hidden">
                             <button
@@ -81,15 +81,15 @@ pub fn Home() -> impl IntoView {
                             </a>
                             <a
                                 class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
-                                href="books"
+                                href="notes"
                             >
-                                "Books"
+                                "Notes"
                             </a>
                             <a
                                 class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
-                                href="hire-me"
+                                href="writing"
                             >
-                                "Hire Me"
+                                "Writing"
                             </a>
                         </div>
                     </div>
@@ -103,7 +103,7 @@ pub fn Home() -> impl IntoView {
                         "Edoardo D'Errico."
                     </h1>
                     <p class="mt-5 text-lg text-[#F8F9FA]">
-                        "CS student interested in // CyberSec // CTF // Whatever stimulates my Brain."
+                        "Just a student interested in // CS // Maths // CyberSec // Whatever stimulates my Brain."
                     </p>
                     <div class="mt-18 flex flex-col justify-center items-center gap-2 sm:flex-row sm:gap-3">
                         // <!-- Social Brands -->

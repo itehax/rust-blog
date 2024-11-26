@@ -39,9 +39,9 @@ pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
                                         .expect("Unable to read the right post_type")
                                         .iter()
                                         .map(|post| {
-                                            if post_type == PostType::Project {
+                                            if post_type == PostType::Project || post_type == PostType::Notes {
                                                 view! {
-                                                    <ProjectPostCard
+                                                    <LinkPostCard
                                                         post_metadata=post.post_metadata.clone()
                                                         href=post.post_metadata.project_link.clone()
                                                     />
@@ -70,7 +70,7 @@ pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
                 </Transition>
             </div>
         </div>
-        <GoBack content="Back to Home".to_string()/>
+        <GoBack content="Back to Home".to_string() url="".to_string()/>
         <HomeFooter/>
     }
 }
@@ -101,7 +101,7 @@ pub fn PostCard(post_metadata: PostMetadata, path: String) -> impl IntoView {
 }
 
 #[component]
-pub fn ProjectPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView {
+pub fn LinkPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView {
     view! {
         <a
             class="group flex flex-col h-full border transition-all duration-300 rounded-xl p-5 border-gray-700 hover:border-transparent hover:shadow-black/[.4]"
@@ -153,7 +153,7 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
                                         name="description"
                                         content=post.post_metadata.description.clone()
                                     />
-                                    <PostLayout content=post.post_content.clone()/>
+                                    <PostLayout content=post.post_content.clone() url=post_type.to_string()/>
                                 }
                                     .into_view()
                             } else {
@@ -174,7 +174,7 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
 }
 
 #[component]
-pub fn PostLayout(content: PostContent) -> impl IntoView {
+pub fn PostLayout(content: PostContent,url: String) -> impl IntoView {
     view! {
         <div class="bg-[#080A21]">
             <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
@@ -185,7 +185,7 @@ pub fn PostLayout(content: PostContent) -> impl IntoView {
                     ></div>
                 </div>
             </div>
-            <GoBack content="Back to Posts".to_string()/>
+            <GoBack content="Back to Posts".to_string() url=url />
             <HomeFooter/>
         </div>
     }

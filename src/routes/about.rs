@@ -12,30 +12,17 @@ pub fn About() -> impl IntoView {
         <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
             <div class="max-w-3xl">
                 <div class="prose prose-blog mx-auto md:prose-lg prose-pre:m-0 prose-pre:rounded-none">
-                    <h2 id="currently-in-the-first-year-of-computer-science-">
-                        "Currently in the first year of computer science."
+                    <h2>
+                        "Hello to you, reading this blog!"
                     </h2>
                     <p>
-                        "I have several " <strong>"passions"</strong>
-                        ", although we can now call them habits."
+                       "A 20-year-old guy who casually discovered during the lockdown that he had an inordinate passion for "<strong>"computer science"</strong>", "<strong>"mathematics"</strong>" ... and everything "<strong>"interesting"</strong>" to him (tautology)." 
                     </p>
-                    <ul>
-                        <li>
-                            <p>
-                                "Computer science in general, in particular the "
-                                <strong>"security "</strong>
-                                "aspect of everything related to computing."
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                "Reading, in particular literature and philosophical essays. My favourite author is "
-                                <a href="https://en.wikipedia.org/wiki/Infinite_Jest">
-                                    "David Foster Wallace"
-                                </a> ", if you like him, surely we can be good friends."
-                            </p>
-                        </li>
-                    </ul>
+                    <p>
+                        "I am currently attending university for computer science and mathematics (both).
+
+                        In my spare time, I enjoy reading, watching films and learning new things." 
+                    </p> 
                     <p>
                         "In short, " <strong>"the one and only things I like"</strong>
                         ", as expected of a hacker,  are those that can stimulate my "
@@ -43,26 +30,10 @@ pub fn About() -> impl IntoView {
                     </p>
 
                     <img src="/images/about_images/me.jpg" alt=""/>
-                    <h3>"What should be expected from this blog"</h3>
-                    <ol>
-                        <li>
-                            <p>
-                                "Programming post, I have several projects in mind and I will comment/write down what I have learnt useful."
-                            </p>
-                        </li>
-                        <li>
-                            <p>
-                                "CTF writeup and in general useful stuff for hackers, regarding these topics,I will always post several projects and open a youtube channel, especially on the use of rust in this field 🦀."
-                            </p>
-                        </li>
-                        <li>
-                            <p>"Finally, reviews of books read by me."</p>
-                        </li>
-                    </ol>
                 </div>
             </div>
         </div>
-        <GoBack content="Back to Home".to_string()/>
+        <GoBack content="Back to Home".to_string() url="".to_string()/>
         <HomeFooter/>
     }
 }

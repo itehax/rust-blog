@@ -4,10 +4,10 @@ use crate::{
     routes::{
         about::About,
         blog::blog_section::BlogPost,
-        books::{books_article::RenderBooksPost, books_section::BooksPost},
-        hire_me::HireMe,
+        notes::{notes_section::NotesPost,notes_article::RenderNotesPost},
         home::Home,
         projects::{projects_article::RenderProjectsPost, projects_section::ProjectsPost},
+        writing::{writing_article::RenderWritingPost,writing_section::WritingPost}
     },
     server_functions::posts::get_posts,
 };
@@ -61,16 +61,17 @@ pub fn App() -> impl IntoView {
 
                 <Route path="/about" view=About/>
 
-                <Route path="/hire-me" view=HireMe/>
+                <Route path="/notes" view=NotesPost/>
 
-                <Route path="/books" view=BooksPost/>
-
-                <Route path="/books/:post" view=RenderBooksPost/>
+                <Route path="/notes/:post" view=RenderNotesPost/>
 
                 <Route path="/projects" view=ProjectsPost/>
 
                 <Route path="/projects/:post" view=RenderProjectsPost/>
 
+                <Route path="/writing" view=WritingPost/>
+
+                <Route path="/writing/:post" view=RenderWritingPost/>
             </Routes>
             <script src="/preline/preline.js"></script>
         </Router>
