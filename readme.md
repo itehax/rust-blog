@@ -3,7 +3,7 @@
 This is my personal website i built using [leptos](https://leptos.dev) and [preline](https://preline.co)
 ---
 
-[Preview](https://itehax.com)
+[Preview](https://edoardoderrico.com)
 
 ## How to run
 
