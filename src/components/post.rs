@@ -16,8 +16,8 @@ pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
     let posts =
         use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>()
             .expect("unable to find context");
-    view! { 
-        <Body class="bg-[#080A21]"/>
+    view! {
+        <Body class="bg-[#080A21]" />
         <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
                 <h2 class="text-2xl font-bold md:text-4xl md:leading-tight text-[#F8F9FA]">
@@ -27,7 +27,7 @@ pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <Transition fallback=move || {
-                    view! {  <p>"Loading..."</p> }
+                    view! { <p>"Loading..."</p> }
                 }>
                     {move || {
                         posts
@@ -39,7 +39,9 @@ pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
                                         .expect("Unable to read the right post_type")
                                         .iter()
                                         .map(|post| {
-                                            if post_type == PostType::Project || post_type == PostType::Notes {
+                                            if post_type == PostType::Project
+                                                || post_type == PostType::Notes
+                                            {
                                                 view! {
                                                     <LinkPostCard
                                                         post_metadata=post.post_metadata.clone()
@@ -70,8 +72,8 @@ pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
                 </Transition>
             </div>
         </div>
-        <GoBack content="Back to Home".to_string() url="".to_string()/>
-        <HomeFooter/>
+        <GoBack content="Back to Home".to_string() url="".to_string() />
+        <HomeFooter />
     }
 }
 
@@ -83,7 +85,7 @@ pub fn PostCard(post_metadata: PostMetadata, path: String) -> impl IntoView {
             href=format!("/{}/{}", path, post_metadata.create_href())
         >
             <div class="aspect-w-16 aspect-h-11">
-                <img class="w-full object-cover rounded-xl" src=post_metadata.image_path/>
+                <img class="w-full object-cover rounded-xl" src=post_metadata.image_path />
             </div>
             <div class="my-6">
                 <h3 class="text-xl font-semibold  text-gray-300 group-hover:text-[#F8F9FA]">
@@ -93,7 +95,7 @@ pub fn PostCard(post_metadata: PostMetadata, path: String) -> impl IntoView {
                 <p class="mt-5 text-[#CED4DA]">{post_metadata.description}</p>
             </div>
             <div class="mt-auto flex items-center gap-x-3">
-                <img class="w-8 h-8 rounded-full" src="https://github.com/itehax.png"/>
+                <img class="w-8 h-8 rounded-full" src="https://github.com/itehax.png" />
                 <h5 class="text-sm text-gray-200">"By Itehax."</h5>
             </div>
         </a>
@@ -108,7 +110,7 @@ pub fn LinkPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView 
             href=href
         >
             <div class="aspect-w-16 aspect-h-11">
-                <img class="w-full object-cover rounded-xl" src=post_metadata.image_path/>
+                <img class="w-full object-cover rounded-xl" src=post_metadata.image_path />
             </div>
             <div class="my-6">
                 <h3 class="text-xl font-semibold  text-gray-300 group-hover:text-[#F8F9FA]">
@@ -118,7 +120,7 @@ pub fn LinkPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView 
                 <p class="mt-5 text-[#CED4DA]">{post_metadata.description}</p>
             </div>
             <div class="mt-auto flex items-center gap-x-3">
-                <img class="w-8 h-8 rounded-full" src="https://github.com/itehax.png"/>
+                <img class="w-8 h-8 rounded-full" src="https://github.com/itehax.png" />
                 <h5 class="text-sm text-gray-200">"By Itehax."</h5>
             </div>
         </a>
@@ -132,9 +134,9 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
     let params = use_params_map();
     let post_query = move || params.with(|params| params.get("post").cloned().unwrap_or_default());
 
-    view! { 
+    view! {
         <Suspense fallback=move || {
-            view! {  <p>"Loading..."</p> }
+            view! { <p>"Loading..."</p> }
         }>
             {move || {
                 posts
@@ -148,18 +150,21 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
                                 .find(|&p| p.post_metadata.create_href() == post_query());
                             if let Some(post) = post {
                                 view! {
-                                    <Title text=post.post_metadata.title.clone()/>
+                                    <Title text=post.post_metadata.title.clone() />
                                     <Meta
                                         name="description"
                                         content=post.post_metadata.description.clone()
                                     />
-                                    <PostLayout content=post.post_content.clone() url=post_type.to_string()/>
+                                    <PostLayout
+                                        content=post.post_content.clone()
+                                        url=post_type.to_string()
+                                    />
                                 }
                                     .into_view()
                             } else {
                                 let mut outside_errors = Errors::default();
                                 outside_errors.insert_with_default_key(AppError::NotFound);
-                                view! { <ErrorTemplate outside_errors/> }.into_view()
+                                view! { <ErrorTemplate outside_errors /> }.into_view()
                             }
                         }
                         Err(e) => {
@@ -186,7 +191,7 @@ pub fn PostLayout(content: PostContent,url: String) -> impl IntoView {
                 </div>
             </div>
             <GoBack content="Back to Posts".to_string() url=url />
-            <HomeFooter/>
+            <HomeFooter />
         </div>
     }
 }

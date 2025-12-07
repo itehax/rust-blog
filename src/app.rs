@@ -22,56 +22,47 @@ pub fn App() -> impl IntoView {
     provide_context(posts);
 
     view! {
-        <Stylesheet id="leptos" href="/pkg/itehax-website.css"/>
-        <Link rel="shortcut icon" type_="image/png" href="/favicon1.png"/>
-        <Link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <Link rel="preconnect" href="https://fonts.gstatic.com"/>
+        <Stylesheet id="leptos" href="/pkg/itehax-website.css" />
+        <Link rel="shortcut icon" type_="image/png" href="/phrack_icon1.png" />
         <Link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
             rel="stylesheet"
         />
+        // <Link href="/fonts/ibm.css" rel="stylesheet"/>
         <Router fallback=|| {
             let mut outside_errors = Errors::default();
             outside_errors.insert_with_default_key(AppError::NotFound);
-            view! { <ErrorTemplate outside_errors/> }.into_view()
+            view! { <ErrorTemplate outside_errors /> }.into_view()
         }>
             <Routes>
-                <Route path="" view=Home/>
+                <Route path="" view=Home />
 
-                <Route path="/blog" view=BlogPost/>
+                <Route path="/blog" view=BlogPost />
 
                 <Route
                     path="/blog/:post"
                     view=move || {
                         view! {
-                            <Link rel="stylesheet" href="/highlighter/styles/github.min.css"/>
+                            <Link rel="stylesheet" href="/highlighter/styles/github.min.css" />
                             <Link
                                 rel="stylesheet"
                                 href=r#"https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"#
                                 integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+"
                                 crossorigin="anonymous"
                             />
-                            <Link rel="stylesheet" href="/highlighter/styles/katex.css"/>
+                            <Link rel="stylesheet" href="/highlighter/styles/katex.css" />
 
                             <script defer src="/highlighter/load_highlight.js"></script>
-                            <RenderBlogPost/>
+                            <RenderBlogPost />
                         }
                     }
                 />
 
-                <Route path="/about" view=About/>
+                <Route path="/about" view=About />
 
-                <Route path="/notes" view=NotesPost/>
+                <Route path="/writing" view=WritingPost />
 
-                <Route path="/notes/:post" view=RenderNotesPost/>
-
-                <Route path="/projects" view=ProjectsPost/>
-
-                <Route path="/projects/:post" view=RenderProjectsPost/>
-
-                <Route path="/writing" view=WritingPost/>
-
-                <Route path="/writing/:post" view=RenderWritingPost/>
+                <Route path="/writing/:post" view=RenderWritingPost />
             </Routes>
             <script src="/preline/preline.js"></script>
         </Router>

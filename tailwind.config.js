@@ -9,7 +9,7 @@ module.exports = {
       xl: '1440px',
     },
     fontFamily: {
-      sans: ['Inter', 'sans-serif'],
+      sans: ['Anonymous Pro','IBM Plex Sans', 'sans-serif'],
 
     },
     extend: {

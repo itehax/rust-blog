@@ -54,8 +54,8 @@ pub fn ErrorTemplate(
     }
 
     view! {
-        <Html lang="en" class="h-full"/>
-        <Body class="flex h-full bg-[#080A21]"/>
+        <Html lang="en" class="h-full" />
+        <Body class="flex h-full bg-[#080A21]" />
         <For
             // a function that returns the items we're iterating over; a signal is fine
             each=move || { errors.clone().into_iter().enumerate() }
@@ -65,7 +65,7 @@ pub fn ErrorTemplate(
             children=move |error| {
                 let error_string = error.1.to_string();
                 let error_code = error.1.status_code();
-                view! { <ErrorComponent error_code=error_code error_string=error_string/> }
+                view! { <ErrorComponent error_code=error_code error_string=error_string /> }
             }
         />
     }

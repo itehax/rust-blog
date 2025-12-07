@@ -5,8 +5,8 @@ use leptos_meta::*;
 #[component]
 pub fn BlogPost() -> impl IntoView {
     view! {
-        <Title text="Itehax Blog"/>
-        <Meta name="description" content="My Blog Posts."/>
+        <Title text="Itehax Blog" />
+        <Meta name="description" content="My Blog Posts." />
         <Post
             post_type=PostType::Blog
             post_description="Posts about tutorial and project i built.".to_string()
