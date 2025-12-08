@@ -13,12 +13,13 @@ pub fn About() -> impl IntoView {
             <div class="max-w-3xl">
                 <div class="prose prose-blog mx-auto md:prose-lg prose-pre:m-0 prose-pre:rounded-none">
                     <h1>"Manifesto"</h1>
-                    <h2>"In Praise of the Ad Hoc"</h2>
+                    <h2>"'In Praise of the Ad Hoc'"</h2>
+                    <h2>"'Ode all' Ad Hoc'"</h2>
+                    <p>"Escape that fucking Gaussian. Understand. Destroy. Transform."</p>
+                    <p>"The real pleasure of life isn’t in the middle of that curve."</p>
+
                     <p>
-                        "Escape the fucking Gaussian. Understand. Destroy. Transform.
-                        
-                        The real pleasure of life isn’t in the middle of that curve.
-                        Most people think it is — music, entertainment, the whole modern world runs on that illusion.
+                        "Most people think it is — music, entertainment, the whole modern world runs on that illusion.
                         
                         Do you really want to settle for what they feed you?
                         It’s time to understand that what is, is for a reason,
@@ -28,7 +29,7 @@ pub fn About() -> impl IntoView {
                         Just for you.
                         Ad hoc. "
                     </p>
-                    <h2>"Welcome to my world, you are now ready to be initiated"</h2>
+                    <h2>"Welcome to my world, you are finally ready to be initiated."</h2>
 
                     <p>
                         "A 20-year-old guy who casually discovered during the lockdown that he had an inordinate passion for "
@@ -45,8 +46,6 @@ pub fn About() -> impl IntoView {
                         ", as expected of a hacker,  are those that can stimulate my "
                         <strong>"mind"</strong> "."
                     </p>
-                    <h2>"Welcome to my world, you are now ready to be initiated"</h2>
-
                 </div>
             </div>
         </div>
