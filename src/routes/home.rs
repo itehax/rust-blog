@@ -8,6 +8,7 @@ pub fn Home() -> impl IntoView {
     let quotes = [
         "'My crime is that of curiosity",
         "'Ethereal, almost ghostly",
+        "'Metalanguage, sometimes I think my voice belongs"
     ];
     let mut rng = rand::rng(); /* Would be better to init only once but don't care */
     view! {
@@ -73,13 +74,13 @@ pub fn Home() -> impl IntoView {
                             <a class="font-medium text-[#F8F9FA]" href="about" aria-current="page">
                                 "About"
                             </a>
-                            //<a
-                            //    class="font-medium text-[#F8F9FA]"
-                            //    href="manifesto"
-                            //    aria-current="page"
-                            //>
-                            //    "Manifesto"
-                            //</a>
+                            // <a
+                            // class="font-medium text-[#F8F9FA]"
+                            // href="manifesto"
+                            // aria-current="page"
+                            // >
+                            // "Manifesto"
+                            // </a>
                             <a
                                 class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
                                 href="blog"

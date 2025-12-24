@@ -94,3 +94,4 @@ After it's builded.
 docker run -p 3000:3000 itehax-website
 ```
 
+to add images for preview: 1284x745 + same color of bg

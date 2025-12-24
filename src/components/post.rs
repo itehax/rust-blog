@@ -39,9 +39,7 @@ pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
                                         .expect("Unable to read the right post_type")
                                         .iter()
                                         .map(|post| {
-                                            if post_type == PostType::Project
-                                                || post_type == PostType::Notes
-                                            {
+                                            if post_type == PostType::Project {
                                                 view! {
                                                     <LinkPostCard
                                                         post_metadata=post.post_metadata.clone()

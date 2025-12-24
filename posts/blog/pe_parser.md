@@ -1,5 +1,5 @@
 ---
-image_path: "/images/blog_images/pe.jpg"
+image_path: "/images/blog_images/pe.png"
 title: Portable executable explained throught rust code
 date: 2023-11-17
 description: Understanding the PE (portable executable) format by writing a parser in rust, using WinApi.

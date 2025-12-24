@@ -59,7 +59,7 @@ pub fn App() -> impl IntoView {
                 />
 
                 <Route path="/about" view=About />
-                //<Route path="/manifesto" view=Manifesto /> TBA
+                // <Route path="/manifesto" view=Manifesto /> TBA
 
                 <Route path="/writing" view=WritingPost />
                 <Route path="/writing/:post" view=RenderWritingPost />

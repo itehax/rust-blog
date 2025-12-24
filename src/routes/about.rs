@@ -26,7 +26,8 @@ pub fn About() -> impl IntoView {
                     </p>
                     <p>
                         "
-                        Despite trying to learn and "<strong>"create new stuff"</strong>", which actually takes up a good chunk of my mental energy, I love:"
+                        Despite trying to learn and "<strong>"create new stuff"</strong>
+                        ", which actually takes up a good chunk of my mental energy, I love:"
                     </p>
                     <ul>
                         <li>
@@ -51,9 +52,13 @@ pub fn About() -> impl IntoView {
                     <p>"Just two constants:"</p>
                     <ul>
                         <li>
-                            "Understanding the "<strong>"mental process"</strong>" that led the creators of a certain concept to discover it."
+                            "Understanding the "<strong>"mental process"</strong>
+                            " that led the creators of a certain concept to discover it."
                         </li>
-                        <li><strong>"No rules"</strong>", just stuff i find interesting."</li>
+                        <li>
+                            <strong>"No rules"</strong>
+                            ", just stuff i find interesting."
+                        </li>
                     </ul>
                     <p>"That's all, hope you can enjoy :)"</p>
                     <hr />
