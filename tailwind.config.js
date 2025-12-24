@@ -16,6 +16,7 @@ module.exports = {
       //https://play.tailwindcss.com/VCZwwz1e3R
       animation: {
         text: 'text 5s ease infinite',
+        typewriter: "typing 4s steps(60, end) forwards, blink 1s step-end infinite"
       },
       keyframes: {
         text: {

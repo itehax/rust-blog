@@ -30,7 +30,7 @@ pub fn Error(error_code: StatusCode, error_string: String) -> impl IntoView {
                 <div class="mt-5 flex flex-col justify-center items-center gap-2 sm:flex-row sm:gap-3">
                     <a
                         class="w-full sm:w-auto inline-flex justify-center items-center gap-x-3 text-center bg-blue-600 hover:bg-blue-700 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2  transition py-3 px-4 focus:ring-offset-gray-800"
-                        href="https://github.com/itehax/itehax-website"
+                        href="https://github.com/itehax/rust-blog"
                         target="_blank"
                     >
                         <svg

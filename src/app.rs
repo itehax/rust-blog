@@ -4,10 +4,10 @@ use crate::{
     routes::{
         about::About,
         blog::blog_section::BlogPost,
-        notes::{notes_section::NotesPost,notes_article::RenderNotesPost},
         home::Home,
+        manifesto::Manifesto,
         projects::{projects_article::RenderProjectsPost, projects_section::ProjectsPost},
-        writing::{writing_article::RenderWritingPost,writing_section::WritingPost}
+        writing::{writing_article::RenderWritingPost, writing_section::WritingPost},
     },
     server_functions::posts::get_posts,
 };
@@ -18,7 +18,7 @@ use leptos_router::*;
 #[component]
 pub fn App() -> impl IntoView {
     provide_meta_context();
-    let posts = create_resource( || (), |_| async move { get_posts().await });
+    let posts = create_resource(|| (), |_| async move { get_posts().await });
     provide_context(posts);
 
     view! {
@@ -59,10 +59,13 @@ pub fn App() -> impl IntoView {
                 />
 
                 <Route path="/about" view=About />
+                //<Route path="/manifesto" view=Manifesto /> TBA
 
                 <Route path="/writing" view=WritingPost />
-
                 <Route path="/writing/:post" view=RenderWritingPost />
+
+                <Route path="/projects" view=ProjectsPost />
+                <Route path="/projects/:post" view=RenderProjectsPost />
             </Routes>
             <script src="/preline/preline.js"></script>
         </Router>

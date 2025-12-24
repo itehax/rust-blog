@@ -1,9 +1,15 @@
 use crate::components::footer::HomeFooter;
 use leptos::*;
 use leptos_meta::*;
+use rand::seq::IndexedRandom;
 
 #[component]
 pub fn Home() -> impl IntoView {
+    let quotes = [
+        "'My crime is that of curiosity",
+        "'Ethereal, almost ghostly",
+    ];
+    let mut rng = rand::rng(); /* Would be better to init only once but don't care */
     view! {
         <Html lang="en" class="h-full" />
         <Title text="Itehax" />
@@ -67,7 +73,13 @@ pub fn Home() -> impl IntoView {
                             <a class="font-medium text-[#F8F9FA]" href="about" aria-current="page">
                                 "About"
                             </a>
-
+                            //<a
+                            //    class="font-medium text-[#F8F9FA]"
+                            //    href="manifesto"
+                            //    aria-current="page"
+                            //>
+                            //    "Manifesto"
+                            //</a>
                             <a
                                 class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
                                 href="blog"
@@ -79,7 +91,13 @@ pub fn Home() -> impl IntoView {
                                 class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
                                 href="writing"
                             >
-                                "Writing"
+                                "R/W"
+                            </a>
+                            <a
+                                class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
+                                href="projects"
+                            >
+                                "Projects"
                             </a>
                         </div>
                     </div>
@@ -92,7 +110,7 @@ pub fn Home() -> impl IntoView {
                     <h1 class="block text-2xl font-bold  sm:text-4xl animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
                         "Edoardo D'Errico."
                     </h1>
-                    <p class="mt-5 text-lg text-[#F8F9FA]">"My crime is that of curiosity"</p>
+                    <p class="mt-5 text-lg text-[#F8F9FA]">{quotes.choose(&mut rng).cloned()}</p>
 
                     <div class="mt-18 flex flex-col justify-center items-center gap-2 sm:flex-row sm:gap-3">
                         // <!-- Social Brands -->

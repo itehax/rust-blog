@@ -58,7 +58,6 @@ pub async fn get_posts() -> Result<HashMap<PostType, Vec<Post>>, ServerFnError> 
     let mut post_paths = HashMap::new();
     post_paths.insert(PostType::Blog, "posts/blog");
     post_paths.insert(PostType::Project, "posts/projects");
-    post_paths.insert(PostType::Notes, "posts/notes");
     post_paths.insert(PostType::Writing, "posts/writing");
 
     let mut all_posts = HashMap::new();
@@ -124,8 +123,7 @@ cfg_if::cfg_if! {
             posts.sort_by(|a, b| {
                 let a_date = NaiveDate::parse_from_str(&a.post_metadata.date, "%Y-%m-%d").unwrap();
                 let b_date = NaiveDate::parse_from_str(&b.post_metadata.date, "%Y-%m-%d").unwrap();
-                //reverse sorting
-                a_date.cmp(&b_date)
+                b_date.cmp(&a_date)
             });
         }
 

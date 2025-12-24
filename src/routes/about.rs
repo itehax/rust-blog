@@ -12,40 +12,58 @@ pub fn About() -> impl IntoView {
         <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
             <div class="max-w-3xl">
                 <div class="prose prose-blog mx-auto md:prose-lg prose-pre:m-0 prose-pre:rounded-none">
-                    <h1>"Manifesto"</h1>
-                    <h2>"'In Praise of the Ad Hoc'"</h2>
-                    <h2>"'Ode all' Ad Hoc'"</h2>
-                    <p>"Escape that fucking Gaussian. Understand. Destroy. Transform."</p>
-                    <p>"The real pleasure of life isn’t in the middle of that curve."</p>
+                    <h1>"About (whoami)"</h1>
+                    <h2>"Welcome to my world, you are now ready to be initiated."</h2>
 
                     <p>
-                        "Most people think it is — music, entertainment, the whole modern world runs on that illusion.
-                        
-                        Do you really want to settle for what they feed you?
-                        It’s time to understand that what is, is for a reason,
-                        and that reason might be you.
-                        
-                        Find and create what speaks only to you.
-                        Just for you.
-                        Ad hoc. "
-                    </p>
-                    <h2>"Welcome to my world, you are finally ready to be initiated."</h2>
-
-                    <p>
-                        "A 20-year-old guy who casually discovered during the lockdown that he had an inordinate passion for "
+                        "A 21-year-old who during the 2020 lockdown discovered an inordinate passion for "
                         <strong>"computer science"</strong>", "<strong>"mathematics"</strong>
-                        " ... and everything "<strong>"interesting"</strong>" to him (tautology)."
+                        " and... everything "<strong>"interesting"</strong>" to him (tautology)."
+                    </p>
+                    <hr />
+                    <p>
+                        "I am currently finishing a computer science degree and working full time in the cybersecurity/intelligence sector."
                     </p>
                     <p>
-                        "I am currently attending university for computer science and mathematics (both).
-                        
-                        In my spare time, I enjoy reading, watching films and learning new things."
+                        "
+                        Despite trying to learn and "<strong>"create new stuff"</strong>", which actually takes up a good chunk of my mental energy, I love:"
                     </p>
+                    <ul>
+                        <li>
+                            "Playing Capture the Flag (international competitions between hackers)."
+                        </li>
+                        <li>
+                            "Reading, in particular hard and for-the-state-of-brain-of-most-people-in-2020s boring stuff."
+                        </li>
+                        <li>"Martial arts, i have practiced judo, boxing and Muay Thai."</li>
+                        <li>
+                            "Nature and discovering new places, especially abandoned and aesthetic ones ^_^"
+                        </li>
+                    </ul>
+                    <h3>"Ok, but what to expect from this blog?"</h3>
                     <p>
-                        "In short, " <strong>"the one and only things I like"</strong>
-                        ", as expected of a hacker,  are those that can stimulate my "
-                        <strong>"mind"</strong> "."
+                        "
+                        Dense stuff that requires "<strong>"silence and concentration."</strong>"
+                        We will delve deep into each topic to understand how it really works under the hood. Topics can range from mathematics and computer science to electronics, chemistry, literature, politics and reflections on life.
+                        "
                     </p>
+
+                    <p>"Just two constants:"</p>
+                    <ul>
+                        <li>
+                            "Understanding the "<strong>"mental process"</strong>" that led the creators of a certain concept to discover it."
+                        </li>
+                        <li><strong>"No rules"</strong>", just stuff i find interesting."</li>
+                    </ul>
+                    <p>"That's all, hope you can enjoy :)"</p>
+                    <hr />
+                    <blockquote>
+
+                        <p>
+                            "Note: I am very open to know like-minded people, if you think you are, feel free to "
+                            <a href="mailto:edoardoderrico@outlook.com">"contact me"</a>" !"
+                        </p>
+                    </blockquote>
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@ pub fn BlogPost() -> impl IntoView {
         <Meta name="description" content="My Blog Posts." />
         <Post
             post_type=PostType::Blog
-            post_description="Posts about tutorial and project i built.".to_string()
+            post_description="Posts about tutorial and explanation of projects i built.".to_string()
         />
     }
 }
