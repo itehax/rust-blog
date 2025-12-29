@@ -19,5 +19,8 @@ jobs:
 
       - name: Deploy Website 
       - run: flyctl deploy --remote-only --build-arg LAST_UPDATED="$LAST_UPDATED"
+
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       
     
