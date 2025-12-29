@@ -36,6 +36,7 @@ module.exports = {
       typography: ({ theme }) => ({
         blog: {
           css: {
+            //Dark mode (Default)
             '--tw-prose-body': "#CED4DA",
             '--tw-prose-headings': "#F8F9FA",
             '--tw-prose-lead': "#F8F9FA",
@@ -51,6 +52,7 @@ module.exports = {
             '--tw-prose-pre-bg': "#14213D",
             '--tw-prose-th-borders': "#CED4DA",
             '--tw-prose-td-borders': "#F8F9FA",
+
             // '--tw-prose-invert-body': theme('colors.pink[200]'),
             // '--tw-prose-invert-headings': theme('colors.white'),
             // '--tw-prose-invert-lead': "#CED4DA",

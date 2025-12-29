@@ -19,6 +19,10 @@ RUN cargo leptos --manifest-path=./Cargo.toml build --release -vv
 
 
 FROM rustlang/rust:nightly-bullseye as runner
+
+ARG LAST_UPDATED
+ENV LAST_UPDATED=${LAST_UPDATED}
+
 COPY --from=builder /app/posts /app/posts
 COPY --from=builder /app/public /app/public
 

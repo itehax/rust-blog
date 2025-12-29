@@ -27,7 +27,10 @@ pub fn HomeFooter() -> impl IntoView {
                             "Preline"
                         </a> "."
                     </p>
-                    <p class="text-[#CED4DA]">"© Edoardo D'Errico. 2025 "</p>
+                    <p class="text-[#CED4DA]">
+                        "Last update on: "
+                        {std::env::var("LAST_UPDATED").unwrap_or("Date not Found".to_string())}
+                    </p>
 
                     <a
                         class="flex justify-center items-center space-x-2 text-blue-500 hover:text-blue-400 text-base mt-4"

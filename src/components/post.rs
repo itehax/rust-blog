@@ -179,7 +179,7 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
 #[component]
 pub fn PostLayout(content: PostContent,url: String) -> impl IntoView {
     view! {
-        <div class="bg-[#080A21]">
+        <div class="bg-[#080A21] min-h-screen">
             <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
                 <div class="max-w-3xl">
                     <div

@@ -10,6 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Get last update date
+        run: |
+          LAST_UPDATED=$(git log -1 --format=%cI)
+          FORMATTED=$(date -u -d "$LAST_UPDATED" +"%Y/%m/%d %H:%M")
+          echo "LAST_UPDATED=$FORMATTED" >> $GITHUB_ENV
+
+      - name: Deploy Website 
+      - run: flyctl deploy --remote-only --build-arg LAST_UPDATED="$LAST_UPDATED"
+      
+    
