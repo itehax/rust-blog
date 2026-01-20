@@ -1,8 +1,8 @@
 ---
-image_path: "/images/blog_images/scraping.png"
+image_path: "/images/blog_images/scraping.webp"
 title: Web Scraping using Rust
 date: 2023-09-30
-description: Web scraping using rust. A guide on Airbnb web scraping to demonstrate the capabilities of rust and the current ecosystem.
+description: Scraping Airbnb, bypassing Cloudflare and much more.
 project_link: none
 ---
 

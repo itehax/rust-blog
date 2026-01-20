@@ -53,22 +53,33 @@ impl std::fmt::Display for PostType {
     }
 }
 
+
 #[server(GetPosts, "/api")]
 pub async fn get_posts() -> Result<HashMap<PostType, Vec<Post>>, ServerFnError> {
-    let mut post_paths = HashMap::new();
-    post_paths.insert(PostType::Blog, "posts/blog");
-    post_paths.insert(PostType::Project, "posts/projects");
-    post_paths.insert(PostType::Writing, "posts/writing");
+    let result = tokio::task::spawn_blocking(move || {
+        let mut post_paths = HashMap::new();
+        post_paths.insert(PostType::Blog, "posts/blog");
+        post_paths.insert(PostType::Project, "posts/projects");
+        post_paths.insert(PostType::Writing, "posts/writing");
 
-    let mut all_posts = HashMap::new();
+        let mut all_posts = HashMap::new();
 
-    for (post_type, path) in post_paths {
-        let posts = process_posts(path);
-        all_posts.insert(post_type, posts);
+        for (post_type, path) in post_paths {
+            let posts = process_posts(path);
+            all_posts.insert(post_type, posts);
+        }
+        all_posts
+    })
+    .await; 
+    match result {
+        Ok(posts) => Ok(posts),
+        Err(e) => Err(ServerFnError::new(format!("Threading error: {}", e))),
     }
-    Ok(all_posts)
 }
-
+#[server(GetLastUpdate, "/api")]
+pub async fn get_last_update() -> Result<String, ServerFnError> {
+    Ok(std::env::var("LAST_UPDATED").unwrap_or_else(|_| "Date not Found".to_string()))
+}
 cfg_if::cfg_if! {
     if #[cfg(feature = "ssr")] {
         use std::{

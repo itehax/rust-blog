@@ -1,8 +1,8 @@
 ---
-image_path: "/images/blog_images/writing_website.jpg"
-title: Writing a Blog in Rust
+image_path: "/images/blog_images/blog.webp"
+title: Writing a Blog using Rust
 date: 2023-07-22
-description: Writing a Blog using Rust, Leptos and Preline. what I learnt and whether I would do it again.
+description: "Building and deploying a full-stack blog using Rust, WASM, and tailwindcss"
 project_link: none
 ---
 

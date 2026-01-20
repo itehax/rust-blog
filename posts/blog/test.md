@@ -1,5 +1,5 @@
 ---
-image_path: "/images/blog_images/test.jpg"
+image_path: "/images/blog_images/first.webp"
 title: Testing layout
 date: 2023-07-21
 description: Testing the layout of the site.

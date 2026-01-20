@@ -1,7 +1,13 @@
 use leptos::*;
 
+use crate::server_functions::posts::get_last_update;
+
 #[component]
 pub fn HomeFooter() -> impl IntoView {
+    let last_update = create_resource(
+        || (), 
+        |_| async move { get_last_update().await }
+    );
     view! {
         <footer class="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
             <div class="text-center">
@@ -27,10 +33,14 @@ pub fn HomeFooter() -> impl IntoView {
                             "Preline"
                         </a> "."
                     </p>
-                    <p class="text-[#CED4DA]">
-                        "Last update on: "
-                        {std::env::var("LAST_UPDATED").unwrap_or("Date not Found".to_string())}
-                    </p>
+                  <p class="text-[#CED4DA]">
+            "Last update on: "
+            {move || match last_update.get() {
+                None => "".to_string(),
+                Some(Ok(date)) => date,
+                Some(Err(_)) => "Error".to_string(),
+            }}
+        </p> 
 
                     <a
                         class="flex justify-center items-center space-x-2 text-blue-500 hover:text-blue-400 text-base mt-4"

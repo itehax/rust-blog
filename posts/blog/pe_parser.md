@@ -1,8 +1,8 @@
 ---
-image_path: "/images/blog_images/pe.png"
-title: Portable executable explained throught rust code
+image_path: "/images/blog_images/pe.webp"
+title: Writing a PE parser using Rust
 date: 2023-11-17
-description: Understanding the PE (portable executable) format by writing a parser in rust, using WinApi.
+description: A deep dive into the Portable Executable format.
 project_link: none
 ---
 

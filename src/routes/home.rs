@@ -7,8 +7,8 @@ use rand::seq::IndexedRandom;
 pub fn Home() -> impl IntoView {
     let quotes = [
         "'My crime is that of curiosity",
-        "'Ethereal, almost ghostly",
-        "'Metalanguage, sometimes I think my voice belongs"
+        //        "'Ethereal, almost ghostly",
+        //        "'Metalanguage, sometimes I think my voice belongs"
     ];
     let mut rng = rand::rng(); /* Would be better to init only once but don't care */
     view! {

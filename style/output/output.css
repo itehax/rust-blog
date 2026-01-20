@@ -1105,8 +1105,24 @@ video {
   --tw-prose-td-borders: #F8F9FA;
 }
 
+.visible {
+  visibility: visible;
+}
+
+.static {
+  position: static;
+}
+
+.fixed {
+  position: fixed;
+}
+
 .relative {
   position: relative;
+}
+
+.isolate {
+  isolation: isolate;
 }
 
 .z-50 {
@@ -1569,6 +1585,10 @@ video {
 
 .duration-300 {
   transition-duration: 300ms;
+}
+
+.\[start\:end\] {
+  start: end;
 }
 
 @media (min-width: 768px) {
