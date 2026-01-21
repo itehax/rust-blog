@@ -24,6 +24,8 @@ RUN cargo leptos --manifest-path=./Cargo.toml build --release -vv
 FROM debian:bullseye-slim as runner
 
 
+ARG LAST_UPDATED
+ENV LAST_UPDATED=$LAST_UPDATED
 
 COPY --from=builder /app/target/x86_64-unknown-linux-gnu/release/itehax-website /app/
 COPY --from=builder /app/target/site /app/site

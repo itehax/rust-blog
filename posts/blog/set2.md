@@ -122,6 +122,8 @@ For the unpadding routine, the logic is inverted. We strictly interpret the fina
 ```Python
 def unpkcs_7(padded: bytes, block_size: int):
     pad = padded[-1]
+    if pad == 0 or pad > block_size:
+         raise Exception("Invalid padding value")
     if len(padded) % block_size != 0 or not padded.endswith(bytes([pad]) * pad):
         raise Exception("Invalid pkcs7 encoded string")
     return padded[:-pad]
