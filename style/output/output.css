@@ -1105,14 +1105,6 @@ video {
   --tw-prose-td-borders: #F8F9FA;
 }
 
-.visible {
-  visibility: visible;
-}
-
-.static {
-  position: static;
-}
-
 .fixed {
   position: fixed;
 }

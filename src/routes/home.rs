@@ -1,8 +1,7 @@
 use crate::components::footer::HomeFooter;
 use leptos::*;
 use leptos_meta::*;
-use rand::seq::IndexedRandom;
-
+use rand::seq::SliceRandom;
 #[component]
 pub fn Home() -> impl IntoView {
     let quotes = [
@@ -10,7 +9,7 @@ pub fn Home() -> impl IntoView {
         //        "'Ethereal, almost ghostly",
         //        "'Metalanguage, sometimes I think my voice belongs"
     ];
-    let mut rng = rand::rng(); /* Would be better to init only once but don't care */
+    let mut rng = rand::thread_rng(); /* Would be better to init only once but don't care */
     view! {
         <Html lang="en" class="h-full" />
         <Title text="Itehax" />
