@@ -10,7 +10,7 @@ use leptos_router::*;
 #[component]
 pub fn App() -> impl IntoView {
     provide_meta_context();
-    let posts = create_resource(|| (), |_| async move { get_posts().await });
+    let posts = create_blocking_resource(|| (), |_| async move { get_posts().await });
     provide_context(posts);
 
     let last_update = create_resource(|| (), |_| async move { get_last_update().await });
