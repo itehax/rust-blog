@@ -5,9 +5,29 @@ use crate::components::footer::{GoBack, HomeFooter};
 
 #[component]
 pub fn About() -> impl IntoView {
+    let title = "About | Cybersecurity & CTF Writeups by Edoardo D'Errico";
+    let description = "Cybersecurity writeups and CTF solutions by Edoardo D'Errico. Technical posts on cryptography, exploit development, and security research.";
+    let url = "https://edoardoderrico.com/about";
+
     view! {
-        <Title text="Itehax About" />
-        <Meta name="description" content="About Edoardo D'Errico." />
+        <Title text=title />
+        <Meta name="description" content=description />
+
+        // Open Graph / Facebook
+        <Meta property="og:url" content=url />
+        <Meta property="og:type" content="website" />
+        <Meta property="og:title" content=title />
+        <Meta property="og:description" content=description />
+        // <Meta property="og:image" content={image}/>
+
+        // Twitter
+        <Meta name="twitter:card" content="summary_large_image" />
+        <Meta property="twitter:domain" content="edoardoderrico.com" />
+        <Meta property="twitter:url" content=url />
+        <Meta name="twitter:title" content=title />
+        <Meta name="twitter:description" content=description />
+        // <Meta name="twitter:image" content={image}/>
+
         <Body class="bg-[#080A21]" />
         <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
             <div class="max-w-3xl">

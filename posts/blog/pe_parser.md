@@ -4,6 +4,9 @@ title: Writing a PE parser using Rust
 date: 2023-11-17
 description: A deep dive into the Portable Executable format.
 project_link: none
+seo_title: "Building a PE Parser in Rust: Complete Guide to Windows Executable Analysis"
+seo_description: "Learn to build a Portable Executable (PE) parser in Rust. Master Windows binary format structure, import/export tables, sections, and reverse engineering fundamentals with practical code examples."
+seo_keywords: "PE parser, Rust PE parser, Portable Executable, Windows executable analysis, reverse engineering, malware analysis, binary format parsing, PE format structure, import address table, export directory, Rust security tools, Windows internals"
 ---
 
 # **Portable executable** explained throught **rust** code

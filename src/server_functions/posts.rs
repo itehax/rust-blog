@@ -9,6 +9,13 @@ pub struct PostMetadata {
     pub date: String,
     pub description: String,
     pub project_link: String,
+    pub seo_title: Option<String>,
+    #[serde(default)]
+    pub seo_description: Option<String>,
+    #[serde(default)]
+    pub seo_image: Option<String>,
+    #[serde(default)]
+    pub seo_keywords: Option<String>,
 }
 
 impl PostMetadata {
@@ -53,7 +60,6 @@ impl std::fmt::Display for PostType {
     }
 }
 
-
 #[server(GetPosts, "/api")]
 pub async fn get_posts() -> Result<HashMap<PostType, Vec<Post>>, ServerFnError> {
     let result = tokio::task::spawn_blocking(move || {
@@ -70,7 +76,7 @@ pub async fn get_posts() -> Result<HashMap<PostType, Vec<Post>>, ServerFnError> 
         }
         all_posts
     })
-    .await; 
+    .await;
     match result {
         Ok(posts) => Ok(posts),
         Err(e) => Err(ServerFnError::new(format!("Threading error: {}", e))),

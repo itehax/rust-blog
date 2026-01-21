@@ -1,15 +1,7 @@
 use crate::{
     error_template::{AppError, ErrorTemplate},
-    routes::blog::blog_article::RenderBlogPost,
-    routes::{
-        about::About,
-        blog::blog_section::BlogPost,
-        home::Home,
-        manifesto::Manifesto,
-        projects::{projects_article::RenderProjectsPost, projects_section::ProjectsPost},
-        writing::{writing_article::RenderWritingPost, writing_section::WritingPost},
-    },
-    server_functions::posts::get_posts,
+    routes::{about::About, blog::{blog_article::RenderBlogPost, blog_section::BlogPost}, home::Home, manifesto::Manifesto, projects::{projects_article::RenderProjectsPost, projects_section::ProjectsPost}, writing::{writing_article::RenderWritingPost, writing_section::WritingPost}},
+    server_functions::posts::{get_last_update, get_posts},
 };
 use leptos::*;
 use leptos_meta::*;
@@ -21,6 +13,8 @@ pub fn App() -> impl IntoView {
     let posts = create_resource(|| (), |_| async move { get_posts().await });
     provide_context(posts);
 
+    let last_update = create_resource(|| (), |_| async move { get_last_update().await });
+    provide_context(last_update);
     view! {
         <Stylesheet id="leptos" href="/pkg/itehax-website.css" />
         <Link rel="shortcut icon" type_="image/png" href="/phrack_icon1.png" />

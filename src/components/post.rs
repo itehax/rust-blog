@@ -1,5 +1,6 @@
 use crate::components::footer::GoBack;
 use crate::components::footer::HomeFooter;
+use crate::components::seo::PostSeo;
 use crate::error_template::AppError;
 use crate::error_template::ErrorTemplate;
 use crate::server_functions::posts::Post;
@@ -13,9 +14,8 @@ use std::collections::HashMap;
 
 #[component]
 pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
-    let posts =
-        use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>()
-            .expect("unable to find context");
+    let posts = use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>()
+        .expect("unable to find context");
     view! {
         <Body class="bg-[#080A21]" />
         <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
@@ -126,9 +126,8 @@ pub fn LinkPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView 
 }
 #[component]
 pub fn RenderPost(post_type: PostType) -> impl IntoView {
-    let posts =
-        use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>()
-            .expect("unable to find context");
+    let posts = use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>()
+        .expect("unable to find context");
     let params = use_params_map();
     let post_query = move || params.with(|params| params.get("post").cloned().unwrap_or_default());
 
@@ -148,10 +147,9 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
                                 .find(|&p| p.post_metadata.create_href() == post_query());
                             if let Some(post) = post {
                                 view! {
-                                    <Title text=post.post_metadata.title.clone() />
-                                    <Meta
-                                        name="description"
-                                        content=post.post_metadata.description.clone()
+                                    <PostSeo
+                                        post_metadata=post.post_metadata.clone()
+                                        post_type=post_type
                                     />
                                     <PostLayout
                                         content=post.post_content.clone()
@@ -177,13 +175,13 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
 }
 
 #[component]
-pub fn PostLayout(content: PostContent,url: String) -> impl IntoView {
+pub fn PostLayout(content: PostContent, url: String) -> impl IntoView {
     view! {
-        <div class="bg-[#080A21] min-h-screen">
+        <div class="bg-[#080A21] min-h-screen w-full overflow-x-hidden">
             <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
                 <div class="max-w-3xl">
                     <div
-                        class="prose prose-blog mx-auto md:prose-lg prose-pre:m-0 prose-pre:rounded-none"
+                        class="prose prose-blog mx-auto md:prose-lg prose-pre:m-0 prose-pre:rounded-none break-words"
                         inner_html=content
                     ></div>
                 </div>

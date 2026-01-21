@@ -1088,7 +1088,7 @@ video {
 }
 
 .prose-blog {
-  --tw-prose-body: #CED4DA;
+  --tw-prose-body: #E9ECEF;
   --tw-prose-headings: #F8F9FA;
   --tw-prose-lead: #F8F9FA;
   --tw-prose-links: #F8F9FA;
@@ -1336,6 +1336,14 @@ video {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.break-words {
+  overflow-wrap: break-word;
 }
 
 .rounded-full {

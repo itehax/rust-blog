@@ -9,7 +9,7 @@ module.exports = {
       xl: '1440px',
     },
     fontFamily: {
-      sans: ['Anonymous Pro','IBM Plex Sans', 'sans-serif'],
+      sans: ['Anonymous Pro', 'IBM Plex Sans', 'sans-serif'],
 
     },
     extend: {
@@ -37,17 +37,17 @@ module.exports = {
         blog: {
           css: {
             //Dark mode (Default)
-            '--tw-prose-body': "#CED4DA",
+            '--tw-prose-body': "#E9ECEF",  // CAMBIATO da #CED4DA a #E9ECEF
             '--tw-prose-headings': "#F8F9FA",
             '--tw-prose-lead': "#F8F9FA",
             '--tw-prose-links': "#F8F9FA",
             '--tw-prose-bold': "#F8F9FA",
             '--tw-prose-counters': "#F8F9FA",
             '--tw-prose-bullets': "#F8F9FA",
-            '--tw-prose-hr': "#CED4DA",
+            '--tw-prose-hr': "#CED4DA",     // Puoi lasciare questo più scuro per separare
             '--tw-prose-quotes': "#F8F9FA",
             '--tw-prose-quote-borders': "#CED4DA",
-            '--tw-prose-captions': "#CED4DA",
+            '--tw-prose-captions': "#CED4DA", // Le didascalie stanno bene un po' più scure
             '--tw-prose-code': "#F8F9FA",
             '--tw-prose-pre-bg': "#14213D",
             '--tw-prose-th-borders': "#CED4DA",

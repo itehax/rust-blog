@@ -10,13 +10,31 @@ pub fn Home() -> impl IntoView {
         //        "'Metalanguage, sometimes I think my voice belongs"
     ];
     let mut rng = rand::thread_rng(); /* Would be better to init only once but don't care */
+    let title = "Edoardo D'Errico | Cybersecurity & CTF Writeups | Itehax";
+    let description = "Cybersecurity writeups and CTF solutions by Edoardo D'Errico. Technical posts on cryptography, exploit development, and security research.";
+    let url = "https://edoardoderrico.com/";
     view! {
         <Html lang="en" class="h-full" />
-        <Title text="Itehax" />
-        <Meta
-            name="description"
-            content="My own personal website. Here you'll find everything about Edoardo D'Errico aka itehax."
-        />
+        <Title text=title />
+        <Meta name="description" content=description />
+
+        // Open Graph / Facebook
+        <Meta property="og:url" content=url />
+        <Meta property="og:type" content="website" />
+        <Meta property="og:title" content=title />
+        <Meta property="og:description" content=description />
+        // <Meta property="og:image" content={image}/>
+
+        // Twitter
+        <Meta name="twitter:card" content="summary_large_image" />
+        <Meta property="twitter:domain" content="edoardoderrico.com" />
+        <Meta property="twitter:url" content=url />
+        <Meta name="twitter:title" content=title />
+        <Meta name="twitter:description" content=description />
+        // <Meta name="twitter:image" content={image}/>
+
+        // SEO UP
+
         <Body class="bg-[#080A21] flex h-full" />
         <div class="max-w-[50rem] flex flex-col mx-auto w-full h-full ">
             // <!-- ========== HEADER ========== -->

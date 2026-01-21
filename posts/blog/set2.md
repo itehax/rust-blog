@@ -4,6 +4,9 @@ title: "Learning Cryptography by Breaking It: Cryptopals Set 2"
 date: 2026-01-21
 description: A writeup of the Cryptopals Crypto Challenge Set 2.
 project_link: none 
+seo_title: "Cryptopals Set 2 Solutions: ECB Attacks"
+seo_description: "Technical walkthrough of Cryptopals Set 2 challenges, covering PKCS#7 Padding, ECB/CBC detection, and byte-at-a-time decryption techniques."
+seo_keywords: "cryptopals, cryptography, CBC mode, padding oracle, ECB detection, security challenges, CTF"
 ---
 
 # A writeup of the Cryptopals Crypto Challenge Set 2.
@@ -28,7 +31,7 @@ I solved this set several months ago and I found it very stimulating.
 
 Somehow __Cryptopals__ made me **grow as a person**, allowing me to glimpse the true power of programming and mathematics, the fact that __code is nothing but thought taking form__.
 
-There's no better feeling than when you start reasoning about a problem from scratch and like an LLM in thinking mode, your mind starts firing hypotheses until you find the right solution.
+There's no better feeling than when you start reasoning about a problem from scratch and like an LLM in thinking mode your mind starts firing hypotheses until you find the right solution.
 
 That's why I suggest all readers solve the set independently before seeing the solution.
 
