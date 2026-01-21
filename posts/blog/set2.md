@@ -4,7 +4,7 @@ title: "Learning Cryptography by Breaking It: Cryptopals Set 2"
 date: 2026-01-21
 description: A writeup of the Cryptopals Crypto Challenge Set 2.
 project_link: none 
-seo_title: "Cryptopals Set 2 Solutions: PKCS#7 and AES-ECB Attacks."
+seo_title: "Cryptopals Set 2 Solutions: PKCS#7 Padding and AES-ECB Attacks."
 seo_description: "Technical walkthrough of Cryptopals Set 2 challenges, covering PKCS#7 Padding, ECB/CBC detection, and byte-at-a-time decryption techniques."
 seo_keywords: "cryptopals, cryptography, CBC mode, padding oracle, ECB detection, security challenges, CTF"
 ---
