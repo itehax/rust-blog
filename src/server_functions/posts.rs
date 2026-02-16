@@ -3,6 +3,13 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct TocItem {
+    pub id: String,
+    pub text: String,
+    pub level: u8,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PostMetadata {
     pub image_path: String,
     pub title: String,
@@ -30,13 +37,15 @@ pub type PostContent = String;
 pub struct Post {
     pub post_metadata: PostMetadata,
     pub post_content: PostContent,
+    pub toc: Vec<TocItem>,
 }
 
 impl Post {
-    pub fn new(post_metadata: PostMetadata, post_content: PostContent) -> Self {
+    pub fn new(post_metadata: PostMetadata, post_content: PostContent, toc: Vec<TocItem>) -> Self {
         Self {
             post_metadata,
             post_content,
+            toc,
         }
     }
 }
@@ -115,7 +124,7 @@ cfg_if::cfg_if! {
         pub fn parse_post_content(content: &str) -> Option<Post> {
             use gray_matter::engine::YAML;
             use gray_matter::Matter;
-            use pulldown_cmark::{html, Options, Parser};
+            use pulldown_cmark::{html, Event, Tag, TagEnd, HeadingLevel, Options, Parser};
 
             let mut options = Options::empty();
             options.insert(Options::ENABLE_HEADING_ATTRIBUTES);
@@ -130,10 +139,73 @@ cfg_if::cfg_if! {
 
             let parser = Parser::new_ext(&content, options);
 
-            let mut html_output = String::new();
-            html::push_html(&mut html_output, parser);
+            // First pass: collect TOC and add IDs to headings
+            let mut toc = Vec::new();
+            let mut events = Vec::new();
+            let mut current_heading_level = None;
+            let mut current_heading_text = String::new();
 
-            Some(Post::new(post_metadata, html_output))
+            for event in parser {
+                match &event {
+                    Event::Start(Tag::Heading { level, .. }) => {
+                        current_heading_level = Some(*level);
+                        current_heading_text.clear();
+                    }
+                    Event::Text(text) if current_heading_level.is_some() => {
+                        current_heading_text.push_str(text);
+                    }
+                    Event::End(TagEnd::Heading(_level)) => {
+                        if let Some(heading_level) = current_heading_level {
+                            // Create ID from heading text
+                            let id = current_heading_text
+                                .to_lowercase()
+                                .chars()
+                                .map(|c| if c.is_alphanumeric() || c == ' ' { c } else { ' ' })
+                                .collect::<String>()
+                                .split_whitespace()
+                                .collect::<Vec<_>>()
+                                .join("-");
+
+                            // Add to TOC (only h2)
+                            let level_num = match heading_level {
+                                HeadingLevel::H1 => 1,
+                                HeadingLevel::H2 => 2,
+                                HeadingLevel::H3 => 3,
+                                HeadingLevel::H4 => 4,
+                                HeadingLevel::H5 => 5,
+                                HeadingLevel::H6 => 6,
+                            };
+
+                            if level_num == 2 {
+                                toc.push(TocItem {
+                                    id: id.clone(),
+                                    text: current_heading_text.clone(),
+                                    level: level_num,
+                                });
+                            }
+
+                            // Replace heading with one that has an ID
+                            events.push(Event::Html(format!(r#"<h{} id="{}">"#, level_num, id).into()));
+                            events.push(Event::Text(current_heading_text.clone().into()));
+                            events.push(Event::Html(format!(r#"</h{}>"#, level_num).into()));
+
+                            current_heading_level = None;
+                            continue;
+                        }
+                    }
+                    _ => {}
+                }
+
+                // Don't add heading events as we're replacing them
+                if current_heading_level.is_none() {
+                    events.push(event);
+                }
+            }
+
+            let mut html_output = String::new();
+            html::push_html(&mut html_output, events.into_iter());
+
+            Some(Post::new(post_metadata, html_output, toc))
         }
 
         pub fn sort_posts(posts: &mut [Post]) {

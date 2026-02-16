@@ -7,6 +7,7 @@ use crate::server_functions::posts::Post;
 use crate::server_functions::posts::PostContent;
 use crate::server_functions::posts::PostMetadata;
 use crate::server_functions::posts::PostType;
+use crate::server_functions::posts::TocItem;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::use_params_map;
@@ -153,6 +154,7 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
                                     />
                                     <PostLayout
                                         content=post.post_content.clone()
+                                        toc=post.toc.clone()
                                         url=post_type.to_string()
                                     />
                                 }
@@ -175,16 +177,238 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
 }
 
 #[component]
-pub fn PostLayout(content: PostContent, url: String) -> impl IntoView {
+pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
+    let active_id = create_rw_signal(String::new());
+    let scroll_progress = create_rw_signal(0.0);
+    let toc_items = create_rw_signal(toc);
+    let dropdown_open = create_rw_signal(false);
+
+    // Scroll tracking effect
+    #[cfg(target_arch = "wasm32")]
+    {
+        use wasm_bindgen::prelude::*;
+        use wasm_bindgen::JsCast;
+        use std::cell::Cell;
+        use std::rc::Rc;
+
+        create_effect(move |_| {
+            let ticking = Rc::new(Cell::new(false));
+
+            let closure = {
+                let ticking = ticking.clone();
+                Closure::wrap(Box::new(move || {
+                    if ticking.get() {
+                        return;
+                    }
+                    ticking.set(true);
+
+                    let ticking_inner = ticking.clone();
+                    let toc_clone = toc_items.get();
+                    let callback = Closure::once(move || {
+                        let window = web_sys::window().expect("no window");
+                        let document = window.document().expect("no document");
+
+                        // Calculate scroll progress
+                        let scroll_y = window.scroll_y().unwrap_or(0.0);
+                        let doc_height = document
+                            .document_element()
+                            .map(|el| el.scroll_height())
+                            .unwrap_or(0) as f64;
+                        let window_height = window
+                            .inner_height()
+                            .ok()
+                            .and_then(|h| h.as_f64())
+                            .unwrap_or(0.0);
+
+                        let max_scroll = doc_height - window_height;
+                        let progress = if max_scroll > 0.0 {
+                            (scroll_y / max_scroll * 100.0).min(100.0)
+                        } else {
+                            0.0
+                        };
+                        scroll_progress.set(progress);
+
+                        // Find active heading
+                        let mut current_id = String::new();
+                        let mut min_distance = f64::MAX;
+
+                        for item in &toc_clone {
+                            if let Some(element) = document.get_element_by_id(&item.id) {
+                                let rect = element.get_bounding_client_rect();
+                                let top = rect.top() + scroll_y;
+                                let distance = (top - scroll_y - 100.0).abs();
+
+                                if top <= scroll_y + 150.0 && distance < min_distance {
+                                    min_distance = distance;
+                                    current_id = item.id.clone();
+                                }
+                            }
+                        }
+
+                        if !current_id.is_empty() && active_id.get() != current_id {
+                            active_id.set(current_id);
+                        }
+
+                        ticking_inner.set(false);
+                    });
+
+                    let window = web_sys::window().expect("no window");
+                    let _ = window.request_animation_frame(callback.as_ref().unchecked_ref());
+                    callback.forget();
+                }) as Box<dyn FnMut()>)
+            };
+
+            let window = web_sys::window().expect("no window");
+            let _ = window.add_event_listener_with_callback(
+                "scroll",
+                closure.as_ref().unchecked_ref(),
+            );
+
+            closure.forget();
+        });
+    }
+
     view! {
-        <div class="bg-[#080A21] min-h-screen w-full overflow-x-hidden">
-            <div class="max-w-3xl px-4 pt-6 lg:pt-10 pb-12 sm:px-6 lg:px-8 mx-auto">
-                <div class="max-w-3xl">
+        <nav
+            class=move || {
+                if toc_items.get().is_empty() {
+                    "hidden"
+                } else {
+                    "fixed top-0 left-0 right-0 z-50 bg-[#080A21]/98 backdrop-blur-xl border-b border-gray-700/40 shadow-lg"
+                }
+            }
+        >
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-14">
+                    <button
+                        on:click=move |_| dropdown_open.update(|open| *open = !*open)
+                        class="flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-white transition-colors duration-150"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"
+                            ></path>
+                        </svg>
+                        <span>"Contents"</span>
+                        <svg
+                            class=move || {
+                                if dropdown_open.get() {
+                                    "w-4 h-4 transform rotate-180 transition-transform duration-200"
+                                } else {
+                                    "w-4 h-4 transition-transform duration-200"
+                                }
+                            }
+
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            ></path>
+                        </svg>
+                    </button>
+
+                    <div class="text-xs text-gray-400 font-mono">
+                        {move || format!("{}%", scroll_progress.get() as i32)}
+                    </div>
+                </div>
+
+                // Scroll progress bar
+                <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-800/50">
                     <div
-                        class="prose prose-blog mx-auto md:prose-lg prose-pre:m-0 prose-pre:rounded-none break-words"
-                        inner_html=content
+                        class="h-full bg-[#CED4DA] shadow-sm"
+                        style=move || format!("width: {}%", scroll_progress.get())
                     ></div>
                 </div>
+            </div>
+
+            // Dropdown menu
+            <div
+                class=move || {
+                    if dropdown_open.get() {
+                        "absolute top-full left-0 right-0 bg-[#080A21] backdrop-blur-xl border-b border-gray-700/40 shadow-2xl"
+                    } else {
+                        "hidden"
+                    }
+                }
+            >
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {move || {
+                            toc_items
+                                .get()
+                                .iter()
+                                .map(|item| {
+                                    let id = item.id.clone();
+                                    let id_for_class = id.clone();
+                                    let id_for_h3 = id.clone();
+                                    let text = item.text.clone();
+                                    view! {
+                                        <a
+                                            href=format!("#{}", id)
+                                            on:click=move |_| dropdown_open.set(false)
+                                            class=move || {
+                                                let base = "group block p-3 rounded-xl border transition-all duration-300 hover:border-transparent hover:shadow-black/[.4]";
+                                                if active_id.get() == id_for_class {
+                                                    format!(
+                                                        "{} border-gray-600 bg-gray-800/40",
+                                                        base,
+                                                    )
+                                                } else {
+                                                    format!(
+                                                        "{} border-gray-700",
+                                                        base,
+                                                    )
+                                                }
+                                            }
+                                        >
+
+                                            <h3 class=move || {
+                                                if active_id.get() == id_for_h3 {
+                                                    "text-sm font-semibold text-[#F8F9FA]"
+                                                } else {
+                                                    "text-sm font-semibold text-gray-300 group-hover:text-[#F8F9FA]"
+                                                }
+                                            }>
+
+                                                {text}
+                                            </h3>
+                                        </a>
+                                    }
+                                })
+                                .collect_view()
+                        }}
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+    }
+}
+
+#[component]
+pub fn PostLayout(content: PostContent, toc: Vec<TocItem>, url: String) -> impl IntoView {
+    view! {
+        <div class="bg-[#080A21] min-h-screen w-full overflow-x-hidden">
+            <TableOfContents toc=toc />
+            <div class="max-w-4xl px-4 pt-20 pb-12 sm:px-6 lg:px-8 mx-auto">
+                <div
+                    class="prose prose-blog mx-auto md:prose-lg prose-pre:m-0 prose-pre:rounded-none break-words"
+                    inner_html=content
+                ></div>
             </div>
             <GoBack content="Back to Posts".to_string() url=url />
             <HomeFooter />
