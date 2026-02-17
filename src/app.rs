@@ -1,6 +1,6 @@
 use crate::{
     error_template::{AppError, ErrorTemplate},
-    routes::{about::About, blog::{blog_article::RenderBlogPost, blog_section::BlogPost}, home::Home, manifesto::Manifesto, projects::{projects_article::RenderProjectsPost, projects_section::ProjectsPost}, writing::{writing_article::RenderWritingPost, writing_section::WritingPost}},
+    routes::{about::About, blog::{blog_article::RenderBlogPost, blog_section::BlogPost}, home::Home, writing::{writing_article::RenderWritingPost, writing_section::WritingPost}},
     server_functions::posts::{get_last_update, get_posts},
 };
 use leptos::*;

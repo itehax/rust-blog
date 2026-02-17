@@ -36,22 +36,64 @@ module.exports = {
       typography: ({ theme }) => ({
         blog: {
           css: {
+            fontSize: '1.125rem',
+            lineHeight: '1.8',
+            p: {
+              marginBottom: '1.25em',
+            },
+            h2: {
+              marginTop: '2em',
+              marginBottom: '0.75em',
+            },
+            h3: {
+              marginTop: '1.6em',
+              marginBottom: '0.5em',
+            },
+            li: {
+              marginTop: '0.4em',
+              marginBottom: '0.4em',
+            },
+            blockquote: {
+              padding: '1em 1.5em',
+              borderLeftWidth: '3px',
+            },
+            pre: {
+              padding: '1.2em',
+              borderRadius: '0.5rem',
+              marginTop: '1.5em',
+              marginBottom: '1.5em',
+            },
+            code: {
+              fontSize: '0.9em',
+            },
+            a: {
+              textDecorationColor: 'rgba(230, 237, 243, 0.3)',
+              textUnderlineOffset: '3px',
+            },
+            'img, figure': {
+              marginTop: '2em',
+              marginBottom: '2em',
+            },
+            hr: {
+              marginTop: '2.5em',
+              marginBottom: '2.5em',
+            },
             //Dark mode (Default)
-            '--tw-prose-body': "#E9ECEF",  // CAMBIATO da #CED4DA a #E9ECEF
-            '--tw-prose-headings': "#F8F9FA",
-            '--tw-prose-lead': "#F8F9FA",
-            '--tw-prose-links': "#F8F9FA",
-            '--tw-prose-bold': "#F8F9FA",
-            '--tw-prose-counters': "#F8F9FA",
-            '--tw-prose-bullets': "#F8F9FA",
-            '--tw-prose-hr': "#CED4DA",     // Puoi lasciare questo più scuro per separare
-            '--tw-prose-quotes': "#F8F9FA",
-            '--tw-prose-quote-borders': "#CED4DA",
-            '--tw-prose-captions': "#CED4DA", // Le didascalie stanno bene un po' più scure
-            '--tw-prose-code': "#F8F9FA",
-            '--tw-prose-pre-bg': "#14213D",
-            '--tw-prose-th-borders': "#CED4DA",
-            '--tw-prose-td-borders': "#F8F9FA",
+            '--tw-prose-body': "#C9D1D9",
+            '--tw-prose-headings': "#E6EDF3",
+            '--tw-prose-lead': "#E6EDF3",
+            '--tw-prose-links': "#E6EDF3",
+            '--tw-prose-bold': "#E6EDF3",
+            '--tw-prose-counters': "#8B949E",
+            '--tw-prose-bullets': "#8B949E",
+            '--tw-prose-hr': "#30363D",
+            '--tw-prose-quotes': "#C9D1D9",
+            '--tw-prose-quote-borders': "#30363D",
+            '--tw-prose-captions': "#8B949E",
+            '--tw-prose-code': "#E6EDF3",
+            '--tw-prose-pre-bg': "#161B22",
+            '--tw-prose-th-borders': "#30363D",
+            '--tw-prose-td-borders': "#30363D",
 
             // '--tw-prose-invert-body': theme('colors.pink[200]'),
             // '--tw-prose-invert-headings': theme('colors.white'),

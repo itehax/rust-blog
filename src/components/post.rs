@@ -18,13 +18,13 @@ pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
     let posts = use_context::<Resource<(), Result<HashMap<PostType, Vec<Post>>, ServerFnError>>>()
         .expect("unable to find context");
     view! {
-        <Body class="bg-[#080A21]" />
+        <Body class="bg-[#0D1117]" />
         <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
             <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
-                <h2 class="text-2xl font-bold md:text-4xl md:leading-tight text-[#F8F9FA]">
+                <h2 class="text-2xl font-bold md:text-4xl md:leading-tight text-[#E6EDF3]">
                     "Posts"
                 </h2>
-                <p class="mt-1  text-[#CED4DA]">{post_description}</p>
+                <p class="mt-1  text-[#8B949E]">{post_description}</p>
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <Transition fallback=move || {
@@ -87,11 +87,11 @@ pub fn PostCard(post_metadata: PostMetadata, path: String) -> impl IntoView {
                 <img class="w-full object-cover rounded-xl" src=post_metadata.image_path />
             </div>
             <div class="my-6">
-                <h3 class="text-xl font-semibold  text-gray-300 group-hover:text-[#F8F9FA]">
+                <h3 class="text-xl font-semibold  text-gray-300 group-hover:text-[#E6EDF3]">
                     {post_metadata.title}
                 </h3>
                 <h2 class="mt-5 text-gray-400">{post_metadata.date}</h2>
-                <p class="mt-5 text-[#CED4DA]">{post_metadata.description}</p>
+                <p class="mt-5 text-[#8B949E]">{post_metadata.description}</p>
             </div>
             <div class="mt-auto flex items-center gap-x-3">
                 <img class="w-8 h-8 rounded-full" src="https://github.com/itehax.png" />
@@ -112,11 +112,11 @@ pub fn LinkPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView 
                 <img class="w-full object-cover rounded-xl" src=post_metadata.image_path />
             </div>
             <div class="my-6">
-                <h3 class="text-xl font-semibold  text-gray-300 group-hover:text-[#F8F9FA]">
+                <h3 class="text-xl font-semibold  text-gray-300 group-hover:text-[#E6EDF3]">
                     {post_metadata.title}
                 </h3>
                 <h2 class="mt-5 text-gray-400">{post_metadata.date}</h2>
-                <p class="mt-5 text-[#CED4DA]">{post_metadata.description}</p>
+                <p class="mt-5 text-[#8B949E]">{post_metadata.description}</p>
             </div>
             <div class="mt-auto flex items-center gap-x-3">
                 <img class="w-8 h-8 rounded-full" src="https://github.com/itehax.png" />
@@ -274,7 +274,7 @@ pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
                 if toc_items.get().is_empty() {
                     "hidden"
                 } else {
-                    "fixed top-0 left-0 right-0 z-50 bg-[#080A21]/98 backdrop-blur-xl border-b border-gray-700/40 shadow-lg"
+                    "fixed top-0 left-0 right-0 z-50 bg-[#0D1117]/98 backdrop-blur-xl border-b border-[#30363D]/60 shadow-lg"
                 }
             }
         >
@@ -328,7 +328,7 @@ pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
                 // Scroll progress bar
                 <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-800/50">
                     <div
-                        class="h-full bg-[#CED4DA] shadow-sm"
+                        class="h-full bg-[#58A6FF] shadow-sm"
                         style=move || format!("width: {}%", scroll_progress.get())
                     ></div>
                 </div>
@@ -338,7 +338,7 @@ pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
             <div
                 class=move || {
                     if dropdown_open.get() {
-                        "absolute top-full left-0 right-0 bg-[#080A21] backdrop-blur-xl border-b border-gray-700/40 shadow-2xl"
+                        "absolute top-full left-0 right-0 bg-[#0D1117] backdrop-blur-xl border-b border-[#30363D]/60 shadow-2xl"
                     } else {
                         "hidden"
                     }
@@ -378,9 +378,9 @@ pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
 
                                             <h3 class=move || {
                                                 if active_id.get() == id_for_h3 {
-                                                    "text-sm font-semibold text-[#F8F9FA]"
+                                                    "text-sm font-semibold text-[#E6EDF3]"
                                                 } else {
-                                                    "text-sm font-semibold text-gray-300 group-hover:text-[#F8F9FA]"
+                                                    "text-sm font-semibold text-gray-300 group-hover:text-[#E6EDF3]"
                                                 }
                                             }>
 
@@ -402,11 +402,11 @@ pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
 #[component]
 pub fn PostLayout(content: PostContent, toc: Vec<TocItem>, url: String) -> impl IntoView {
     view! {
-        <div class="bg-[#080A21] min-h-screen w-full overflow-x-hidden">
+        <div class="bg-[#0D1117] min-h-screen w-full overflow-x-hidden">
             <TableOfContents toc=toc />
-            <div class="max-w-4xl px-4 pt-20 pb-12 sm:px-6 lg:px-8 mx-auto">
+            <div class="max-w-3xl px-4 pt-24 pb-20 sm:px-6 lg:px-8 mx-auto">
                 <div
-                    class="prose prose-blog mx-auto md:prose-lg prose-pre:m-0 prose-pre:rounded-none break-words"
+                    class="prose prose-blog mx-auto md:prose-lg leading-relaxed prose-pre:m-0 prose-pre:rounded-none break-words"
                     inner_html=content
                 ></div>
             </div>

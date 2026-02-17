@@ -7,6 +7,24 @@
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
   }
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background-color: rgba(56, 139, 253, 0.15);
+  }
+  /* Scale up on 4K / high-res monitors */
+  @media (min-width: 2560px) {
+    html {
+      font-size: 125%;
+    }
+  }
+  @media (min-width: 3840px) {
+    html {
+      font-size: 150%;
+    }
+  }
 }
 
 @layer utilities {

@@ -35,7 +35,7 @@ pub fn Home() -> impl IntoView {
 
         // SEO UP
 
-        <Body class="bg-[#080A21] flex h-full" />
+        <Body class="bg-[#0D1117] flex h-full" />
         <div class="max-w-[50rem] flex flex-col mx-auto w-full h-full ">
             // <!-- ========== HEADER ========== -->
             <header class="mb-auto flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full text-sm py-4">
@@ -45,7 +45,7 @@ pub fn Home() -> impl IntoView {
                 >
                     <div class="flex items-center justify-between">
                         <a
-                            class="flex-none text-xl font-semibold text-[#F8F9FA]"
+                            class="flex-none text-xl font-semibold text-[#E6EDF3]"
                             href="#"
                             aria-label="Brand"
                         >
@@ -54,7 +54,7 @@ pub fn Home() -> impl IntoView {
                         <div class="sm:hidden">
                             <button
                                 type="button"
-                                class="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-2 rounded-md  font-medium text-[#CED4DA]  hover:text-[#CED4DA] shadow-sm align-middle transition-all text-sm"
+                                class="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-2 rounded-md  font-medium text-[#8B949E]  hover:text-[#8B949E] shadow-sm align-middle transition-all text-sm"
                                 data-hs-collapse="#navbar-collapse-with-animation"
                                 aria-controls="navbar-collapse-with-animation"
                                 aria-label="Toggle navigation"
@@ -88,31 +88,31 @@ pub fn Home() -> impl IntoView {
                         class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block"
                     >
                         <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:pl-5">
-                            <a class="font-medium text-[#F8F9FA]" href="about" aria-current="page">
+                            <a class="font-medium text-[#E6EDF3]" href="about" aria-current="page">
                                 "About"
                             </a>
                             // <a
-                            // class="font-medium text-[#F8F9FA]"
+                            // class="font-medium text-[#E6EDF3]"
                             // href="manifesto"
                             // aria-current="page"
                             // >
                             // "Manifesto"
                             // </a>
                             <a
-                                class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
+                                class="font-medium  text-[#8B949E]  hover:text-[#E6EDF3]"
                                 href="blog"
                             >
                                 "Blog"
                             </a>
 
                             <a
-                                class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
+                                class="font-medium  text-[#8B949E]  hover:text-[#E6EDF3]"
                                 href="writing"
                             >
                                 "R/W"
                             </a>
                           //  <a
-                          //      class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
+                          //      class="font-medium  text-[#8B949E]  hover:text-[#E6EDF3]"
                           //      href="projects"
                           //  >
                           //      "Projects"
@@ -128,7 +128,7 @@ pub fn Home() -> impl IntoView {
                     <h1 class="block text-2xl font-bold  sm:text-4xl animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
                         "Edoardo D'Errico."
                     </h1>
-                    <p class="mt-5 text-lg text-[#F8F9FA]">{quotes.choose(&mut rng).cloned()}</p>
+                    <p class="mt-5 text-lg text-[#E6EDF3]">{quotes.choose(&mut rng).cloned()}</p>
 
                     <div class="mt-18 flex flex-col justify-center items-center gap-2 sm:flex-row sm:gap-3">
                         // <!-- Social Brands -->

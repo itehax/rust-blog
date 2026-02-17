@@ -8,7 +8,7 @@ pub fn HomeFooter() -> impl IntoView {
         <footer class="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
             <div class="text-center">
                 <div class="mt-3">
-                    <p class="text-[#CED4DA]">
+                    <p class="text-[#8B949E]">
                         "Made with ❤️ using "
                         <a
                             class="font-semibold text-blue-500 hover:text-blue-400"
@@ -29,7 +29,7 @@ pub fn HomeFooter() -> impl IntoView {
                             "Preline"
                         </a> "."
                     </p>
-                    <p class="text-[#CED4DA]">
+                    <p class="text-[#8B949E]">
                         "Last update on: "
                         {move || match last_update.get() {
                             None => "".to_string(),
@@ -43,7 +43,7 @@ pub fn HomeFooter() -> impl IntoView {
                         href="/feed.xml"
                         rel="external"
                     >
-                        <span class="text-[#CED4DA]">"Rss"</span>
+                        <span class="text-[#8B949E]">"Rss"</span>
                         <svg
                             viewBox="0 0 48 48"
                             class="h-6 w-6"
