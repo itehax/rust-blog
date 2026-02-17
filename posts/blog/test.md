@@ -4,7 +4,11 @@ title: Testing layout
 date: 2023-07-21
 description: Testing the layout of the site.
 project_link: none
+tags: ["test" ]
 ---
+
+> [!author]
+> This is a test post I use to verify that the site layout renders correctly. Feel free to ignore it!
 
 
 

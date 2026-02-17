@@ -31,6 +31,8 @@ serde = { version = "1.0.163", features = ["derive"] }
 chrono = { version = "0.4.24", features = ["serde"] }
 rand = "0.8.5"
 getrandom = { version = "0.2.15", features = ["js"] }
+regex = { version = "1", optional = true }
+serde_json = "1"
 
 
 [features]
@@ -45,6 +47,7 @@ ssr = [
     "leptos_meta/ssr",
     "leptos_router/ssr",
     "dep:tracing",
+    "dep:regex",
 ]
 
 [package.metadata.cargo-all-features]

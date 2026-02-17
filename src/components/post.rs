@@ -1,5 +1,6 @@
 use crate::components::footer::GoBack;
 use crate::components::footer::HomeFooter;
+use crate::components::graph::GraphView;
 use crate::components::seo::PostSeo;
 use crate::error_template::AppError;
 use crate::error_template::ErrorTemplate;
@@ -90,8 +91,23 @@ pub fn PostCard(post_metadata: PostMetadata, path: String) -> impl IntoView {
                 <h3 class="text-xl font-semibold  text-gray-300 group-hover:text-[#E6EDF3]">
                     {post_metadata.title}
                 </h3>
-                <h2 class="mt-5 text-gray-400">{post_metadata.date}</h2>
-                <p class="mt-5 text-[#8B949E]">{post_metadata.description}</p>
+                <h2 class="mt-5 text-gray-400">{post_metadata.date.clone()}</h2>
+                <p class="mt-5 text-[#8B949E]">{post_metadata.description.clone()}</p>
+                {if !post_metadata.tags.is_empty() {
+                    Some(view! {
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            {post_metadata.tags.iter().map(|tag| {
+                                view! {
+                                    <span class="text-xs px-2 py-0.5 rounded-full bg-[#161B22] text-[#58A6FF] border border-[#30363D]">
+                                        {tag.clone()}
+                                    </span>
+                                }
+                            }).collect_view()}
+                        </div>
+                    })
+                } else {
+                    None
+                }}
             </div>
             <div class="mt-auto flex items-center gap-x-3">
                 <img class="w-8 h-8 rounded-full" src="https://github.com/itehax.png" />
@@ -115,8 +131,23 @@ pub fn LinkPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView 
                 <h3 class="text-xl font-semibold  text-gray-300 group-hover:text-[#E6EDF3]">
                     {post_metadata.title}
                 </h3>
-                <h2 class="mt-5 text-gray-400">{post_metadata.date}</h2>
-                <p class="mt-5 text-[#8B949E]">{post_metadata.description}</p>
+                <h2 class="mt-5 text-gray-400">{post_metadata.date.clone()}</h2>
+                <p class="mt-5 text-[#8B949E]">{post_metadata.description.clone()}</p>
+                {if !post_metadata.tags.is_empty() {
+                    Some(view! {
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            {post_metadata.tags.iter().map(|tag| {
+                                view! {
+                                    <span class="text-xs px-2 py-0.5 rounded-full bg-[#161B22] text-[#58A6FF] border border-[#30363D]">
+                                        {tag.clone()}
+                                    </span>
+                                }
+                            }).collect_view()}
+                        </div>
+                    })
+                } else {
+                    None
+                }}
             </div>
             <div class="mt-auto flex items-center gap-x-3">
                 <img class="w-8 h-8 rounded-full" src="https://github.com/itehax.png" />
@@ -147,6 +178,11 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
                                 .iter()
                                 .find(|&p| p.post_metadata.create_href() == post_query());
                             if let Some(post) = post {
+                                let post_href = format!(
+                                    "/{}/{}",
+                                    post_type,
+                                    post.post_metadata.create_href()
+                                );
                                 view! {
                                     <PostSeo
                                         post_metadata=post.post_metadata.clone()
@@ -156,6 +192,7 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
                                         content=post.post_content.clone()
                                         toc=post.toc.clone()
                                         url=post_type.to_string()
+                                        post_href=post_href
                                     />
                                 }
                                     .into_view()
@@ -400,7 +437,12 @@ pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
 }
 
 #[component]
-pub fn PostLayout(content: PostContent, toc: Vec<TocItem>, url: String) -> impl IntoView {
+pub fn PostLayout(
+    content: PostContent,
+    toc: Vec<TocItem>,
+    url: String,
+    #[prop(optional)] post_href: Option<String>,
+) -> impl IntoView {
     view! {
         <div class="bg-[#0D1117] min-h-screen w-full overflow-x-hidden">
             <TableOfContents toc=toc />
@@ -409,6 +451,18 @@ pub fn PostLayout(content: PostContent, toc: Vec<TocItem>, url: String) -> impl 
                     class="prose prose-blog mx-auto md:prose-lg leading-relaxed prose-pre:m-0 prose-pre:rounded-none break-words"
                     inner_html=content
                 ></div>
+                {post_href
+                    .map(|href| {
+                        view! {
+                            <div class="mt-16 border border-[#30363D] rounded-xl p-4 bg-[#161B22]">
+                                <h3 class="text-lg font-semibold text-[#E6EDF3] mb-4">
+                                    "Related Posts"
+                                </h3>
+                                <GraphView filter_post=href />
+                            </div>
+                        }
+                    })}
+
             </div>
             <GoBack content="Back to Posts".to_string() url=url />
             <HomeFooter />

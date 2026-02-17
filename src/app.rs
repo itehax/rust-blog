@@ -1,6 +1,6 @@
 use crate::{
     error_template::{AppError, ErrorTemplate},
-    routes::{about::About, blog::{blog_article::RenderBlogPost, blog_section::BlogPost}, home::Home, writing::{writing_article::RenderWritingPost, writing_section::WritingPost}},
+    routes::{about::About, blog::{blog_article::RenderBlogPost, blog_section::BlogPost}, graph::GraphPage, home::Home, writing::{writing_article::RenderWritingPost, writing_section::WritingPost}},
     server_functions::posts::{get_last_update, get_posts},
 };
 use leptos::*;
@@ -53,6 +53,7 @@ pub fn App() -> impl IntoView {
                 />
 
                 <Route path="/about" view=About />
+                <Route path="/graph" view=GraphPage />
                 // <Route path="/manifesto" view=Manifesto /> TBA
 
                 <Route path="/writing" view=WritingPost />

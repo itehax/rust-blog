@@ -1,4 +1,5 @@
 use crate::components::footer::HomeFooter;
+use crate::components::graph::GraphView;
 use leptos::*;
 use leptos_meta::*;
 use rand::seq::SliceRandom;
@@ -261,6 +262,12 @@ pub fn Home() -> impl IntoView {
                     </div>
                 </div>
             </main>
+            <div class="w-full px-4 sm:px-6 lg:px-8 mb-8">
+                <div class="border border-[#1b2029] rounded-xl p-4 bg-[#0D1117]">
+                    <h3 class="text-sm font-medium text-[#8B949E] mb-4 text-center">"Post Connections"</h3>
+                    <GraphView />
+                </div>
+            </div>
             <HomeFooter />
         </div>
     }

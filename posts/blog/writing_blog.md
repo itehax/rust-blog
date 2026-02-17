@@ -7,6 +7,7 @@ project_link: none
 seo_title: "Build a Full-Stack Blog with Rust, Leptos & WebAssembly (WASM)"
 seo_description: "Complete guide to building a server-side rendered blog using Rust, Leptos framework, and WebAssembly. Learn SSR, markdown parsing, server functions, Docker deployment, and CI/CD with practical code examples."
 seo_keywords: "Rust blog, Leptos framework, WebAssembly blog, WASM Rust, Rust SSR, server-side rendering Rust, full-stack Rust, Rust web development, markdown parser Rust, Docker Rust deployment, cargo-leptos, Rust frontend, Preline UI, fly.io deployment"
+tags: ["rust", "web-development", "leptos", "wasm"]
 ---
 
 # Writing a blog using rust

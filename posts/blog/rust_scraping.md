@@ -7,6 +7,7 @@ project_link: none
 seo_title: "Web Scraping with Rust: Automate Airbnb Data Extraction with Thirtyfour"
 seo_description: "Master web scraping in Rust using Thirtyfour and Selenium WebDriver. Learn to scrape dynamic sites like Airbnb, handle client-side rendering, automate browser interactions, and export data to CSV with practical examples."
 seo_keywords: "Rust web scraping, Thirtyfour Rust, Selenium WebDriver Rust, scrape Airbnb, dynamic web scraping, client-side rendering scraping, Rust automation, web scraping tutorial, Cloudflare bypass, Rust WebDriver, browser automation Rust, scraping JavaScript sites"
+tags: ["rust", "web-scraping", "automation"]
 ---
 
 # Web Scraping using **Rust** 🦀
