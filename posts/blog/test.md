@@ -156,6 +156,44 @@ Ordered list
 <img src="/images/blog_images/rust_cute.png">
 
 
+Now some terminal output!
+
+<div class="bg-zinc-900 overflow-hidden rounded-md">
+                <div class="flex items-center gap-1.5 px-4 py-2 bg-zinc-800">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <p class="text-xs text-zinc-400 ml-2">Output</p>
+                </div>
+
+```txt
+$ cargo build --release
+   Compiling my_app v0.1.0 (/usr/src/app)
+    Finished release [optimized] target(s) in 3.45s
+```
+
+</div>
+
+Running the binary:
+
+<div class="bg-zinc-900 overflow-hidden rounded-md">
+                <div class="flex items-center gap-1.5 px-4 py-2 bg-zinc-800">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <p class="text-xs text-zinc-400 ml-2">Output</p>
+                </div>
+
+```txt
+$ ./target/release/my_app
+Listening on http://127.0.0.1:3000
+[INFO]  GET /api/posts → 200 OK (12ms)
+[INFO]  GET /blog/test → 200 OK (4ms)
+[ERROR] GET /blog/missing → 404 Not Found
+```
+
+</div>
+
 Now some maths!
 
 <p>Integral $\int_{a}^{b} x^2 dx$ inside text. 

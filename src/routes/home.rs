@@ -111,12 +111,12 @@ pub fn Home() -> impl IntoView {
                             >
                                 "R/W"
                             </a>
-                            <a
-                                class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
-                                href="projects"
-                            >
-                                "Projects"
-                            </a>
+                          //  <a
+                          //      class="font-medium  text-[#CED4DA]  hover:text-[#F8F9FA]"
+                          //      href="projects"
+                          //  >
+                          //      "Projects"
+                          //  </a>
                         </div>
                     </div>
                 </nav>

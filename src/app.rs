@@ -58,8 +58,8 @@ pub fn App() -> impl IntoView {
                 <Route path="/writing" view=WritingPost />
                 <Route path="/writing/:post" view=RenderWritingPost />
 
-                <Route path="/projects" view=ProjectsPost />
-                <Route path="/projects/:post" view=RenderProjectsPost />
+            //    <Route path="/projects" view=ProjectsPost />
+            //    <Route path="/projects/:post" view=RenderProjectsPost />
             </Routes>
             <script src="/preline/preline.js"></script>
         </Router>
