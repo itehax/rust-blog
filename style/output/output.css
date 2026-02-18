@@ -1266,10 +1266,6 @@ body {
   margin-left: 0.5rem;
 }
 
-.mt-0\.5 {
-  margin-top: 0.125rem;
-}
-
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -1473,10 +1469,6 @@ body {
 
 .flex-wrap {
   flex-wrap: wrap;
-}
-
-.items-start {
-  align-items: flex-start;
 }
 
 .items-center {
@@ -2357,6 +2349,10 @@ body {
     flex-wrap: nowrap;
   }
 
+  .sm\:items-start {
+    align-items: flex-start;
+  }
+
   .sm\:items-center {
     align-items: center;
   }
@@ -2384,6 +2380,10 @@ body {
 
   .sm\:pl-5 {
     padding-left: 1.25rem;
+  }
+
+  .sm\:text-left {
+    text-align: left;
   }
 
   .sm\:text-3xl {

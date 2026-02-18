@@ -7,7 +7,7 @@ project_link: none
 seo_title: "Cryptopals Set 2 Solutions: PKCS#7 Padding and AES-ECB Attacks."
 seo_description: "Technical walkthrough of Cryptopals Set 2 challenges, covering PKCS#7 Padding, ECB/CBC detection, and byte-at-a-time decryption techniques."
 seo_keywords: "cryptopals, cryptography, CBC mode, padding oracle, ECB detection, security challenges, CTF"
-tags: ["cryptography", "security", "ctf"]
+tags: ["cryptography", "cybersec", "ctf"]
 ---
 
 # A writeup of the Cryptopals Crypto Challenge Set 2.
@@ -67,7 +67,8 @@ While there are many padding standards, the dominant standard in modern cryptogr
 
 Levels 9 and 15 task us with implementing the padding and unpadding primitives, but before we dive into the implementation, let's deconstruct the mechanics of PKCS#7.
 
-> We don't just fill space; we fill it with metadata about the fill itself.
+> [!author]
+> The idea is that we don't just fill space; we fill it with metadata about the fill itself!
 
 The algorithm is simple: if we need to add $N$ bytes of padding to reach the block boundary, we append $N$ bytes, where each byte has the value $N$.$$P_{padded} = P \ || \ \underbrace{N, N, \dots, N}_{N \text{ times}}$$
 This creates a crucial invariant: the **last byte** of the padded message always tells us exactly **how many bytes** to strip away during decryption.
@@ -149,6 +150,7 @@ If our message is 1MB long and our block cipher only encrypt 16 bytes at a time,
 In cryptography, this strategy is called a **Mode of Operation**.
 While modern cryptography favors authenticated modes like GCM or Chacha20-Poly1305, Cryptopals starts us off with the two "grandfathers" of block encryption.
 
+> [!author]
 >Understanding them is mandatory to understanding why modern systems are built the way they are.
 Also, make sure you understand the formulas and diagrams, as they are necessary for understanding future attacks.
 

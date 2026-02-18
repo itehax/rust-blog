@@ -94,17 +94,23 @@ pub fn PostCard(post_metadata: PostMetadata, path: String) -> impl IntoView {
                 <h2 class="mt-5 text-gray-400">{post_metadata.date.clone()}</h2>
                 <p class="mt-5 text-[#8B949E]">{post_metadata.description.clone()}</p>
                 {if !post_metadata.tags.is_empty() {
-                    Some(view! {
-                        <div class="mt-3 flex flex-wrap gap-2">
-                            {post_metadata.tags.iter().map(|tag| {
-                                view! {
-                                    <span class="text-xs px-2 py-0.5 rounded-full bg-[#161B22] text-[#58A6FF] border border-[#30363D]">
-                                        {tag.clone()}
-                                    </span>
-                                }
-                            }).collect_view()}
-                        </div>
-                    })
+                    Some(
+                        view! {
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                {post_metadata
+                                    .tags
+                                    .iter()
+                                    .map(|tag| {
+                                        view! {
+                                            <span class="text-xs px-2 py-0.5 rounded-full bg-[#161B22] text-[#58A6FF] border border-[#30363D]">
+                                                {tag.clone()}
+                                            </span>
+                                        }
+                                    })
+                                    .collect_view()}
+                            </div>
+                        },
+                    )
                 } else {
                     None
                 }}
@@ -134,17 +140,23 @@ pub fn LinkPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView 
                 <h2 class="mt-5 text-gray-400">{post_metadata.date.clone()}</h2>
                 <p class="mt-5 text-[#8B949E]">{post_metadata.description.clone()}</p>
                 {if !post_metadata.tags.is_empty() {
-                    Some(view! {
-                        <div class="mt-3 flex flex-wrap gap-2">
-                            {post_metadata.tags.iter().map(|tag| {
-                                view! {
-                                    <span class="text-xs px-2 py-0.5 rounded-full bg-[#161B22] text-[#58A6FF] border border-[#30363D]">
-                                        {tag.clone()}
-                                    </span>
-                                }
-                            }).collect_view()}
-                        </div>
-                    })
+                    Some(
+                        view! {
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                {post_metadata
+                                    .tags
+                                    .iter()
+                                    .map(|tag| {
+                                        view! {
+                                            <span class="text-xs px-2 py-0.5 rounded-full bg-[#161B22] text-[#58A6FF] border border-[#30363D]">
+                                                {tag.clone()}
+                                            </span>
+                                        }
+                                    })
+                                    .collect_view()}
+                            </div>
+                        },
+                    )
                 } else {
                     None
                 }}
@@ -181,7 +193,7 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
                                 let post_href = format!(
                                     "/{}/{}",
                                     post_type,
-                                    post.post_metadata.create_href()
+                                    post.post_metadata.create_href(),
                                 );
                                 view! {
                                     <PostSeo
@@ -306,27 +318,20 @@ pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
     }
 
     view! {
-        <nav
-            class=move || {
-                if toc_items.get().is_empty() {
-                    "hidden"
-                } else {
-                    "fixed top-0 left-0 right-0 z-50 bg-[#0D1117]/98 backdrop-blur-xl border-b border-[#30363D]/60 shadow-lg"
-                }
+        <nav class=move || {
+            if toc_items.get().is_empty() {
+                "hidden"
+            } else {
+                "fixed top-0 left-0 right-0 z-50 bg-[#0D1117]/98 backdrop-blur-xl border-b border-[#30363D]/60 shadow-lg"
             }
-        >
+        }>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-14">
                     <button
                         on:click=move |_| dropdown_open.update(|open| *open = !*open)
                         class="flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-white transition-colors duration-150"
                     >
-                        <svg
-                            class="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
@@ -372,15 +377,13 @@ pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
             </div>
 
             // Dropdown menu
-            <div
-                class=move || {
-                    if dropdown_open.get() {
-                        "absolute top-full left-0 right-0 bg-[#0D1117] backdrop-blur-xl border-b border-[#30363D]/60 shadow-2xl"
-                    } else {
-                        "hidden"
-                    }
+            <div class=move || {
+                if dropdown_open.get() {
+                    "absolute top-full left-0 right-0 bg-[#0D1117] backdrop-blur-xl border-b border-[#30363D]/60 shadow-2xl"
+                } else {
+                    "hidden"
                 }
-            >
+            }>
 
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -400,15 +403,9 @@ pub fn TableOfContents(toc: Vec<TocItem>) -> impl IntoView {
                                             class=move || {
                                                 let base = "group block p-3 rounded-xl border transition-all duration-300 hover:border-transparent hover:shadow-black/[.4]";
                                                 if active_id.get() == id_for_class {
-                                                    format!(
-                                                        "{} border-gray-600 bg-gray-800/40",
-                                                        base,
-                                                    )
+                                                    format!("{} border-gray-600 bg-gray-800/40", base)
                                                 } else {
-                                                    format!(
-                                                        "{} border-gray-700",
-                                                        base,
-                                                    )
+                                                    format!("{} border-gray-700", base)
                                                 }
                                             }
                                         >
@@ -453,14 +450,7 @@ pub fn PostLayout(
                 ></div>
                 {post_href
                     .map(|href| {
-                        view! {
-                            <div class="mt-16 border border-[#30363D] rounded-xl p-4 bg-[#161B22]">
-                                <h3 class="text-lg font-semibold text-[#E6EDF3] mb-4">
-                                    "Related Posts"
-                                </h3>
-                                <GraphView filter_post=href />
-                            </div>
-                        }
+                        view! { <GraphView filter_post=href /> }
                     })}
 
             </div>

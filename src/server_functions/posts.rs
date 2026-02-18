@@ -323,7 +323,7 @@ cfg_if::cfg_if! {
             html_output = author_re.replace_all(&html_output, |caps: &regex::Captures| {
                 let text = &caps[1];
                 format!(
-                    r#"<div class="flex gap-4 items-start p-4 my-6 rounded-lg bg-[#161B22] border border-[#30363D]"><img src="https://github.com/itehax.png" class="w-10 h-10 rounded-full shrink-0 mt-0.5" alt="Author" /><div class="text-[#C9D1D9] text-sm leading-relaxed"><p>{}</p></div></div>"#,
+                    r#"<div class="flex flex-col sm:flex-row gap-4 items-center sm:items-start p-4 my-6 rounded-lg bg-[#161B22] border border-[#30363D] text-center sm:text-left"><img src="https://github.com/itehax.png" class="w-10 h-10 rounded-full shrink-0" alt="Author" /><div class="text-[#C9D1D9] text-sm leading-relaxed"><p>{}</p></div></div>"#,
                     text.trim()
                 )
             }).to_string();

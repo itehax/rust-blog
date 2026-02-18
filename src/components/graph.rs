@@ -6,6 +6,7 @@ pub fn GraphView(
     #[prop(into, optional)] filter_post: String,
 ) -> impl IntoView {
     let graph_data = create_resource(|| (), |_| async move { get_graph_data().await });
+    let is_filtered = !filter_post.is_empty();
     let filter_post = store_value(filter_post);
 
     view! {
@@ -32,31 +33,38 @@ pub fn GraphView(
                                     .filter(|n| connected_ids.contains(&n.id))
                                     .cloned()
                                     .collect();
-                                let node_ids: std::collections::HashSet<String> =
-                                    nodes.iter().map(|n| n.id.clone()).collect();
+                                let node_ids: std::collections::HashSet<String> = nodes
+                                    .iter()
+                                    .map(|n| n.id.clone())
+                                    .collect();
                                 let edges: Vec<_> = data
                                     .edges
                                     .iter()
                                     .filter(|e| {
-                                        node_ids.contains(&e.source)
-                                            && node_ids.contains(&e.target)
+                                        node_ids.contains(&e.source) && node_ids.contains(&e.target)
                                     })
                                     .cloned()
                                     .collect();
-                                crate::server_functions::posts::GraphData { nodes, edges }
+                                crate::server_functions::posts::GraphData {
+                                    nodes,
+                                    edges,
+                                }
                             } else {
                                 data
                             };
-
-                            let json =
-                                serde_json::to_string(&filtered).unwrap_or_default();
+                            if is_filtered && filtered.nodes.len() < 2 {
+                                return 
+                                view! { <></> }
+                                    .into_view();
+                            }
+                            let json = serde_json::to_string(&filtered).unwrap_or_default();
+                            let graph_el = 
                             view! {
                                 <div
                                     id="graph-container"
                                     class="relative w-full overflow-hidden"
                                     style="height: 250px;"
-                                >
-                                </div>
+                                ></div>
                                 <script>
                                     {format!(
                                         r#"window.__GRAPH_DATA__ = {};
@@ -79,11 +87,24 @@ pub fn GraphView(
                                                 }});
                                             }}
                                         }})();"#,
-                                        json
+                                        json,
                                     )}
                                 </script>
+                            };
+                            if is_filtered {
+
+                                view! {
+                                    <div class="mt-16 border border-[#1b2029] rounded-xl p-4 bg-[#0D1117]">
+                                        <h3 class="text-sm font-medium text-[#8B949E] mb-4 text-center">
+                                            "Related Posts"
+                                        </h3>
+                                        {graph_el}
+                                    </div>
+                                }
+                                    .into_view()
+                            } else {
+                                graph_el.into_view()
                             }
-                                .into_view()
                         }
                         Err(e) => {
                             view! {
