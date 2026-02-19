@@ -63,7 +63,7 @@ pub fn GraphView(
                                 <div
                                     id="graph-container"
                                     class="relative w-full overflow-hidden"
-                                    style="height: 250px;"
+                                    style="height: 220px;"
                                 ></div>
                                 <script>
                                     {format!(
@@ -94,7 +94,7 @@ pub fn GraphView(
                             if is_filtered {
 
                                 view! {
-                                    <div class="mt-16 border border-[#1b2029] rounded-xl p-4 bg-[#0D1117]">
+                                    <div class="mt-16 border border-[#30363D] rounded-xl p-4 bg-[#161B22]">
                                         <h3 class="text-sm font-medium text-[#8B949E] mb-4 text-center">
                                             "Related Posts"
                                         </h3>

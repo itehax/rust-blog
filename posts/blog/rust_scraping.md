@@ -39,11 +39,7 @@ Now, No more talk and **let's get started!**
 
 ## Start scraping airbnb 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 pub async fn scrape_airbnb(place: &str) -> Result<(), Box<dyn Error>> {
     let driver = initialize_driver().await?;
@@ -60,17 +56,13 @@ pub async fn scrape_airbnb(place: &str) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 ```
-</div>
+
 
 This is the function that will be called in the main, to start scraping we need to run our [webdriver](https://googlechromelabs.github.io/chrome-for-testing/), which will expose a port that our framework will connect to.
 In my case I will use chrome and maximize the window.
 Note: i added a sleep of 2 seconds in order to make the website page load.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 async fn initialize_driver() -> Result<WebDriver, WebDriverError> {
     let caps = DesiredCapabilities::chrome();
@@ -79,7 +71,7 @@ async fn initialize_driver() -> Result<WebDriver, WebDriverError> {
     Ok(driver)
 }
 ```
-</div>
+
 
 Next our driver will open our url, in this case that of airbnb. 
 
@@ -89,11 +81,7 @@ The page we are currently on is this.
 On the left, circled in red we find the button while on the right the corresponding html element. Underlined in yellow is the class that corresponds to the element, in this case useless but very useful to distinguish between elements of the same type using css selectors.
 What we want to do now is to press the button that says everywhere (in Italian, ovunque) and then search for our desired place and begin the research.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 async fn search_location(driver: &WebDriver, place: &str) -> Result<(), WebDriverError> {
     click_choose_place(driver).await?;
@@ -105,15 +93,11 @@ async fn search_location(driver: &WebDriver, place: &str) -> Result<(), WebDrive
     Ok(())
 }
 ```
-</div>
+
 
 After copying the css selector associated with the button, we can use the find function provided by the webdriver to search for the element and if it is found, it will be clicked via the **click function**, associated with the found element instance.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 async fn click_choose_place(driver: &WebDriver) -> Result<(), WebDriverError> {
     driver
@@ -123,17 +107,13 @@ async fn click_choose_place(driver: &WebDriver) -> Result<(), WebDriverError> {
     Ok(())
 }
 ```
-</div>
+
 
 <img src="/images/blog_images/scraping2.png">
 
 Now all we have to do is enter the location; this is the function that takes care of that. 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 async fn write_place(driver: &WebDriver, place: &str) -> Result<(), WebDriverError> {
     let input = driver
@@ -146,7 +126,7 @@ async fn write_place(driver: &WebDriver, place: &str) -> Result<(), WebDriverErr
     Ok(())
 }
 ```
-</div>
+
 
 In this case after finding the input element we will check that one condition is verified, namely that the element is clickable, in fact after pressing the first button the input box may not have been loaded yet causing an error in the search for the selector and thus compromising the whole scrape.
 In addition to having the function of clicking on elements found by the driver, we have another high-level one, which allows us to **write text** (keys) in our element.
@@ -164,11 +144,7 @@ Now we could already start extracting data, but as we scroll further down the pa
 To automate this process, we can keep clicking the button that leads to our page until it is no longer there or, in the case of airbnb, no longer clickable.
 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 async fn scrape_all(driver: WebDriver) -> Result<(), Box<dyn Error>> {
     driver
@@ -231,7 +207,7 @@ async fn load_next_page(
     Ok(())
 }
 ```
-</div>
+
 
 Now focus on the algorithm and not on the functions to extract the information and write it into the csv file.
 
@@ -242,25 +218,17 @@ Next we check that the button to go to the next page is present, if it is presen
 
 What we are missing now is to extract the information that we are interested in, in our case a page will contain more than one accommodation, so we will not search for just one item, but for all the items on our page. Attached is the code.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 async fn get_house_elements(driver: &WebDriver) -> Result<Vec<WebElement>, WebDriverError> {
     driver.find_all(By::Css("#site-content > div > div:nth-child(2) > div > div > div > div > div.gsgwcjk.g8ge8f1.g14v8520.dir.dir-ltr > div.dir.dir-ltr > div > div.c1l1h97y.dir.dir-ltr > div > div > div > div.cy5jw6o.dir.dir-ltr > div > div.g1qv1ctd.c1v0rf5q.dir.dir-ltr")).await
 }
 ```
-</div>
+
 
 Now there are only 2 steps left, extracting the information and writing it into a csv file.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 #[derive(Debug, Serialize)]
 struct BnbDetails {
@@ -300,7 +268,7 @@ impl BnbDetails {
 }
 ... 
 ```
-</div>
+
 
 This is the struct that contains our data, I only included in the code the method to extract the title, as the others are very similar.
 The logic is again, to find the element and in this case use the function text to get the text inside the element.

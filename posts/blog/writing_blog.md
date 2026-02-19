@@ -54,11 +54,7 @@ One thing I liked about leptos are the [**server functions**](https://leptos-rs.
 
 This is how my server function looks like!
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 #[server(GetPosts, "/api")]
 pub async fn get_posts() -> Result<HashMap<PostType, Vec<Post>>, ServerFnError> {
@@ -77,7 +73,7 @@ pub async fn get_posts() -> Result<HashMap<PostType, Vec<Post>>, ServerFnError> 
 }
 
 ```
-</div>
+
 
 As you can see from the code, the function returns if everything went correctly a hashmap that has as its key the PostType type and as its value a Vec of Post.
 
@@ -85,11 +81,7 @@ In particular, since the logic of the projects and books section is the same as 
 
 You can find the definition of these types here. 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct PostMetadata {
@@ -125,15 +117,11 @@ pub enum PostType {
 }
 
 ```
-</div>
+
 
 Finally, here is the part that deals with parsing md files.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 pub fn parse_post_content(content: &str) -> Option<Post> {
     use gray_matter::engine::YAML;
@@ -160,7 +148,7 @@ pub fn parse_post_content(content: &str) -> Option<Post> {
 }
 
 ```
-</div>
+
 
 ---
 
@@ -171,11 +159,7 @@ In my case, I had to create a **dockerfile** and then upload it to a hosting tha
 
 That's the dockerfile.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Dockerfile</p>
-                </div>
-
+> [!code Dockerfile]
 ```dockerfile
 FROM rustlang/rust:nightly-bullseye as builder
 
@@ -208,7 +192,7 @@ EXPOSE 3000
 CMD [ "/app/itehax-website" ]
 
 ```
-</div>
+
 
 Nothing really hard, i actually tried to use [cargo chef](https://github.com/LukeMathWalker/cargo-chef) to speed up the building process, but it didn't worked, probably because of the way cargo.toml is structured, however I didn't investigate all that much at the moment.
 
@@ -218,11 +202,7 @@ I decided to deploy on [fly.io](fly.io), mainly because it has a free plan, plus
 
 This is the code that takes advantage of **github actions** to make sure that each time the code is pushed into the main, it is automatically deployed
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Yml</p>
-                </div>
-
+> [!code Yml]
 ```yml
 name: Fly Deploy
 on:
@@ -241,7 +221,7 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 ```
-</div>
+
 
 ---
 

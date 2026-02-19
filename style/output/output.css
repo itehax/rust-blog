@@ -1187,9 +1187,14 @@ body {
   --tw-prose-quote-borders: #30363D;
   --tw-prose-captions: #8B949E;
   --tw-prose-code: #E6EDF3;
+  --tw-prose-pre-code: #C9D1D9;
   --tw-prose-pre-bg: #161B22;
   --tw-prose-th-borders: #30363D;
   --tw-prose-td-borders: #30363D;
+}
+
+.visible {
+  visibility: visible;
 }
 
 .fixed {
@@ -1254,16 +1259,12 @@ body {
   margin-bottom: 1rem;
 }
 
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
 .mb-auto {
   margin-bottom: auto;
 }
 
-.ml-2 {
-  margin-left: 0.5rem;
+.ml-1 {
+  margin-left: 0.25rem;
 }
 
 .mt-1 {
@@ -1338,6 +1339,10 @@ body {
   height: 0.75rem;
 }
 
+.h-3\.5 {
+  height: 0.875rem;
+}
+
 .h-4 {
   height: 1rem;
 }
@@ -1348,6 +1353,10 @@ body {
 
 .h-6 {
   height: 1.5rem;
+}
+
+.h-7 {
+  height: 1.75rem;
 }
 
 .h-8 {
@@ -1374,6 +1383,10 @@ body {
   width: 0.75rem;
 }
 
+.w-3\.5 {
+  width: 0.875rem;
+}
+
 .w-4 {
   width: 1rem;
 }
@@ -1384,6 +1397,10 @@ body {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.w-7 {
+  width: 1.75rem;
 }
 
 .w-8 {
@@ -1491,6 +1508,10 @@ body {
   gap: 0.5rem;
 }
 
+.gap-3 {
+  gap: 0.75rem;
+}
+
 .gap-4 {
   gap: 1rem;
 }
@@ -1526,6 +1547,10 @@ body {
   overflow-wrap: break-word;
 }
 
+.rounded {
+  border-radius: 0.25rem;
+}
+
 .rounded-full {
   border-radius: 9999px;
 }
@@ -1548,11 +1573,6 @@ body {
 
 .border-b {
   border-bottom-width: 1px;
-}
-
-.border-\[\#1b2029\] {
-  --tw-border-opacity: 1;
-  border-color: rgb(27 32 41 / var(--tw-border-opacity, 1));
 }
 
 .border-\[\#30363D\] {
@@ -1593,19 +1613,34 @@ body {
   background-color: rgb(22 27 34 / var(--tw-bg-opacity, 1));
 }
 
+.bg-\[\#21262D\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(33 38 45 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#28C840\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(40 200 64 / var(--tw-bg-opacity, 1));
+}
+
 .bg-\[\#58A6FF\] {
   --tw-bg-opacity: 1;
   background-color: rgb(88 166 255 / var(--tw-bg-opacity, 1));
 }
 
+.bg-\[\#FF5F57\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 95 87 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#FFBD2E\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 189 46 / var(--tw-bg-opacity, 1));
+}
+
 .bg-blue-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
-}
-
-.bg-blue-950 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(23 37 84 / var(--tw-bg-opacity, 1));
 }
 
 .bg-gray-800\/40 {
@@ -1614,31 +1649,6 @@ body {
 
 .bg-gray-800\/50 {
   background-color: rgb(31 41 55 / 0.5);
-}
-
-.bg-green-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity, 1));
-}
-
-.bg-red-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
-}
-
-.bg-yellow-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(250 204 21 / var(--tw-bg-opacity, 1));
-}
-
-.bg-zinc-800 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(39 39 42 / var(--tw-bg-opacity, 1));
-}
-
-.bg-zinc-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 24 27 / var(--tw-bg-opacity, 1));
 }
 
 .bg-gradient-to-r {
@@ -1716,6 +1726,11 @@ body {
   padding-bottom: 0.5rem;
 }
 
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -1724,6 +1739,11 @@ body {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .pb-12 {
@@ -1865,11 +1885,6 @@ body {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-.text-zinc-400 {
-  --tw-text-opacity: 1;
-  color: rgb(161 161 170 / var(--tw-text-opacity, 1));
-}
-
 .shadow-2xl {
   --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
@@ -1942,6 +1957,274 @@ body {
 
 .\[start\:end\] {
   start: end;
+}
+
+/* =========================================================
+   Theme design tokens
+   Dark is the default; light is activated via data-theme="light"
+   on the <html> element.
+   ========================================================= */
+
+:root {
+  --bg-primary:    #0D1117;
+  --bg-surface:    #161B22;
+  --text-primary:  #E6EDF3;
+  --text-secondary:#C9D1D9;
+  --text-muted:    #8B949E;
+  --border:        #30363D;
+  --border-subtle: #1b2029;
+  --accent:        #58A6FF;
+  /* Graph */
+  --graph-link:               #4A5568;
+  --graph-link-highlight:     #58A6FF;
+  --graph-label:              #8B949E;
+  --graph-node-fill:          #58A6FF;
+  --graph-node-stroke:        #161B22;
+  --graph-node-highlight-fill:#E6EDF3;
+}
+
+[data-theme="light"] {
+  --bg-primary:    #F6F8FA;
+  --bg-surface:    #FFFFFF;
+  --text-primary:  #1C2128;
+  --text-secondary:#24292F;
+  --text-muted:    #57606A;
+  --border:        #D0D7DE;
+  --border-subtle: #EAEEF2;
+  --accent:        #0969DA;
+  /* Graph */
+  --graph-link:               #ADBAC7;
+  --graph-link-highlight:     #0969DA;
+  --graph-label:              #57606A;
+  --graph-node-fill:          #0969DA;
+  --graph-node-stroke:        #F6F8FA;
+  --graph-node-highlight-fill:#1C2128;
+}
+
+/* =========================================================
+   Light-theme overrides for hardcoded Tailwind colour classes
+   The ancestor-attribute selector wins over plain utility classes
+   without needing !important.
+   ========================================================= */
+
+/* Backgrounds */
+
+[data-theme="light"] .bg-\[\#0D1117\] {
+  background-color: #F6F8FA !important;
+}
+
+[data-theme="light"] .bg-\[\#161B22\] {
+  background-color: #FFFFFF !important;
+}
+
+/* Body background (set via <Body class="..."> in each route) */
+
+[data-theme="light"] body {
+  background-color: #F6F8FA !important;
+}
+
+/* Text – primary */
+
+[data-theme="light"] .text-\[\#E6EDF3\]              {
+  color: #1C2128 !important;
+}
+
+[data-theme="light"] .hover\:text-\[\#E6EDF3\]:hover {
+  color: #1C2128 !important;
+}
+
+/* Text – secondary */
+
+[data-theme="light"] .text-\[\#C9D1D9\] {
+  color: #24292F !important;
+}
+
+/* Text – muted */
+
+[data-theme="light"] .text-\[\#8B949E\] {
+  color: #57606A !important;
+}
+
+/* Borders */
+
+[data-theme="light"] .border-\[\#30363D\] {
+  border-color: #D0D7DE !important;
+}
+
+[data-theme="light"] .border-\[\#1b2029\] {
+  border-color: #EAEEF2 !important;
+}
+
+/* Social-icon colours (Tailwind named grays used in home.rs) */
+
+[data-theme="light"] .text-gray-500              {
+  color: #57606A !important;
+}
+
+[data-theme="light"] .hover\:text-gray-200:hover {
+  color: #1C2128 !important;
+}
+
+/* Blue accent links */
+
+[data-theme="light"] .text-blue-500              {
+  color: #0969DA !important;
+}
+
+[data-theme="light"] .hover\:text-blue-400:hover {
+  color: #0550AE !important;
+}
+
+/* Prose overrides for blog / writing articles */
+
+[data-theme="light"] .prose-blog {
+  --tw-prose-body:         #24292F;
+  --tw-prose-headings:     #1C2128;
+  --tw-prose-lead:         #1C2128;
+  --tw-prose-links:        #0969DA;
+  --tw-prose-bold:         #1C2128;
+  --tw-prose-counters:     #57606A;
+  --tw-prose-bullets:      #57606A;
+  --tw-prose-hr:           #D0D7DE;
+  --tw-prose-quotes:       #24292F;
+  --tw-prose-quote-borders:#D0D7DE;
+  --tw-prose-captions:     #57606A;
+  --tw-prose-code:         #1C2128;
+  --tw-prose-pre-code:     #24292F;
+  --tw-prose-pre-bg:       #F0F4F8;
+  --tw-prose-th-borders:   #D0D7DE;
+  --tw-prose-td-borders:   #D0D7DE;
+}
+
+/* Selection highlight in light mode */
+
+[data-theme="light"] ::-moz-selection {
+  background-color: rgba(9, 105, 218, 0.15);
+}
+
+[data-theme="light"] ::selection {
+  background-color: rgba(9, 105, 218, 0.15);
+}
+
+/* =========================================================
+   Theme toggle icon visibility
+   In dark mode: show sun (click → light).
+   In light mode: show moon (click → dark).
+   ========================================================= */
+
+.theme-icon-moon                        {
+  display: none;
+}
+
+[data-theme="light"] .theme-icon-sun   {
+  display: none;
+}
+
+[data-theme="light"] .theme-icon-moon  {
+  display: block;
+}
+
+/* =========================================================
+   Article / post page – additional light-mode overrides
+   ========================================================= */
+
+/* Article nav bar (opacity modifier variants not caught by simple class override) */
+
+[data-theme="light"] .bg-\[\#0D1117\]\/98 {
+  background-color: rgb(246 248 250 / 0.98) !important;
+}
+
+/* ToC dropdown card hovers (named Tailwind grays) */
+
+[data-theme="light"] .border-gray-700          {
+  border-color: #D0D7DE !important;
+}
+
+[data-theme="light"] .border-gray-600          {
+  border-color: #ADBAC7 !important;
+}
+
+[data-theme="light"] .bg-gray-800\/40          {
+  background-color: rgba(220, 228, 240, 0.4) !important;
+}
+
+[data-theme="light"] .bg-gray-800\/50          {
+  background-color: rgba(220, 228, 240, 0.5) !important;
+}
+
+[data-theme="light"] .text-gray-200            {
+  color: #1C2128 !important;
+}
+
+[data-theme="light"] .text-gray-300            {
+  color: #424A53 !important;
+}
+
+[data-theme="light"] .text-gray-400            {
+  color: #57606A !important;
+}
+
+[data-theme="light"] .hover\:text-white:hover  {
+  color: #1C2128 !important;
+}
+
+/* Tag badges on post cards */
+
+[data-theme="light"] .text-\[\#58A6FF\]        {
+  color: #0969DA !important;
+}
+
+/* Scroll progress bar and accent colours */
+
+[data-theme="light"] .bg-\[\#58A6FF\]          {
+  background-color: #0969DA !important;
+}
+
+/* =========================================================
+   [!code] and [!term] directive block styles
+   ========================================================= */
+
+/* Strip prose margins and radius from the inner <pre> so the
+   container's own border-radius shows cleanly. */
+
+.itx-code-block pre,
+.itx-term-block  pre {
+  margin-top:    0 !important;
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* The code block header adjusts to the current theme via the
+   existing [data-theme="light"] overrides for bg-[#161B22] and
+   border-[#30363D] that are already defined above.             */
+
+/* Terminal blocks always keep a dark background regardless of
+   the active colour theme – terminals look wrong in light.     */
+
+.itx-term-block {
+  /* Pin prose colour variables used by the inner <pre>/<code>  */
+  --tw-prose-pre-bg: #0D1117;
+  --tw-prose-code:   #C9D1D9;
+  --tw-prose-pre-code: #C9D1D9;
+}
+
+/* Light-mode: keep the terminal header bar dark                */
+
+[data-theme="light"] .itx-term-header {
+  background-color: #21262D !important;
+}
+
+/* Light-mode: keep the terminal body wrapper dark              */
+
+[data-theme="light"] .itx-term-body {
+  background-color: #0D1117 !important;
+}
+
+/* Light-mode: code block title bar – use surface/border tokens */
+
+[data-theme="light"] .itx-code-header {
+  background-color: #F0F4F8 !important;
+  border-bottom-color: #D0D7DE !important;
 }
 
 @media (min-width: 768px) {

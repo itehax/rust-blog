@@ -328,6 +328,58 @@ cfg_if::cfg_if! {
                 )
             }).to_string();
 
+            // Post-process: [!code Title] + fenced code block → styled code panel
+            //
+            //   > [!code src/main.rs]
+            //   ```rust
+            //   fn main() { ... }
+            //   ```
+            //
+            // Title is optional – omit it for an unlabelled code block.
+            let code_re = regex::Regex::new(
+                r#"(?s)<blockquote>\s*<p>\[!code(?:\s+([^\]]*))?\]</p>\s*</blockquote>\s*(<pre><code[^>]*>[\s\S]*?</code></pre>)"#
+            ).unwrap();
+            html_output = code_re.replace_all(&html_output, |caps: &regex::Captures| {
+                let title = caps.get(1).map(|m| m.as_str().trim()).unwrap_or("");
+                let pre_block = &caps[2];
+                let header = if title.is_empty() {
+                    String::new()
+                } else {
+                    format!(
+                        r#"<div class="itx-code-header flex items-center gap-2 px-4 py-2 bg-[#161B22] border-b border-[#30363D]"><svg class="w-3.5 h-3.5 text-[#8B949E] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg><span class="text-xs font-mono text-[#8B949E]">{}</span></div>"#,
+                        title
+                    )
+                };
+                format!(
+                    r#"<div class="itx-code-block overflow-hidden rounded-lg border border-[#30363D] my-6">{}{}</div>"#,
+                    header, pre_block
+                )
+            }).to_string();
+
+            // Post-process: [!term Title] (or [!terminal Title]) + code block → terminal panel
+            //
+            //   > [!term cargo build]
+            //   ```txt
+            //   Compiling my_crate v0.1.0
+            //   Finished release target
+            //   ```
+            //
+            // Title is optional – defaults to "terminal".
+            let term_re = regex::Regex::new(
+                r#"(?s)<blockquote>\s*<p>\[!term(?:inal)?(?:\s+([^\]]*))?\]</p>\s*</blockquote>\s*(<pre><code[^>]*>[\s\S]*?</code></pre>)"#
+            ).unwrap();
+            html_output = term_re.replace_all(&html_output, |caps: &regex::Captures| {
+                let title = caps.get(1)
+                    .map(|m| m.as_str().trim())
+                    .filter(|s| !s.is_empty())
+                    .unwrap_or("terminal");
+                let pre_block = &caps[2];
+                format!(
+                    r#"<div class="itx-term-block overflow-hidden rounded-lg my-6"><div class="itx-term-header flex items-center gap-1.5 px-4 py-2.5 bg-[#21262D]"><span class="w-3 h-3 rounded-full bg-[#FF5F57] shrink-0"></span><span class="w-3 h-3 rounded-full bg-[#FFBD2E] shrink-0"></span><span class="w-3 h-3 rounded-full bg-[#28C840] shrink-0"></span><span class="text-xs font-mono text-[#8B949E] ml-1">{}</span></div><div class="itx-term-body">{}</div></div>"#,
+                    title, pre_block
+                )
+            }).to_string();
+
             Some(Post::new(post_metadata, html_output, toc))
         }
 

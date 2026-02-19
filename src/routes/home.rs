@@ -7,13 +7,23 @@ use rand::seq::SliceRandom;
 pub fn Home() -> impl IntoView {
     let quotes = [
         "'My crime is that of curiosity",
-        //        "'Ethereal, almost ghostly",
-        //        "'Metalanguage, sometimes I think my voice belongs"
     ];
-    let mut rng = rand::thread_rng(); /* Would be better to init only once but don't care */
+    let mut rng = rand::thread_rng();
     let title = "Edoardo D'Errico | Cybersecurity & CTF Writeups | Itehax";
     let description = "Cybersecurity writeups and CTF solutions by Edoardo D'Errico. Technical posts on cryptography, exploit development, and security research.";
     let url = "https://edoardoderrico.com/";
+
+    let toggle_theme = move |_: web_sys::MouseEvent| {
+        let window = web_sys::window().unwrap();
+        let doc = window.document().unwrap();
+        let html = doc.document_element().unwrap();
+        let current = html.get_attribute("data-theme").unwrap_or_else(|| "dark".to_string());
+        let new_theme = if current == "dark" { "light" } else { "dark" };
+        let _ = html.set_attribute("data-theme", new_theme);
+        if let Ok(Some(storage)) = window.local_storage() {
+            let _ = storage.set_item("theme", new_theme);
+        }
+    };
     view! {
         <Html lang="en" class="h-full" />
         <Title text=title />
@@ -92,13 +102,6 @@ pub fn Home() -> impl IntoView {
                             <a class="font-medium text-[#E6EDF3]" href="about" aria-current="page">
                                 "About"
                             </a>
-                            // <a
-                            // class="font-medium text-[#E6EDF3]"
-                            // href="manifesto"
-                            // aria-current="page"
-                            // >
-                            // "Manifesto"
-                            // </a>
                             <a
                                 class="font-medium  text-[#8B949E]  hover:text-[#E6EDF3]"
                                 href="blog"
@@ -112,12 +115,48 @@ pub fn Home() -> impl IntoView {
                             >
                                 "R/W"
                             </a>
-                        // <a
-                        // class="font-medium  text-[#8B949E]  hover:text-[#E6EDF3]"
-                        // href="projects"
-                        // >
-                        // "Projects"
-                        // </a>
+
+                            // Theme toggle (sun / moon)
+                            <button
+                                on:click=toggle_theme
+                                aria-label="Toggle colour theme"
+                                class="inline-flex items-center justify-center w-8 h-8 rounded-md text-[#8B949E] hover:text-[#E6EDF3] transition"
+                            >
+                                // Sun icon (visible in dark mode – click to go light)
+                                <svg
+                                    class="theme-icon-sun w-4 h-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                                // Moon icon (visible in light mode – click to go dark)
+                                <svg
+                                    class="theme-icon-moon w-4 h-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </nav>
@@ -125,13 +164,13 @@ pub fn Home() -> impl IntoView {
             // <!-- ========== END HEADER ========== -->
             // <!-- ========== MAIN CONTENT ========== -->
             <main id="content" role="main">
-                <div class="text-center py-10 px-4 sm:px-6 lg:px-8">
+                <div class="text-center py-6 px-4 sm:px-6 lg:px-8">
                     <h1 class="block text-2xl font-bold  sm:text-4xl animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
                         "Edoardo D'Errico."
                     </h1>
                     <p class="mt-5 text-lg text-[#E6EDF3]">{quotes.choose(&mut rng).cloned()}</p>
 
-                    <div class="mt-18 flex flex-col justify-center items-center gap-2 sm:flex-row sm:gap-3">
+                    <div class="mt-4 flex flex-col justify-center items-center gap-2 sm:flex-row sm:gap-3">
                         // <!-- Social Brands -->
                         <div class="mt-3 space-x-2">
                             <a
@@ -262,8 +301,8 @@ pub fn Home() -> impl IntoView {
                     </div>
                 </div>
             </main>
-            <div class="w-full px-4 sm:px-6 lg:px-8 mb-8">
-                <div class="border border-[#1b2029] rounded-xl p-4 bg-[#0D1117]">
+            <div class="w-full px-4 sm:px-6 lg:px-8 mb-4">
+                <div class="border border-[#30363D] rounded-xl p-4 bg-[#161B22]">
                     <h3 class="text-sm font-medium text-[#8B949E] mb-4 text-center">
                         "Post Connections"
                     </h3>

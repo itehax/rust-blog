@@ -48,24 +48,16 @@ As explained [here](https://adventures.michaelfbryan.com/posts/deserializing-bin
 This is the code that deals with doing this in C , another similar approach would use ```memcpy```.
 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 struct my_struct { int a, b, c; char d[0xFF]; };
 my_struct* s = (my_struct*) (pointer_to_file);
 ```
-</div>
+
 
 The correspondent in rust,we will use `std::slice::from_raw_parts_mut`, which is an unsafe function, we are using that because in the case that our file is badly formatted, we have no interest in continuing the program, alternatively there are other less performing options.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn fill_struct_from_file<T>(structure: &mut T, file: &mut File) {
     unsafe {
@@ -105,11 +97,7 @@ In this post, I will explain the various structures from which the PE format is 
 
 Note: I am __not going to explain all field of the structures__, but only those that __will interest us__ for the parser, I will attach a link to the __documentation__ for the other cases.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 let mut pe = PE::new(file_path);
 if !pe.is_valid() {
@@ -128,7 +116,8 @@ pe.dump_sections();
 pe.dump_import();
 pe.dump_export();
 ```
-</div>
+
+
 
 
 ### Dos header and Dos stub
@@ -137,11 +126,7 @@ When we open an .exe file (or any file that follows pe format) at offset 0, we w
 
 <img src="/images/blog_images/dos_header.png">
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_DOS_HEADER {  // DOS .EXE header
         WORD   e_magic;                     // Magic number
@@ -165,7 +150,7 @@ typedef struct _IMAGE_DOS_HEADER {  // DOS .EXE header
         LONG   e_lfanew;                    // File address of new exe header
 } IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER;
 ```
-</div>
+
 
 This is the initial structure of the file which is here for backward compatibility reasons and is called **dos header**, so we are not going to dig into this structure. 
 After this, we have the **dos stub** which is needed in case you wanted to run the file in a dos system, the string: 
@@ -175,11 +160,7 @@ would be printed, in a nutshell, in the dos stub we find the code that prints th
 
 Now let's talk about **code**, I have defined this structure that will contain all the useful **fields** to parse the pe file, we will go into more detail on each of these as the post progresses.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 struct PE {
     pe_type: PEType,
@@ -192,16 +173,12 @@ struct PE {
     export_section: IMAGE_SECTION_HEADER,
 }
 ```
-</div>
+
 
 
 I promised you that we would talk about the function that checks whether the file we have **follows the PE format**. This is the function that takes care of that: 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn is_valid(&mut self) -> bool {
     fill_struct_from_file(&mut self.image_dos_header, &mut self.file);
@@ -212,7 +189,7 @@ fn is_valid(&mut self) -> bool {
     true
 }
 ```
-</div>
+
 
 In a nutshell, we save the beginning of the file in a variable of type `IMAGE_DOS_HEADER`, so the fields of the struct will be filled with the corresponding values taken from the text file.
 Next we just check that the first `e_magic` field matches the `IMAGE_DOS_SIGNATURE` ("MZ") constant.
@@ -227,11 +204,7 @@ A very important field in this structure is the `e_lfanew` which will point to t
 Before parsing it, we need to determine whether our file is **32-bit** or **64-bit**.
 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_NT_HEADERS {
         DWORD                   Signature; // The bytes are "PE\0\0".
@@ -239,7 +212,7 @@ typedef struct _IMAGE_NT_HEADERS {
         IMAGE_OPTIONAL_HEADER32 OptionalHeader;
 } IMAGE_NT_HEADERS32, *PIMAGE_NT_HEADERS32;
 ```
-</div>
+
 
 The pe file header, is defined in the struct [`_IMAGE_NT_HEADERS`](https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_nt_headers32). 
 There is this version and the 64-bit version, the difference will be in the [`OptionalHeader`](https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_optional_header32) field, which will be of type `IMAGE_OPTIONAL_HEADER64`. 
@@ -247,11 +220,7 @@ The `OptionalHeader`, ironically is not that optional because the loader need it
 properly.
 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_FILE_HEADER {
         WORD  Machine;
@@ -263,15 +232,11 @@ typedef struct _IMAGE_FILE_HEADER {
         WORD  Characteristics;
 } IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;
 ```
-</div>
+
 
 This is the [image file header](https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_file_header).
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_OPTIONAL_HEADER {
         WORD                 Magic;
@@ -307,15 +272,11 @@ typedef struct _IMAGE_OPTIONAL_HEADER {
         IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
 } IMAGE_OPTIONAL_HEADER32, *PIMAGE_OPTIONAL_HEADER32;
 ```
-</div>
+
 
 This is the image optional header 32.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_OPTIONAL_HEADER64 {
         WORD                 Magic;
@@ -350,7 +311,7 @@ typedef struct _IMAGE_OPTIONAL_HEADER64 {
         IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
 } IMAGE_OPTIONAL_HEADER64, *PIMAGE_OPTIONAL_HEADER64;
 ```
-</div>
+
 
 This is the image optional header 64.
 
@@ -361,11 +322,7 @@ The `magic` field indicates what we want to find, which is whether the file is 3
 To access this field in the file we need to use some basic arithmetic, you should know that the  `e_lfanew`  field of the image dos header will point to the struct  `_IMAGE_NT_HEADERS`, from this location we want to access the first element of the image optional header, so let's add the size of u32 (that would be the size of the dword signature in the image nt headers) and the size of the `IMAGE_FILE_HEADER`, in this way we will be at the beginning of the image optional header, being the first field what we are interested in (magic), we will just read a dword at that position to get it.
 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn seek_magic(&mut self) {
     let _magic_pos = self
@@ -379,15 +336,11 @@ fn seek_magic(&mut self) {
 }
 
 ```
-</div>
+
 
 After reading this field, we can compare it with the constants  `IMAGE_NT_OPTIONAL_HDR32_MAGIC` and ` IMAGE_NT_OPTIONAL_HDR64_MAGIC` to figure out whether the file is 32-bit or 64-bit.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn get_pe_type(&mut self) {
     let mut pe_type = IMAGE_OPTIONAL_HEADER_MAGIC::default();
@@ -405,15 +358,11 @@ fn get_pe_type(&mut self) {
 }
 
 ```
-</div>
+
 
 As I explained, there are 2 structures for the `_IMAGE_NT_HEADERS`, the 32 and the 64 structure, depending on the type of pe file we are going to parse the file and save the data in the appropriate structure, the offset of the structure, as already explained is in the ` e_lfanew` field.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn seek_image_nt_header(&mut self) {
     let _image_nt_header_pos = self
@@ -422,23 +371,19 @@ fn seek_image_nt_header(&mut self) {
         .expect("Unable to seek image_nt_header structure in the file");
  }
 ```
-</div>
+
 
 Now all we have to do is dump the fields we are interested in.
 I would like to pay special attention to the `DataDirectory` field in the optional image header, which is an array of `IMAGE_DATA_DIRECTORY`.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_DATA_DIRECTORY {
   DWORD VirtualAddress;
   DWORD Size;
 } IMAGE_DATA_DIRECTORY, *PIMAGE_DATA_DIRECTORY;
 ```
-</div>
+
 
 The `VirtualAddress` field is the RVA of the directory in question, while the `Size` is the size of the directory, in particular these fields will be useful for us to identify in which __sections__ our directories are located.
 To access the various directories these are the indexes.
@@ -449,11 +394,7 @@ Now some may wonder, what is a data directory?
 In a nutshell it's a piece of __data__ located within a **section** (which we will discuss later), this data is useful for the windows loader to properly execute the file, such as __directory import__ and __directory export__.
 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn dump_nt_header(&mut self) {
         match self.pe_type {
@@ -587,7 +528,7 @@ fn dump_nt_header(&mut self) {
         }
     }
 ```
-</div>
+
 
 
 <img src="/images/blog_images/optional.png">
@@ -606,11 +547,7 @@ To parse the sections correctly, first we need to know how many there are. To kn
 
 What we are going to parse is defined in the [`_IMAGE_SECTION_HEADER`](https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_section_header).
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_SECTION_HEADER {
   BYTE  Name[IMAGE_SIZEOF_SHORT_NAME];
@@ -628,7 +565,7 @@ typedef struct _IMAGE_SECTION_HEADER {
   DWORD Characteristics;
 } IMAGE_SECTION_HEADER, *PIMAGE_SECTION_HEADER;
 ```
-</div>
+
 
 
 <img src="/images/blog_images/section_table.png">
@@ -637,11 +574,7 @@ credit: https://tech-zealots.com/malware-analysis/pe-portable-executable-structu
 These sections, are in a **table**, which starts after the nt header position. So to access the nth table, we just multiply the size of the structure by the position we want to access.
 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn seek_nth_section(&mut self, nth: usize) {
     let image_nt_header_size = match self.pe_type {
@@ -671,15 +604,11 @@ fn get_sections(&mut self) {
 }
 
 ```
-</div>
+
 
 Here is the code for dumping section's information.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn dump_sections(&mut self) {
     self.get_sections();
@@ -704,7 +633,7 @@ fn dump_sections(&mut self) {
     }
 }
 ```
-</div>
+
 
 Now comes the most __difficult__ and most __important__ part of the parser.
 We are going to parse the __import directory__ and the __export directory__.
@@ -722,11 +651,7 @@ Before we delve into these two directories, I would like to remind you that as I
 Now I can post the complete code to get the sections.
 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn get_sections(&mut self) {
     let (import_rva, export_rva, number_of_sections) = match self.pe_type {
@@ -772,14 +697,10 @@ fn get_sections(&mut self) {
     }
 }
 ```
-</div>
+
 
 What we most care about is this piece of code:
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn get_sections(&mut self) {
     let (import_rva, export_rva, number_of_sections) = match self.pe_type {
@@ -817,7 +738,7 @@ fn get_sections(&mut self) {
     }
 }
 ```
-</div>
+
 
 In a nutshell, what this code is doing is checking that the import/export rva is within the __section range__, so it can figure out which section it is in.
 Basically is checking if `section_address <= import_rva < last_section_address`.
@@ -840,11 +761,7 @@ This is also well explained [here](https://www.ired.team/miscellaneous-reversing
 
 Now, the import information is contained in the `IMAGE_IMPORT_DESCRIPTOR` struct.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_IMPORT_DESCRIPTOR {
   union {
@@ -864,7 +781,7 @@ typedef struct _IMAGE_IMPORT_DESCRIPTOR {
   DWORD FirstThunk;
 } IMAGE_IMPORT_DESCRIPTOR,*PIMAGE_IMPORT_DESCRIPTOR;
 ```
-</div>
+
 
 We will have a number of these structs equal to the number of dlls imported, and each one will be after the other.
 
@@ -875,11 +792,7 @@ What we will do, then, is to keep iterating and advancing (we will advance by th
 
 Regarding the `FirstThunk` and the `OriginalFirstThunk` the former, will point to the so-called __IAT__ (import address table), and the latter to the __ILT__ (import lookup table), also known as the import name table.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_THUNK_DATA64 {
     union {
@@ -901,7 +814,7 @@ typedef struct _IMAGE_THUNK_DATA32 {
 } IMAGE_THUNK_DATA32;
 typedef IMAGE_THUNK_DATA32 * PIMAGE_THUNK_DATA32;
 ```
-</div>
+
 
 
 The structure they point to is `_IMAGE_THUNK_DATA`, on disk, the address of `Function` field will be the same as `AddressOfData`, at runtime however the address of `Function`, which corresponds to the __IAT__ , will be overwritten by the loader with the function va. 
@@ -912,11 +825,7 @@ Note: this information is very useful for [iat hooking](https://www.ired.team/of
 
 Now... some code.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn dump_import(&mut self) {
     let import_rva = match self.pe_type {
@@ -956,15 +865,11 @@ fn dump_import(&mut self) {
     }
 }
 ```
-</div>
+
 
 It is missing to explain how to print the name and the various functions, precisely this part of the code.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 let import_name_raw = self.import_section.PointerToRawData
     + (import_descriptor.Name - self.import_section.VirtualAddress);
@@ -973,7 +878,7 @@ let import_name = self.get_import_name(import_name_raw);
 println!("import -> {}", import_name)
 self.dump_ilt(import_descriptor);
 ```
-</div>
+
 
 To get the location of the file where the string is, we must perform the reasoning done earlier, so add to the offset of the section the address pointing to the name minus the virtual address of the section.
 
@@ -984,11 +889,7 @@ Once we have the address, we will go and create a `BufReader` and set the locati
 
 Next we convert the Vec to a String.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
 fn get_import_name(&mut self, import_name_raw: u32) -> String {
     let mut buf_reader = self.seek_import_name(import_name_raw);
@@ -1013,7 +914,7 @@ fn read_cstring_from_file(mut buf_reader: BufReader<&File>) -> String {
         .to_string()
 }
 ```
-</div>
+
 
 ---
 
@@ -1027,27 +928,19 @@ The [ordinal](https://learn.microsoft.com/en-us/cpp/build/exporting-functions-fr
 To check that the function is imported by ordinal, just check that the most significant bit of `AddressOfData` is set, if it, all we need to do is print the ordinal.
 In case it is imported by name instead, we need to read the address in `AddressOfData`, which will point to this structure.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_IMPORT_BY_NAME {
     WORD    Hint;
     CHAR   Name[1];
 } IMAGE_IMPORT_BY_NAME, *PIMAGE_IMPORT_BY_NAME;   
 ```
-</div>
+
 
 Then we need to add 2 to the memory pointer by this address to skip the `Hint` field and get the string.
 After that we just have to read the cstring at that location and print the address in ILT and IAT.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
     fn dump_thunk(&mut self, import_descriptor: IMAGE_IMPORT_DESCRIPTOR) {
         match self.pe_type {
@@ -1155,7 +1048,7 @@ After that we just have to read the cstring at that location and print the addre
             .expect("Unable to seek import name");
     }
 ```
-</div>
+
 
 Now we are going to dump the export directory.
 
@@ -1167,11 +1060,7 @@ Regarding the export directory, we will find it(in most cases) in the dlls, what
 
 The export directory is defined in this way.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C</p>
-                </div>
-
+> [!code C]
 ```C
 typedef struct _IMAGE_EXPORT_DIRECTORY {
   DWORD Characteristics;
@@ -1200,7 +1089,7 @@ typedef struct _IMAGE_EXPORT_DIRECTORY {
   DWORD AddressOfNameOrdinals;
 } IMAGE_EXPORT_DIRECTORY,*PIMAGE_EXPORT_DIRECTORY;  
 ```
-</div>
+
 
 First we should note that the export directory may not be present; if it is not present, the rva of the export directory will be zero, otherwise, as we did for the import, we want to __get the offset to this directory__. 
 Once we are in the right location, we can cast our structure, which will therefore contain all the data about the file we are parsing.
@@ -1218,11 +1107,7 @@ So all we have to do is multiply (as explained earlier), the size of the type we
 To access the function address, all we have to do is read a u32 at the address we want, and for the string, as we did with the imports, read until we find the null character. 
 
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code Rust]
 ```rust
         fn dump_export(&mut self) {
         let export_rva = match self.pe_type {
@@ -1303,7 +1188,7 @@ To access the function address, all we have to do is read a u32 at the address w
             .expect("Unable to seek export table");
     }
 ```
-</div>
+
 
 
 ## Wrapping up
@@ -1312,11 +1197,7 @@ If you have come this far __congratulations__, we are officially __done__!
 
 Here is the __output__ of our PE parser.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Console</p>
-                </div>
-
+> [!term Console]
 ```
 Dos Header:
     magic -> 0x5a4d
@@ -1651,5 +1532,5 @@ Export:
     name -> MiniDumpWriteDump
     address -> 6870
 ```
-</div>
+
 

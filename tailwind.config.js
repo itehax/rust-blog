@@ -91,6 +91,7 @@ module.exports = {
             '--tw-prose-quote-borders': "#30363D",
             '--tw-prose-captions': "#8B949E",
             '--tw-prose-code': "#E6EDF3",
+            '--tw-prose-pre-code': "#C9D1D9",
             '--tw-prose-pre-bg': "#161B22",
             '--tw-prose-th-borders': "#30363D",
             '--tw-prose-td-borders': "#30363D",

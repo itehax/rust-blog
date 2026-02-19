@@ -9,8 +9,19 @@ function initGraph() {
   if (container.dataset.graphInit) return;
   container.dataset.graphInit = "1";
 
+  // Read theme-aware colors from CSS variables (with fallbacks)
+  const style = getComputedStyle(document.documentElement);
+  const C = {
+    link:           style.getPropertyValue("--graph-link").trim()                 || "#4A5568",
+    linkHighlight:  style.getPropertyValue("--graph-link-highlight").trim()       || "#58A6FF",
+    label:          style.getPropertyValue("--graph-label").trim()                || "#8B949E",
+    nodeFill:       style.getPropertyValue("--graph-node-fill").trim()            || "#58A6FF",
+    nodeStroke:     style.getPropertyValue("--graph-node-stroke").trim()          || "#161B22",
+    nodeHighlight:  style.getPropertyValue("--graph-node-highlight-fill").trim()  || "#E6EDF3",
+  };
+
   const width = container.clientWidth;
-  const height = Math.min(width * 0.6, 300);
+  const height = Math.min(width * 0.6, 220);
   container.style.height = height + "px";
 
   const isMobile = width < 500;
@@ -57,9 +68,9 @@ function initGraph() {
     .selectAll("line")
     .data(validEdges)
     .join("line")
-    .attr("stroke", "#30363D")
+    .attr("stroke", C.link)
     .attr("stroke-width", 1.5)
-    .attr("stroke-opacity", 0.6);
+    .attr("stroke-opacity", 0.8);
 
   const label = svg
     .append("g")
@@ -68,7 +79,7 @@ function initGraph() {
     .join("text")
     .text((d) => d.title.length > 18 ? d.title.slice(0, 16) + "\u2026" : d.title)
     .attr("font-size", isMobile ? "8px" : "10px")
-    .attr("fill", "#8B949E")
+    .attr("fill", C.label)
     .attr("text-anchor", "middle")
     .attr("dy", -(nodeRadius + 4))
     .style("pointer-events", "none")
@@ -80,8 +91,8 @@ function initGraph() {
     .data(data.nodes)
     .join("circle")
     .attr("r", nodeRadius)
-    .attr("fill", "#58A6FF")
-    .attr("stroke", "#0D1117")
+    .attr("fill", C.nodeFill)
+    .attr("stroke", C.nodeStroke)
     .attr("stroke-width", 1.5)
     .style("cursor", "pointer")
     .call(drag(simulation));
@@ -100,7 +111,7 @@ function initGraph() {
     const connected = connectedNodes.get(d.id) || new Set();
     node
       .attr("fill", (n) =>
-        n.id === d.id || connected.has(n.id) ? "#E6EDF3" : "#58A6FF"
+        n.id === d.id || connected.has(n.id) ? C.nodeHighlight : C.nodeFill
       )
       .attr("opacity", (n) =>
         n.id === d.id || connected.has(n.id) ? 1 : 0.2
@@ -109,7 +120,7 @@ function initGraph() {
       .attr("stroke", (l) => {
         const sid = typeof l.source === "object" ? l.source.id : l.source;
         const tid = typeof l.target === "object" ? l.target.id : l.target;
-        return sid === d.id || tid === d.id ? "#58A6FF" : "#30363D";
+        return sid === d.id || tid === d.id ? C.linkHighlight : C.link;
       })
       .attr("stroke-opacity", (l) => {
         const sid = typeof l.source === "object" ? l.source.id : l.source;
@@ -118,7 +129,7 @@ function initGraph() {
       });
     label
       .attr("fill", (n) =>
-        n.id === d.id || connected.has(n.id) ? "#E6EDF3" : "#8B949E"
+        n.id === d.id || connected.has(n.id) ? C.nodeHighlight : C.label
       )
       .attr("opacity", (n) =>
         n.id === d.id || connected.has(n.id) ? 1 : 0.15
@@ -126,9 +137,9 @@ function initGraph() {
   }
 
   function unhighlight() {
-    node.attr("fill", "#58A6FF").attr("opacity", 1);
-    link.attr("stroke", "#30363D").attr("stroke-opacity", 0.6);
-    label.attr("fill", "#8B949E").attr("opacity", 1);
+    node.attr("fill", C.nodeFill).attr("opacity", 1);
+    link.attr("stroke", C.link).attr("stroke-opacity", 0.8);
+    label.attr("fill", C.label).attr("opacity", 1);
   }
 
   node

@@ -104,26 +104,18 @@ If we added nothing, the decryption function wouldn't know if the last bytes wer
 
 Armed with this logic and a fundamental grasp of modular arithmetic, the generalization becomes trivial. Here is the implementation.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">The pad function</p>
-                </div>
-
+> [!code The pad function]
 ```Python
 def pkcs_7(to_pad: bytes, block_size: int):
     pad = len(to_pad) % block_size
     missing = block_size - pad
     return to_pad + bytes([missing]) * missing
 ```
-</div>
+
 
 For the unpadding routine, the logic is inverted. We strictly interpret the final byte as a length indicator and strip the corresponding suffix. Crucially, this operation must only proceed after asserting that the padding is formally valid.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">The unpad function</p>
-                </div>
-
+> [!code The unpad function]
 ```Python
 def unpkcs_7(padded: bytes, block_size: int):
     pad = padded[-1]
@@ -134,7 +126,7 @@ def unpkcs_7(padded: bytes, block_size: int):
     return padded[:-pad]
 
 ```
-</div>
+
 
 As for the second inquiry regarding larger plaintexts: see you in Level 11.
 
@@ -194,11 +186,7 @@ If the first block has index 1, the mathematical formula for CBC encryption is: 
 
 ### The problem
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">The Black Box function</p>
-                </div>
-
+> [!code The Black Box function]
 ```Python
 def guess_mode(plaintext: bytes) -> tuple[bytes, int]:
     # Simulation of the black box function
@@ -221,8 +209,6 @@ def guess_mode(plaintext: bytes) -> tuple[bytes, int]:
     ciphertext = cipher.encrypt(payload)
     return (ciphertext, is_ecb)
 ```
-
-</div>
 
 In this level we are tasked with treating a function as a "Black Box" (or Oracle). This Oracle is hostile to analysis in two ways:
 
@@ -257,13 +243,8 @@ We can use this information as a discriminant:
 
 This concept can be easily generalized, what we need to do is just find a big input that allow two block to be the same, and check for repeating blocks.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">The detection functions</p>
-                </div>
-
+> [!code The detection functions]
 ```Python
-
 def get_blocks(buf, block_size):
     assert len(buf) % block_size == 0, "Buf len is not a multiple of block_size"
     return [buf[i : i + block_size] for i in range(0, len(buf), block_size)]
@@ -271,8 +252,10 @@ def get_blocks(buf, block_size):
 def detect_mode(ciphertext):
     blocks = get_blocks(ciphertext, 16)
     return len(blocks) != len(set(blocks))
+
 ```
-</div>
+
+
 
 --- 
 
@@ -287,8 +270,7 @@ We assume the ability to inject chosen plaintext into the system and observe the
 
 ### Problem Abstraction
 
-<div class="bg-blue-950 overflow-hidden rounded-md"> <div class="flex justify-between px-4 items-center text-xs text-white"> <p class="text-sm">The code to exploit</p> </div>
-
+> [!code The code to exploit]
 ```python
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
@@ -302,7 +284,7 @@ def ecb_oracle(plaintext: bytes) -> bytes:
     response = pad(plaintext + SECRET, 16)
     return cipher.encrypt(response)
 ```
-</div>
+
 
 
 We are facing an Oracle defined as:$$C = E_K(P \ || \ S)$$
@@ -330,8 +312,7 @@ Here an example of that increasing length:
     - Input "" $\to$ Output size 12 (2 blocks: ```dontre | adme\x02\x02```).
     - Input "A" $\to$ Output size 12.(2 blocks: ```adontr | eadme\x01```).
     - Input "AA" $\to$ Output size 18 (3 blocks ```aadont | readme | \x06\x06\x06\x06\x06\x06```).The **jump** from 12 to 18 tells us two things: the Block Size is 6, and we have pushed the padding into a new block.
-<div class="bg-blue-950 overflow-hidden rounded-md"> <div class="flex justify-between px-4 items-center text-xs text-white"> <p class="text-sm">Discover the block size</p> </div>
-
+> [!code Discover the block size]
 ```Python
 def discover_block_size(oracle, max_block_size) -> int:
     # another idea is using gcd! gcd(x*i,x*j) = x*gcd(i,j), find x
@@ -344,7 +325,7 @@ def discover_block_size(oracle, max_block_size) -> int:
 
     raise Exception("Unable to discover block size")
 ```
-</div>
+
 
 ---
 
@@ -442,11 +423,8 @@ By searching online, i found version of this attack even more optimized than min
 
 Here is the full implementation, combining the Oracle simulation, the block size discovery, and the optimized attack logic.
 
-<div class="bg-blue-950 overflow-hidden rounded-md"> <div class="flex justify-between px-4 items-center text-xs text-white"> <p class="text-sm">Full Solution</p> </div>
-
+> [!code Full Solution]
 ```Python
-
-
 def break_ecb_oracle(oracle) -> bytes:
     block_size = discover_block_size(oracle, 16)
 
@@ -483,7 +461,7 @@ def break_ecb_oracle(oracle) -> bytes:
     else:
         raise Exception("Oracle is not encrypting in Ecb Mode")
 ```
-</div>
+
 
 ---
 
@@ -508,15 +486,14 @@ You must understand that block ciphers process data in chunks. If the data prece
 
 ### Problem Abstraction
 
-<div class="bg-blue-950 overflow-hidden rounded-md"> <div class="flex justify-between px-4 items-center text-xs text-white"> <p class="text-sm">The code to exploit</p> </div>
-
+> [!code The code to exploit]
 ```python
 def ecb_oracle_harder(plaintext: bytes) -> bytes:
     cipher = AES.new(ECB_ORACLE_KEY, AES.MODE_ECB)
     response = pad(ECB_ORACLE_PREFIX + plaintext + SECRET, 16)
     return cipher.encrypt(response)
 ```
-</div>
+
 
 
 The Oracle has evolved. It is now defined as:
@@ -568,8 +545,7 @@ We scan the output blocks. If we find the block full of "A" at block index j, we
 
 Thus, **(j + 1) * block_size** is the total bytes consumed. Subtracting i (our input size) gives us the prefix length.
 
-<div class="bg-blue-950 overflow-hidden rounded-md"> <div class="flex justify-between px-4 items-center text-xs text-white"> <p class="text-sm">Find Prefix Length</p> </div>
-
+> [!code Find Prefix Length]
 ```Python
 def find_prefix_len(a_encrypted, block_size):
     """a_encrypted is an encrypted block string made of full A"""
@@ -581,26 +557,24 @@ def find_prefix_len(a_encrypted, block_size):
                 return (block_size * (j + 1)) - i
     raise Exception("Unable to find prefix len")
 ```
-</div>
+
 
 To align the blocks, i wrote this simply function that calculates what i called the "ceiling" multiple. If the prefix is 17 bytes, we need to reach 32. This function tells us where the next clean block starts.
 
-<div class="bg-blue-950 overflow-hidden rounded-md"> <div class="flex justify-between px-4 items-center text-xs text-white"> <p class="text-sm">The "ceiling" multiple</p> </div>
-
+> [!code The "ceiling" multiple]
 ```Python
 def get_aligned_multiple(number, block_size):
     q, r = divmod(number, block_size)
     return (q + (1 if r else 0)) * block_size
 ```
-</div>
+
 
 After that, we just need to calculate ```prefix_len``` and ```needed_fixup``` (the "junk" padding needed to align).
 
 
 So it is just matter to send: ```crafted = needed_fixup + padding + recovered + guess``` and selecting the right block!
 
-<div class="bg-blue-950 overflow-hidden rounded-md"> <div class="flex justify-between px-4 items-center text-xs text-white"> <p class="text-sm">General Byte-at-a-Time attack</p> </div>
-
+> [!code General Byte-at-a-Time attack]
 ```Python
 def break_ecb_oracle_harder(oracle) -> bytes:
     block_size = discover_block_size(oracle, 16)
@@ -651,7 +625,7 @@ def break_ecb_oracle_harder(oracle) -> bytes:
     else:
         raise Exception("Oracle is not encrypting in Ecb Mode")
 ```
-</div>
+
 
 ---
 
@@ -684,8 +658,7 @@ In early web implementations, **developers often encrypted state cookies believi
 For example, imagine a shopping cart cookie `item=123&price=100`. 
 An attacker could "cut" the encrypted block for a cheap item's price and "paste" it onto an expensive item's cookie.
 
-<div class="bg-blue-950 overflow-hidden rounded-md"> <div class="flex justify-between px-4 items-center text-xs text-white"> <p class="text-sm">The code to exploit</p> </div>
-
+> [!code The code to exploit]
 ```python
 uid = 0
 CUT_AND_PASTE_KEY = get_random_bytes(16)
@@ -708,7 +681,7 @@ def parse_cookie(encrypted_cookie: bytes):
         res[k] = v
     return res
 ```
-</div>
+
 
 We are dealing with a classic "structured cookie" scenario.
 The system uses a profile serialization format similar to URL query parameters:

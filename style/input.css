@@ -36,3 +36,184 @@
     scrollbar-width: none;
   }
 }
+
+/* =========================================================
+   Theme design tokens
+   Dark is the default; light is activated via data-theme="light"
+   on the <html> element.
+   ========================================================= */
+
+:root {
+  --bg-primary:    #0D1117;
+  --bg-surface:    #161B22;
+  --text-primary:  #E6EDF3;
+  --text-secondary:#C9D1D9;
+  --text-muted:    #8B949E;
+  --border:        #30363D;
+  --border-subtle: #1b2029;
+  --accent:        #58A6FF;
+
+  /* Graph */
+  --graph-link:               #4A5568;
+  --graph-link-highlight:     #58A6FF;
+  --graph-label:              #8B949E;
+  --graph-node-fill:          #58A6FF;
+  --graph-node-stroke:        #161B22;
+  --graph-node-highlight-fill:#E6EDF3;
+}
+
+[data-theme="light"] {
+  --bg-primary:    #F6F8FA;
+  --bg-surface:    #FFFFFF;
+  --text-primary:  #1C2128;
+  --text-secondary:#24292F;
+  --text-muted:    #57606A;
+  --border:        #D0D7DE;
+  --border-subtle: #EAEEF2;
+  --accent:        #0969DA;
+
+  /* Graph */
+  --graph-link:               #ADBAC7;
+  --graph-link-highlight:     #0969DA;
+  --graph-label:              #57606A;
+  --graph-node-fill:          #0969DA;
+  --graph-node-stroke:        #F6F8FA;
+  --graph-node-highlight-fill:#1C2128;
+}
+
+/* =========================================================
+   Light-theme overrides for hardcoded Tailwind colour classes
+   The ancestor-attribute selector wins over plain utility classes
+   without needing !important.
+   ========================================================= */
+
+/* Backgrounds */
+[data-theme="light"] .bg-\[\#0D1117\] { background-color: #F6F8FA !important; }
+[data-theme="light"] .bg-\[\#161B22\] { background-color: #FFFFFF !important; }
+
+/* Body background (set via <Body class="..."> in each route) */
+[data-theme="light"] body { background-color: #F6F8FA !important; }
+
+/* Text – primary */
+[data-theme="light"] .text-\[\#E6EDF3\]              { color: #1C2128 !important; }
+[data-theme="light"] .hover\:text-\[\#E6EDF3\]:hover { color: #1C2128 !important; }
+
+/* Text – secondary */
+[data-theme="light"] .text-\[\#C9D1D9\] { color: #24292F !important; }
+
+/* Text – muted */
+[data-theme="light"] .text-\[\#8B949E\] { color: #57606A !important; }
+
+/* Borders */
+[data-theme="light"] .border-\[\#30363D\] { border-color: #D0D7DE !important; }
+[data-theme="light"] .border-\[\#1b2029\] { border-color: #EAEEF2 !important; }
+
+/* Social-icon colours (Tailwind named grays used in home.rs) */
+[data-theme="light"] .text-gray-500              { color: #57606A !important; }
+[data-theme="light"] .hover\:text-gray-200:hover { color: #1C2128 !important; }
+
+/* Blue accent links */
+[data-theme="light"] .text-blue-500              { color: #0969DA !important; }
+[data-theme="light"] .hover\:text-blue-400:hover { color: #0550AE !important; }
+
+/* Prose overrides for blog / writing articles */
+[data-theme="light"] .prose-blog {
+  --tw-prose-body:         #24292F;
+  --tw-prose-headings:     #1C2128;
+  --tw-prose-lead:         #1C2128;
+  --tw-prose-links:        #0969DA;
+  --tw-prose-bold:         #1C2128;
+  --tw-prose-counters:     #57606A;
+  --tw-prose-bullets:      #57606A;
+  --tw-prose-hr:           #D0D7DE;
+  --tw-prose-quotes:       #24292F;
+  --tw-prose-quote-borders:#D0D7DE;
+  --tw-prose-captions:     #57606A;
+  --tw-prose-code:         #1C2128;
+  --tw-prose-pre-code:     #24292F;
+  --tw-prose-pre-bg:       #F0F4F8;
+  --tw-prose-th-borders:   #D0D7DE;
+  --tw-prose-td-borders:   #D0D7DE;
+}
+
+/* Selection highlight in light mode */
+[data-theme="light"] ::selection {
+  background-color: rgba(9, 105, 218, 0.15);
+}
+
+/* =========================================================
+   Theme toggle icon visibility
+   In dark mode: show sun (click → light).
+   In light mode: show moon (click → dark).
+   ========================================================= */
+
+.theme-icon-moon                        { display: none; }
+[data-theme="light"] .theme-icon-sun   { display: none; }
+[data-theme="light"] .theme-icon-moon  { display: block; }
+
+/* =========================================================
+   Article / post page – additional light-mode overrides
+   ========================================================= */
+
+/* Article nav bar (opacity modifier variants not caught by simple class override) */
+[data-theme="light"] .bg-\[\#0D1117\]\/98 {
+  background-color: rgb(246 248 250 / 0.98) !important;
+}
+
+/* ToC dropdown card hovers (named Tailwind grays) */
+[data-theme="light"] .border-gray-700          { border-color: #D0D7DE !important; }
+[data-theme="light"] .border-gray-600          { border-color: #ADBAC7 !important; }
+[data-theme="light"] .bg-gray-800\/40          { background-color: rgba(220, 228, 240, 0.4) !important; }
+[data-theme="light"] .bg-gray-800\/50          { background-color: rgba(220, 228, 240, 0.5) !important; }
+[data-theme="light"] .text-gray-200            { color: #1C2128 !important; }
+[data-theme="light"] .text-gray-300            { color: #424A53 !important; }
+[data-theme="light"] .text-gray-400            { color: #57606A !important; }
+[data-theme="light"] .hover\:text-white:hover  { color: #1C2128 !important; }
+
+/* Tag badges on post cards */
+[data-theme="light"] .text-\[\#58A6FF\]        { color: #0969DA !important; }
+
+/* Scroll progress bar and accent colours */
+[data-theme="light"] .bg-\[\#58A6FF\]          { background-color: #0969DA !important; }
+
+/* =========================================================
+   [!code] and [!term] directive block styles
+   ========================================================= */
+
+/* Strip prose margins and radius from the inner <pre> so the
+   container's own border-radius shows cleanly. */
+.itx-code-block pre,
+.itx-term-block  pre {
+  margin-top:    0 !important;
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* The code block header adjusts to the current theme via the
+   existing [data-theme="light"] overrides for bg-[#161B22] and
+   border-[#30363D] that are already defined above.             */
+
+/* Terminal blocks always keep a dark background regardless of
+   the active colour theme – terminals look wrong in light.     */
+.itx-term-block {
+  /* Pin prose colour variables used by the inner <pre>/<code>  */
+  --tw-prose-pre-bg: #0D1117;
+  --tw-prose-code:   #C9D1D9;
+  --tw-prose-pre-code: #C9D1D9;
+}
+
+/* Light-mode: keep the terminal header bar dark                */
+[data-theme="light"] .itx-term-header {
+  background-color: #21262D !important;
+}
+
+/* Light-mode: keep the terminal body wrapper dark              */
+[data-theme="light"] .itx-term-body {
+  background-color: #0D1117 !important;
+}
+
+/* Light-mode: code block title bar – use surface/border tokens */
+[data-theme="light"] .itx-code-header {
+  background-color: #F0F4F8 !important;
+  border-bottom-color: #D0D7DE !important;
+}

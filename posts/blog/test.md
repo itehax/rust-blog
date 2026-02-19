@@ -18,11 +18,7 @@ This is a test to see how an md file is rendered in my site, the file you see wa
 
 Let's start with some code!
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Dockerfile</p>
-                </div>
-
+> [!code Dockerfile]
 ```dockerfile
 # Use the official Rust image as the base image
 FROM rust:latest
@@ -38,18 +34,11 @@ RUN cargo build --release
 
 # Run the binary after the build
 CMD ["./target/release/my_app"]
-
 ```
-
-</div>
 
 Now some rust code!
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">Rust</p>
-                </div>
-
+> [!code src/main.rs]
 ```rust
 struct Person {
     name: String,
@@ -68,19 +57,12 @@ impl Person {
         println!("Hello, my name is {} and I'm {} years old.", self.name, self.age);
     }
 }
-
 ```
 
-</div>
+Now a bit of assembly code, as these topics will be covered in this blog
 
-Now a bit of assembly code,as these topics will be covered in this blog
-
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">X86 asm code</p>
-                </div>
-
-```x86asm               
+> [!code x86_64.asm]
+```x86asm
 ; get a write handle
 MOV rcx, STD_OUTPUT_HANDLE
 CALL    GetStdHandle
@@ -90,18 +72,12 @@ MOV whandle, eax            ; write handle
 MOV rcx, STD_INPUT_HANDLE
 CALL    GetStdHandle
 MOV rhandle, eax            ; read handle`
-``` 
-
-</div>
+```
 
 And finally... for importance, C code.
 
-<div class="bg-blue-950 overflow-hidden rounded-md">
-                <div class="flex justify-between px-4 items-center text-xs text-white">
-                    <p class="text-sm">C code</p>
-                </div>
-
-```c           
+> [!code example.c]
+```c
 void MyFunction()
 {
    TCHAR szBuffer[100];
@@ -125,9 +101,7 @@ void MyFunction()
                  &dwCount,
                  NULL);
 }
-``` 
-
-</div>
+```
 
 ### Heading Tags
 
@@ -140,7 +114,7 @@ void MyFunction()
 
 This is a paragraph tag. It's used for displaying text content.
 
-[Click me to visit Example website!](https://www.example.com) 
+[Click me to visit Example website!](https://www.example.com)
 
 Unordered list
 
@@ -162,32 +136,16 @@ Ordered list
 
 Now some terminal output!
 
-<div class="bg-zinc-900 overflow-hidden rounded-md">
-                <div class="flex items-center gap-1.5 px-4 py-2 bg-zinc-800">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    <p class="text-xs text-zinc-400 ml-2">Output</p>
-                </div>
-
+> [!term cargo build --release]
 ```txt
 $ cargo build --release
    Compiling my_app v0.1.0 (/usr/src/app)
     Finished release [optimized] target(s) in 3.45s
 ```
 
-</div>
-
 Running the binary:
 
-<div class="bg-zinc-900 overflow-hidden rounded-md">
-                <div class="flex items-center gap-1.5 px-4 py-2 bg-zinc-800">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    <p class="text-xs text-zinc-400 ml-2">Output</p>
-                </div>
-
+> [!term ./target/release/my_app]
 ```txt
 $ ./target/release/my_app
 Listening on http://127.0.0.1:3000
@@ -196,13 +154,11 @@ Listening on http://127.0.0.1:3000
 [ERROR] GET /blog/missing → 404 Not Found
 ```
 
-</div>
-
 Now some maths!
 
-<p>Integral $\int_{a}^{b} x^2 dx$ inside text. 
+<p>Integral $\int_{a}^{b} x^2 dx$ inside text.
 The same integral on display: $$\int_{a}^{b} x^2 \,dx$$
-and multiple integrals: 
+and multiple integrals:
 $$\iint_V \mu(u,v) \,du\,dv$$
 $$\iiint_V \mu(u,v,w) \,du\,dv\,dw$$
 $$\oint_V f(s) \,ds$$

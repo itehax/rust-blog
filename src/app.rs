@@ -22,6 +22,8 @@ pub fn App() -> impl IntoView {
             href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
             rel="stylesheet"
         />
+        // Early theme init: read localStorage before first paint to avoid flash
+        <Script>{r#"(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();"#}</Script>
         // <Link href="/fonts/ibm.css" rel="stylesheet"/>
         <Router fallback=|| {
             let mut outside_errors = Errors::default();

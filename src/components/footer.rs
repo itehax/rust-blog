@@ -5,7 +5,7 @@ pub fn HomeFooter() -> impl IntoView {
     let last_update = use_context::<Resource<(), Result<String, ServerFnError>>>()
         .expect("Last update resource not found in context");
     view! {
-        <footer class="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
+        <footer class="mt-auto w-full max-w-[85rem] py-6 px-4 sm:px-6 lg:px-8 mx-auto">
             <div class="text-center">
                 <div class="mt-3">
                     <p class="text-[#8B949E]">
