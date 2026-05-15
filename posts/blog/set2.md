@@ -1,13 +1,13 @@
 ---
 image_path: "/images/blog_images/set2.webp"
-title: "Learning Cryptography by Breaking It: Cryptopals Set 2" 
+title: "Padding Oracles and Cryptographic Abuse: Cryptopals Set 2"
 date: 2026-01-21
-description: A writeup of the Cryptopals Crypto Challenge Set 2.
-project_link: none 
-seo_title: "Cryptopals Set 2 Solutions: PKCS#7 Padding and AES-ECB Attacks."
-seo_description: "Technical walkthrough of Cryptopals Set 2 challenges, covering PKCS#7 Padding, ECB/CBC detection, and byte-at-a-time decryption techniques."
-seo_keywords: "cryptopals, cryptography, CBC mode, padding oracle, ECB detection, security challenges, CTF"
-tags: ["cryptography", "cybersec", "ctf"]
+description: "A technical walkthrough of Cryptopals Set 2, covering PKCS#7 padding, ECB/CBC mode attacks, encryption oracles, byte-at-a-time ECB decryption, and profile forgery exploits."
+project_link: none
+seo_title: "Cryptopals Set 2 Solutions: ECB Oracle Attacks, PKCS#7 Padding, and CBC Exploits"
+seo_description: "Technical writeup of Cryptopals Set 2 challenges, covering PKCS#7 padding validation, AES-ECB weaknesses, ECB/CBC detection oracles, byte-at-a-time decryption attacks, cut-and-paste exploits, and CBC bitflipping techniques."
+seo_keywords: "cryptopals, cryptography, AES-ECB, AES-CBC, PKCS7 padding, byte-at-a-time ECB, ECB cut-and-paste, CBC bitflipping, encryption oracle, crypto challenges, CTF, offensive security"
+tags: ["cryptography", "cybersecurity", "ctf", "offensive-security"]
 ---
 
 # A writeup of the Cryptopals Crypto Challenge Set 2.
@@ -735,6 +735,7 @@ The resulting ciphertext will decrypt to:
 
 Here is the implementation of the exploit:
 
+> [!code The code to exploit]
 ```Python
 def cut_and_paste(oracle):
     # prefix is going to became email=ciaoo@mail.com&uid=0&role=

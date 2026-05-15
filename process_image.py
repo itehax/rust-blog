@@ -6,8 +6,8 @@ from PIL import Image
 from concurrent.futures import ThreadPoolExecutor
 
 # --- CONFIGURATION ---
-INPUT_FOLDER = "blog_images"      
-OUTPUT_FOLDER = "./public/images/blog_images"     
+INPUT_FOLDER = "tmp_blog_images/"      
+OUTPUT_FOLDER = "./public/images/writing_images"     
 TARGET_RATIO = 16 / 11           
 TARGET_WIDTH = 800               
 # ---------------------

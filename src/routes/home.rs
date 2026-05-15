@@ -62,7 +62,45 @@ pub fn Home() -> impl IntoView {
                         >
                             "Itehax 🖥️🇮🇹📚"
                         </a>
-                        <div class="sm:hidden">
+                        <div class="sm:hidden flex items-center gap-1">
+                            <button
+                                on:click=toggle_theme
+                                aria-label="Toggle colour theme"
+                                class="p-2 inline-flex items-center justify-center rounded-md text-[#8B949E] hover:text-[#E6EDF3] transition-all"
+                            >
+                                <svg
+                                    class="theme-icon-sun w-4 h-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                                <svg
+                                    class="theme-icon-moon w-4 h-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                            </button>
                             <button
                                 type="button"
                                 class="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-2 rounded-md  font-medium text-[#8B949E]  hover:text-[#8B949E] shadow-sm align-middle transition-all text-sm"
@@ -116,11 +154,11 @@ pub fn Home() -> impl IntoView {
                                 "R/W"
                             </a>
 
-                            // Theme toggle (sun / moon)
+                            // Theme toggle (desktop only — mobile has it next to hamburger)
                             <button
                                 on:click=toggle_theme
                                 aria-label="Toggle colour theme"
-                                class="inline-flex items-center justify-center w-8 h-8 rounded-md text-[#8B949E] hover:text-[#E6EDF3] transition"
+                                class="hidden sm:inline-flex items-center justify-center w-8 h-8 rounded-md text-[#8B949E] hover:text-[#E6EDF3] transition"
                             >
                                 // Sun icon (visible in dark mode – click to go light)
                                 <svg
@@ -301,14 +339,14 @@ pub fn Home() -> impl IntoView {
                     </div>
                 </div>
             </main>
-            <div class="w-full px-4 sm:px-6 lg:px-8 mb-4">
-                <div class="border border-[#30363D] rounded-xl p-4 bg-[#161B22]">
-                    <h3 class="text-sm font-medium text-[#8B949E] mb-4 text-center">
-                        "Post Connections"
-                    </h3>
-                    <GraphView />
-                </div>
-            </div>
+            //<div class="w-full px-4 sm:px-6 lg:px-8 mb-4">
+            //    <div class="border border-[#30363D] rounded-xl p-4 bg-[#161B22]">
+            //        <h3 class="text-sm font-medium text-[#8B949E] mb-4 text-center">
+            //            "Post Connections"
+            //        </h3>
+            //        <GraphView />
+            //    </div>
+            //</div>
             <HomeFooter />
         </div>
     }
