@@ -30,7 +30,12 @@ pub struct PostMetadata {
 
 impl PostMetadata {
     pub fn create_href(&self) -> String {
-        self.title.replace(' ', "-").to_lowercase()
+        // Strip URL-reserved characters (`?`, `#`, `&`) so titles containing
+        // them still produce a routable slug that matches the `:post` param.
+        self.title
+            .replace(' ', "-")
+            .to_lowercase()
+            .replace(['?', '#', '&'], "")
     }
 }
 
@@ -135,9 +140,18 @@ pub async fn get_graph_data() -> Result<GraphData, ServerFnError> {
             if !dir.exists() { continue; }
             let posts = process_posts(dir);
             for post in &posts {
-                let href = format!("/{}/{}", post_type, post.post_metadata.create_href());
+                let route = format!("/{}/{}", post_type, post.post_metadata.create_href());
+                // External posts (PDF reports, repos, ...) navigate straight to
+                // their target so a graph-node click doesn't bounce through the
+                // redirecting route. `id` stays the route so tag/link edges match.
+                let link = post.post_metadata.project_link.clone();
+                let href = if !link.is_empty() && link != "none" {
+                    link
+                } else {
+                    route.clone()
+                };
                 nodes.push(GraphNode {
-                    id: href.clone(),
+                    id: route,
                     title: post.post_metadata.title.clone(),
                     href,
                     tags: post.post_metadata.tags.clone(),

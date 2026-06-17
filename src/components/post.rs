@@ -41,11 +41,17 @@ pub fn Post(post_type: PostType, post_description: String) -> impl IntoView {
                                         .expect("Unable to read the right post_type")
                                         .iter()
                                         .map(|post| {
-                                            if post_type == PostType::Project {
+                                            // A post links out (PDF, external report, repo, ...) when it
+                                            // carries a real `project_link`. Otherwise it routes to its
+                                            // internally rendered markdown page.
+                                            let link = post.post_metadata.project_link.clone();
+                                            let is_external = !link.is_empty()
+                                                && link != "none";
+                                            if post_type == PostType::Project || is_external {
                                                 view! {
                                                     <LinkPostCard
                                                         post_metadata=post.post_metadata.clone()
-                                                        href=post.post_metadata.project_link.clone()
+                                                        href=link
                                                     />
                                                 }
                                             } else {
@@ -129,6 +135,11 @@ pub fn LinkPostCard(post_metadata: PostMetadata, href: String) -> impl IntoView 
         <a
             class="group flex flex-col h-full border transition-all duration-300 rounded-xl p-5 border-gray-700 hover:border-transparent hover:shadow-black/[.4]"
             href=href
+            // Open the external target (PDF, repo, ...) in a new tab. This also
+            // signals leptos_router to skip client-side routing for same-origin
+            // assets like /files/*.pdf, so the browser navigates to them directly.
+            target="_blank"
+            rel="noopener noreferrer"
         >
             <div class="aspect-w-16 aspect-h-11">
                 <img class="w-full object-cover rounded-xl" src=post_metadata.image_path />
@@ -190,24 +201,55 @@ pub fn RenderPost(post_type: PostType) -> impl IntoView {
                                 .iter()
                                 .find(|&p| p.post_metadata.create_href() == post_query());
                             if let Some(post) = post {
-                                let post_href = format!(
-                                    "/{}/{}",
-                                    post_type,
-                                    post.post_metadata.create_href(),
-                                );
-                                view! {
-                                    <PostSeo
-                                        post_metadata=post.post_metadata.clone()
-                                        post_type=post_type
-                                    />
-                                    <PostLayout
-                                        content=post.post_content.clone()
-                                        toc=post.toc.clone()
-                                        url=post_type.to_string()
-                                        post_href=post_href
-                                    />
+                                let link = post.post_metadata.project_link.clone();
+                                let is_external = !link.is_empty() && link != "none";
+                                if is_external {
+                                    // External post (PDF report, repo, ...): there is no markdown
+                                    // body to render, so we must never show an empty page. Whatever
+                                    // way this route is reached — graph-node click, ctrl/middle-click
+                                    // "open in new tab", a directly typed URL or a crawler — bounce
+                                    // straight to the target. We still emit the SEO meta tags first
+                                    // so search engines can index the report (a hard server 302
+                                    // would hide them). The <meta refresh> handles the no-JS /
+                                    // pre-hydration paint; the script handles client-side navigation.
+                                    let link_js = serde_json::to_string(&link).unwrap_or_default();
+                                    view! {
+                                        <PostSeo
+                                            post_metadata=post.post_metadata.clone()
+                                            post_type=post_type
+                                        />
+                                        <Meta
+                                            http_equiv="refresh"
+                                            content=format!("0; url={}", link)
+                                        />
+                                        <Script>
+                                            {format!("window.location.replace({});", link_js)}
+                                        </Script>
+                                        <p class="text-[#8B949E] text-center py-20">
+                                            "Redirecting to the report…"
+                                        </p>
+                                    }
+                                        .into_view()
+                                } else {
+                                    let post_href = format!(
+                                        "/{}/{}",
+                                        post_type,
+                                        post.post_metadata.create_href(),
+                                    );
+                                    view! {
+                                        <PostSeo
+                                            post_metadata=post.post_metadata.clone()
+                                            post_type=post_type
+                                        />
+                                        <PostLayout
+                                            content=post.post_content.clone()
+                                            toc=post.toc.clone()
+                                            url=post_type.to_string()
+                                            post_href=post_href
+                                        />
+                                    }
+                                        .into_view()
                                 }
-                                    .into_view()
                             } else {
                                 let mut outside_errors = Errors::default();
                                 outside_errors.insert_with_default_key(AppError::NotFound);
